@@ -3,112 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>openLINK Casino - Sem Tela Fantasma!</title>
+  <title>openLINK Casino - Agora Sim, Separado!</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    :root {
-      --principal: #1a0c2e; --secundaria: #D81B60; --destaque: #FFC107; --fundo: #0c0514;
-      --texto: #f0f0f0; --gradiente-principal: linear-gradient(145deg, #2C1B3E 0%, #11071f 100%);
-      --gradiente-destaque: linear-gradient(135deg, var(--secundaria) 0%, var(--destaque) 100%);
-      --gradiente-botao: linear-gradient(135deg, var(--destaque) 0%, var(--secundaria) 100%);
-      --gradiente-saque-botao: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-      --sombra-principal: 0 15px 30px rgba(0, 0, 0, 0.5); --sombra-destaque: 0 0 25px rgba(216, 27, 96, 0.7);
-      --borda-radius: 15px; --borda-cor: rgba(216, 27, 96, 0.4);
-    }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
-    body { background: var(--fundo) url('https://wallpapercave.com/wp/wp2904699.jpg') no-repeat center center fixed; background-size: cover; color: var(--texto); min-height: 100vh; position: relative; overflow-x: hidden; }
-    body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(12, 5, 20, 0.88); backdrop-filter: blur(3px); z-index: -1; } /* Ajustado z-index */
-    
-    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--fundo); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 1; visibility: visible; transition: opacity 0.75s ease-in-out, visibility 0s linear 0.75s; /* CORREÇÃO AQUI */ }
-    #preloader .loader-icon { font-size: 5rem; color: var(--secundaria); text-shadow: 0 0 20px var(--secundaria); animation: spinShake 2.5s ease-in-out infinite; }
-    #preloader .loader-text { font-family: 'Teko', sans-serif; font-size: 1.8rem; margin-top: 1rem; letter-spacing: 1px; opacity: 0.9; text-align: center; padding: 0 1rem; line-height: 1.2; }
-    #preloader.hidden { opacity: 0; visibility: hidden; }
-
-    .main-wrapper { position: relative; z-index: 10; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 100px; padding-bottom: 2rem; padding-left: 1rem; padding-right: 1rem; }
-    .main-header { width: 95%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(26, 12, 46, 0.6); border: 1px solid var(--borda-cor); border-radius: var(--borda-radius); position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; backdrop-filter: blur(10px); animation: slideDownHeader 0.5s ease-out forwards; }
-    @keyframes slideDownHeader { from { top: -80px; opacity: 0; } to { top: 10px; opacity: 1; } }
-    .header-left { display: flex; align-items: center; gap: 1rem; }
-    .header-logo { font-family: 'Teko', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--texto); text-shadow: 0 0 10px var(--secundaria); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.3s ease; }
-    .header-logo:hover { transform: scale(1.1); }
-    .header-logo .logo-emoji { font-size: 1.3em; animation: logoWiggle 3s ease-in-out infinite; display: inline-block; }
-    .header-logo span { color: var(--secundaria); }
-    .header-right { display: flex; align-items: center; gap: 0.5rem; }
-    .header-balance { font-size: 0.9rem; color: var(--texto); display: flex; align-items: center; gap: 0.3rem; background: rgba(0,0,0,0.3); padding: 0.4rem 0.8rem; border-radius: var(--borda-radius); border: 1px solid var(--borda-cor); }
-    .header-balance span { color: var(--secundaria); font-weight: bold; }
-    .auth-buttons button { background: none; border: 1px solid var(--secundaria); color: var(--texto); padding: 0.4rem 0.8rem; border-radius: var(--borda-radius); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; }
-    .auth-buttons button.register-btn { background: var(--secundaria); color: var(--principal); }
-    .auth-buttons button:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 0 15px var(--secundaria); filter: brightness(1.2); }
-    #home { text-align: center; max-width: 800px; animation: fadeIn 1s ease-in-out 0.5s backwards; margin-top: 0; }
-    #home h1 { font-family: 'Teko', sans-serif; font-size: 3.5rem; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px var(--destaque), 0 0 10px var(--secundaria); animation: textPopIn 0.8s ease-out 0.7s backwards; }
-    @keyframes textPopIn { from { opacity:0; transform: scale(0.5); } to { opacity:1; transform: scale(1); } }
-    #home .subtitle { font-size: 1.1rem; max-width: 700px; margin: 1rem auto; opacity: 0; line-height: 1.4; animation: fadeIn 1s ease-in-out 1s forwards; }
-    #home .primary-cta { font-size: 1.3rem; padding: 1rem 2rem; animation: pulseButton 2s infinite ease-in-out 1.5s; }
-    @keyframes pulseButton { 0%, 100% { transform: scale(1); box-shadow: 0 0 15px var(--destaque); } 50% { transform: scale(1.05); box-shadow: 0 0 25px var(--destaque); } }
-    .container { background: var(--gradiente-principal); padding: 2rem; border-radius: var(--borda-radius); box-shadow: var(--sombra-principal); width: 100%; max-width: 480px; text-align: center; position: relative; border: 1px solid var(--borda-cor); overflow: hidden; margin-top: 2rem; }
-    h2 { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 0 15px var(--secundaria); font-size: 2rem; margin-bottom: 1.5rem; position: relative; display: inline-block; }
-    h2::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 50px; height: 3px; background: var(--gradiente-destaque); border-radius: 3px; }
-    .form-group { margin-bottom: 1rem; position: relative; }
-    .form-group i.fa-solid, .form-group i.fas { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; z-index: 2; transition: transform 0.3s ease; }
-    .form-group input:focus ~ i { color: var(--secundaria); transform: translateY(-50%) scale(1.1); }
-    .form-group input { width: 100%; padding: 0.9rem 0.9rem 0.9rem 3rem; border: 1px solid var(--borda-cor); border-radius: var(--borda-radius); background: rgba(10, 12, 20, .5); color: var(--texto); font-size: 1rem; transition: all .3s ease; }
-    .form-group input:focus { outline: 0; border-color: var(--secundaria); }
-    .password-wrapper { position: relative; }
-    .toggle-password { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #999; cursor: pointer; z-index: 2;}
-    .extra-options { display: flex; justify-content: flex-end; margin-bottom: 1rem; font-size: .8rem; }
-    .extra-options a { color: var(--secundaria); text-decoration: none; }
-    .auth-switcher { margin-top: 1rem; font-size: 0.8rem; }
-    .auth-switcher span { color: var(--secundaria); cursor: pointer; text-decoration: underline; }
-    .hidden { display: none !important; }
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1001; display: none; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s; } /* CORREÇÃO: A visibilidade muda após a opacidade */
-    .modal-overlay.show { display: flex; opacity: 1; visibility: visible; transition-delay: 0s; }
-    .modal-content { background: var(--gradiente-principal); padding: 1.5rem; border-radius: var(--borda-radius); border: 1px solid var(--borda-cor); width: 100%; max-width: 450px; position: relative; transform: scale(.9); transition: transform .3s ease; }
-    .modal-overlay.show .modal-content { transform: scale(1); }
-    .modal-content .close-button { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; color: #fff; cursor: pointer; transition: transform .2s ease; }
-    .close-button:hover { transform: scale(1.2) rotate(90deg); }
-    button { width: 100%; padding: 1rem; background: var(--gradiente-botao); border: none; color: #fff; border-radius: var(--borda-radius); cursor: pointer; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; transition: all .3s ease; box-shadow: var(--sombra-destaque); font-family: 'Teko', sans-serif; position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    button:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 30px var(--destaque); filter: brightness(1.1); }
-    button:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
-    button .fa-spinner { animation: spin 1s linear infinite; }
-    .alerta { width: 90%; max-width: 400px; background: var(--principal); color: var(--texto); padding: 1rem 1.5rem; border-radius: var(--borda-radius); box-shadow: 0 5px 15px rgba(0, 0, 0, .3); position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; align-items: center; gap: 1rem; opacity: 0; animation: slideUpAndShake .7s ease forwards; border: 1px solid var(--borda-cor); }
-    .deposit-step { display: none; }.deposit-step.active { display: block; animation: fadeInModalStep 0.5s ease; }
-    @keyframes fadeInModalStep { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .amount-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem; margin-bottom: 1rem; }.amount-options button { font-size: 1.2em; padding: 1rem 0; }
-    .method-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }.method-options button { font-size: 1.1em; padding: 1.5rem 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--borda-cor); }.method-options button:hover { background: var(--gradiente-botao); }.method-options button i { font-size: 2.5em; color: var(--secundaria); }
-    .confirmation-area { text-align: center; }.confirmation-area img { max-width: 200px; background: #fff; padding: 10px; border-radius: var(--borda-radius); margin: 1rem 0; }.confirmation-area p { margin-bottom: 1.5rem; }.confirmation-area .form-group { margin-bottom: 1rem; text-align: left; }
-    .loading-area i, .success-area i { font-size: 6em; color: var(--secundaria); animation: spin 1.5s linear infinite; }.success-area i { animation: none; color: var(--destaque); }
-    .alerta.success { border-left: 5px solid var(--destaque); }.alerta.error { border-left: 5px solid var(--secundaria); }
-    .game-lobby { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; perspective: 1000px; }.game-card { position: relative; border-radius: var(--borda-radius); cursor: pointer; transform-style: preserve-3d; transition: transform .6s; }.game-card:hover { transform: rotateY(180deg); }.game-card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--borda-radius); display: flex; flex-direction: column; justify-content: center; align-items: center; }.card-front { background: var(--gradiente-principal); border: 1px solid var(--borda-cor); }.card-back { background: var(--gradiente-destaque); transform: rotateY(180deg); font-size: 1em; padding: 1rem; font-weight: bold; line-height:1.3; }.game-card-placeholder { visibility: hidden; padding: 3rem 1rem; }.card-front i { font-size: 2.5em; color: var(--secundaria); margin-bottom: 1rem; }.card-front h3 { font-family: 'Teko', sans-serif; font-size: 1.5em; text-transform: uppercase; }
-    .balance-display { margin-bottom: 1rem; font-size: 1.5em; }.balance-display span { font-weight: bold; color: var(--secundaria); font-size: 1.8em; text-shadow: 0 0 10px var(--secundaria); }
-    .winner-ticker { background: rgba(0,0,0,0.6); border-top: 1px solid var(--borda-cor); position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; text-align: center; white-space: nowrap; overflow: hidden; }.winner-ticker p { display: inline-block; animation: ticker-scroll 25s linear infinite; color: var(--texto); opacity: 0.9; }.winner-ticker p .fa-trophy { color: gold; }.winner-ticker span { color: var(--secundaria); font-weight: bold; }
-    .footer { text-align: center; opacity: 0.7; padding: 2rem 0; width: 100%; }
-    .player-panel-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-    #withdraw-btn { background: var(--gradiente-saque-botao); }
-    #withdraw-btn:hover { box-shadow: 0 0 30px #ff416c; }
-    .withdraw-modal-content p { font-size: 1.2rem; line-height: 1.5; margin-bottom: 1.5rem; }
-    .withdraw-modal-content .troll-face { font-size: 4rem; color: var(--destaque); display: block; margin-bottom: 1rem; animation: trollWiggle 0.5s ease-in-out infinite alternate; }
-    .game-container { background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: var(--borda-radius); margin-top: 2rem; margin-bottom: 2rem; border: 1px solid var(--borda-cor); text-align: center; }
-    .game-container h3 { font-family: 'Teko', sans-serif; font-size: 1.8rem; color: var(--destaque); margin-bottom: 1rem; text-transform: uppercase; }
-    .slot-reels { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
-    .reel { font-size: 3rem; padding: 1rem; background-color: rgba(0,0,0,0.4); border-radius: 10px; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; border: 2px solid var(--secundaria); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); transition: transform 0.1s ease-in-out; }
-    #spin-slot-btn { font-size: 1.1rem; padding: 0.8rem 1.5rem; margin-bottom: 1rem; }
-    .game-result-message { font-size: 1.1rem; color: var(--destaque); min-height: 2em; font-weight: bold; }
-    .reel-spinning { animation: spinReel 0.1s linear infinite alternate; }
-    .deadpool-alert-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s linear 0.3s; }
-    .deadpool-alert-overlay.show { display: flex; opacity: 1; visibility: visible; transition-delay: 0s; }
-    .deadpool-alert-content { background: var(--principal); border: 2px solid var(--secundaria); border-radius: var(--borda-radius); padding: 2rem; text-align: center; max-width: 450px; width: 90%; box-shadow: 0 0 30px var(--secundaria); transform: scale(0.7); transition: transform 0.3s ease-out .1s; }
-    .deadpool-alert-overlay.show .deadpool-alert-content { transform: scale(1); }
-    .deadpool-alert-content img { max-width: 200px; height: auto; border-radius: 10px; margin-bottom: 1.5rem; border: 3px solid var(--destaque); }
-    .deadpool-alert-content p { font-family: 'Teko', sans-serif; font-size: 1.8rem; line-height: 1.3; margin-bottom: 1.5rem; color: var(--texto); }
-    .deadpool-alert-content button { font-size: 1.1rem; padding: 0.8rem 1.5rem; }
-    @media (max-width: 768px) { /* ... */ } @media (max-width: 480px) { /* ... */ }
-    @keyframes spin { 100% { transform: rotate(360deg); } } @keyframes spinReel { 0% { transform: translateY(-5px) rotateX(15deg); } 100% { transform: translateY(5px) rotateX(-15deg); } } @keyframes spinShake { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(15deg) scale(1.1); } 50% { transform: rotate(-10deg) scale(1); } 75% { transform: rotate(5deg) scale(1.05); } } @keyframes logoWiggle {0%, 100% {transform: rotate(-3deg);} 50% {transform: rotate(3deg);}} @keyframes ticker-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-120%); } } @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } } @keyframes slideUpAndShake { 0% {transform: translate(-50%, 100%); opacity: 0;} 60% {transform: translate(-50%, -10px); opacity: 1;} 70% {transform: translate(-50%, 10px) rotate(-2deg); } 80% {transform: translate(-50%, -5px) rotate(2deg); } 90% {transform: translate(-50%, 5px) rotate(-1deg); } 100% {transform: translate(-50%, 0px) rotate(0deg); opacity: 1;} } @keyframes trollWiggle { from { transform: rotate(-5deg) scale(1); } to { transform: rotate(5deg) scale(1.1); } }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="preloader">
@@ -125,7 +26,7 @@
 
   <header class="main-header">
     <div class="header-left">
-      <div class="header-logo" onclick="showHomeAndReset()"><span class="logo-emoji">🦄</span>open<span>LINK</span></div>
+      <div class="header-logo" id="header-logo-clickable"><span class="logo-emoji">🦄</span>open<span>LINK</span></div>
     </div>
     <div class="header-right">
       <div id="header-balance-area" class="header-balance hidden">
@@ -191,7 +92,7 @@
           <h2>Criar Conta (pra quê, né?)</h2>
           <div class="form-group"><i class="fa-solid fa-envelope-circle-check"></i><input type="email" id="register-email" placeholder="Seu melhor E-mail"></div>
           <div class="form-group password-wrapper"><i class="fa-solid fa-user-secret"></i><input type="password" id="register-password" placeholder="Senha (capricha, hacker agradece)"><i class="fas fa-eye-slash toggle-password" data-target="register-password"></i></div>
-          <div class="form-group"><i class="fa-solid fa-cake-candles"></i><input type="text" id="register-birthdate" placeholder="Nascido em (DD/MM/AAAA - pra gente ver se já pode ser preso)"></div>
+          <div class="form-group"><i class="fa-solid fa-cake-candles"></i><input type="text" id="register-birthdate" placeholder="Nascido em (DD/MM/AAAA)"></div>
           <button id="register-account-btn"><span class="btn-text">Criar Conta (e se arrepender depois)</span></button>
           <div class="auth-switcher">Já se arrependeu? <span id="show-login-form">Voltar pro Login</span></div>
         </div>
@@ -210,7 +111,7 @@
         </div>
         <div id="step-2" class="deposit-step">
           <h3>Como você prefere doar seu dinheiro?</h3>
-          <div class="method-options"> <button class="method-btn" data-method="pix"><i class="fa-brands fa-pix"></i>Pix (Rápido e Indolor... ou não)</button> <button class="method-btn" data-method="card"><i class="far fa-credit-card"></i>Cartão (Estoura ele logo!)</button> <button class="method-btn" data-method="boleto"><i class="fa-solid fa-file-invoice-dollar"></i>Boleto (Pra pagar amanhã o que perdeu hoje)</button> <button class="method-btn" data-method="crypto"><i class="fa-brands fa-bitcoin"></i>Cripto (Pros modernos que gostam de sofrer em blockchain)</button> </div>
+          <div class="method-options"> <button class="method-btn" data-method="pix"><i class="fa-brands fa-pix"></i>Pix (Rápido e Indolor... ou não)</button> <button class="method-btn" data-method="card"><i class="far fa-credit-card"></i>Cartão (Estoura ele logo!)</button> <button class="method-btn" data-method="boleto"><i class="fa-solid fa-file-invoice-dollar"></i>Boleto (Pra pagar amanhã)</button> <button class="method-btn" data-method="crypto"><i class="fa-brands fa-bitcoin"></i>Cripto (Pros modernos)</button> </div>
         </div>
         <div id="step-3" class="deposit-step">
           <div id="confirmation-pix" class="confirmation-area hidden"><h3>Pix? Boa sorte!</h3><p>Escaneia aí, gênio. Se o dinheiro sumir, não fui eu.</p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt="QR Code Falso"><button class="confirm-payment-btn">"Paguei" (e que Deus me ajude)</button></div>
@@ -223,7 +124,7 @@
   </div>
 
    <div id="withdraw-modal" class="modal-overlay">
-    <div class="modal-content withdraw-modal-content" style="max-width: 450px;">
+    <div class="modal-content withdraw-modal-content">
       <span class="close-button" id="close-withdraw-modal">&times;</span>
       <span class="troll-face">😏</span>
       <h3>Tentando Sacar, É?</h3>
@@ -233,362 +134,19 @@
     </div>
   </div>
 
+  <div class="deadpool-alert-overlay" id="deadpool-alert-welcome"> <div class="deadpool-alert-content">
+        <img src="https://i.pinimg.com/originals/7a/89/47/7a89470a0f7a501542325099a6998599.gif" alt="Deadpool Torrando a Grana">
+        <p id="deadpool-welcome-text"></p>
+        <button id="deadpool-ok-btn">Entendido, Capitão Óbvio!</button>
+    </div>
+  </div>
+
+
   <footer class="footer">
     © 2025 openLINK Corp. "A gente se importa... com o seu dinheiro". <br> 
     Este site é uma piada elaborada. Apostas reais aqui? Só se for em quem vai lavar a louça. Jogue (ou não) por sua conta e risco.
   </footer>
 
-  <script>
-    window.onload = function() {
-      const preloader = document.getElementById('preloader');
-      if (preloader) {
-          setTimeout(() => {
-              preloader.classList.add('hidden');
-          }, 2800);
-      }
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const authModal = document.getElementById('auth-modal');
-        const closeAuthModalBtn = document.getElementById('close-auth-modal');
-        const openLoginBtn = document.getElementById('open-login-btn');
-        const openRegisterBtn = document.getElementById('open-register-btn');
-        const homeAcessarBtn = document.getElementById('home-acessar-btn'); 
-        const showRegisterFormBtn = document.getElementById('show-register-form');
-        const showLoginFormBtn = document.getElementById('show-login-form');
-        const loginFormDiv = document.getElementById('login-form');
-        const registerFormDiv = document.getElementById('register-form');
-        const headerBalanceArea = document.getElementById('header-balance-area');
-        const authButtonsHeader = document.getElementById('auth-buttons');
-        const headerBalanceSpan = document.getElementById('header-balance');
-        const panelBalanceSpan = document.getElementById('panel-balance');
-        const homeSection = document.getElementById('home');
-        const playerPanel = document.getElementById('player-panel');
-        const entrarBtn = document.getElementById('entrar-btn');
-        const registerAccountBtn = document.getElementById('register-account-btn');
-        const loginUsuarioInput = document.getElementById('login-usuario');
-        const loginSenhaInput = document.getElementById('login-senha');
-        const registerEmailInput = document.getElementById('register-email');
-        const registerPasswordInput = document.getElementById('register-password');
-        // const rememberMeCheck = document.getElementById('rememberMe'); // Removido pois não existe no HTML
-        const depositBtn = document.getElementById('deposit-btn');
-        const addFundsBtn = document.getElementById('add-funds');
-        const bonusTimerDiv = document.getElementById('bonus-timer');
-        const winnerTickerText = document.getElementById('winner-ticker-text');
-        const depositModal = document.getElementById('deposit-modal');
-        const closeDepositModalBtn = document.getElementById('close-deposit-modal');
-        const depositSteps = document.querySelectorAll('.deposit-step');
-        const amountButtons = document.querySelectorAll('.amount-btn');
-        const customAmountInput = document.getElementById('custom-amount');
-        const continueToMethodsBtn = document.getElementById('continue-to-methods');
-        const methodButtons = document.querySelectorAll('.method-btn');
-        const confirmationAreas = document.querySelectorAll('.confirmation-area');
-        const confirmPaymentButtons = document.querySelectorAll('.confirm-payment-btn');
-        const loadingArea = document.getElementById('loading-area');
-        const successArea = document.getElementById('success-area');
-        const togglePasswordButtons = document.querySelectorAll('.toggle-password');
-        const withdrawBtn = document.getElementById('withdraw-btn');
-        const withdrawModal = document.getElementById('withdraw-modal');
-        const closeWithdrawModalBtn = document.getElementById('close-withdraw-modal');
-        const confirmTrollWithdrawBtn = document.getElementById('confirm-troll-withdraw');
-        const spinSlotBtn = document.getElementById('spin-slot-btn');
-        const reel1 = document.getElementById('reel1');
-        const reel2 = document.getElementById('reel2');
-        const reel3 = document.getElementById('reel3');
-        const slotResult = document.getElementById('slot-result');
-
-        let saldo = parseFloat(localStorage.getItem('playerBalance')) || 0;
-        let proximoBonus = localStorage.getItem('proximoBonus') ? new Date(localStorage.getItem('proximoBonus')) : null;
-        let countdownInterval;
-        let selectedAmount = 0;
-        const slotSymbols = ['🍓', '🍕', '🦄', '💩', '💰', '🌮', '💣', '💎'];
-        const custoGiro = 5;
-
-        window.playSound = (sound) => {
-            const soundElement = document.getElementById(`sound-${sound}`);
-            if (soundElement) { soundElement.currentTime = 0; soundElement.play().catch(() => {}); }
-        };
-
-        function formatarNomeDeEmail(email) {
-            if (!email || !email.includes('@')) { return `Jogador "${email || 'Misterioso'}" (que nome original, hein?)`; }
-            let nome = email.substring(0, email.indexOf('@'));
-            nome = nome.replace(/[._]/g, ' ').replace(/\d+/g, '').trim();
-            return nome.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1)).join(' ') || "Ser Anônimo";
-        }
-        
-        function animateBalance(targetValue) {
-            const startValue = saldo; const duration = 1000; let startTime = null;
-            function step(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const progress = Math.min((currentTime - startTime) / duration, 1);
-                const currentBalance = startValue + (targetValue - startValue) * progress;
-                const formattedBalance = `R$ ${currentBalance.toFixed(2).replace('.', ',')}`;
-                if(headerBalanceSpan) headerBalanceSpan.textContent = formattedBalance;
-                if (panelBalanceSpan) panelBalanceSpan.textContent = formattedBalance;
-                if (progress < 1) { requestAnimationFrame(step); } 
-                else { saldo = targetValue; localStorage.setItem('playerBalance', saldo); }
-            }
-            requestAnimationFrame(step);
-        }
-
-        function updateBalanceDisplay(newValue, isAnimated = false) {
-            if (isAnimated) { animateBalance(newValue); } 
-            else {
-                saldo = newValue;
-                const formattedBalance = `R$ ${saldo.toFixed(2).replace('.', ',')}`;
-                if(headerBalanceSpan) headerBalanceSpan.textContent = formattedBalance;
-                if (panelBalanceSpan) panelBalanceSpan.textContent = formattedBalance;
-                localStorage.setItem('playerBalance', saldo);
-            }
-        }
-        
-        window.mostrarAlerta = (mensagem, type = 'info') => {
-            const existingAlert = document.querySelector('.alerta');
-            if(existingAlert) existingAlert.remove();
-            const alerta = document.createElement('div');
-            alerta.className = `alerta ${type}`;
-            alerta.innerHTML = `<i class="fas ${type === 'success' ? 'fa-grin-beam-sweat' : 'fa-dizzy'}"></i> <p>${mensagem}</p>`;
-            document.body.appendChild(alerta);
-            setTimeout(() => { alerta.style.opacity = '0'; setTimeout(() => alerta.remove(), 700); }, 4500);
-        };
-
-        function formatarTempo(ms) {
-            const s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor((s%3600)/60), seg = s%60;
-            return `${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(seg).padStart(2,'0')}s (ou uma eternidade)`;
-        }
-        
-        togglePasswordButtons.forEach(toggle => {
-            if(toggle) {
-                toggle.addEventListener('click', function() {
-                    playSound('click');
-                    const targetInputId = this.dataset.target;
-                    const inputField = document.getElementById(targetInputId);
-                    if (inputField) {
-                        const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
-                        inputField.setAttribute('type', type);
-                        this.classList.toggle('fa-eye'); this.classList.toggle('fa-eye-slash');
-                    }
-                });
-            }
-        });
-
-        window.openModal = function(formToShow = 'login') {
-            if(authModal) {
-                authModal.classList.add('show');
-                if (formToShow === 'register') {
-                    if(loginFormDiv) loginFormDiv.classList.add('hidden');
-                    if(registerFormDiv) registerFormDiv.classList.remove('hidden');
-                } else {
-                    if(loginFormDiv) loginFormDiv.classList.remove('hidden');
-                    if(registerFormDiv) registerFormDiv.classList.add('hidden');
-                }
-            }
-        }
-        
-        function showHomeAndReset() {
-            playSound('click');
-            if(homeSection) homeSection.classList.remove('hidden');
-            if(playerPanel) playerPanel.classList.add('hidden');
-            if(authButtonsHeader) authButtonsHeader.classList.remove('hidden');
-            if(headerBalanceArea) headerBalanceArea.classList.add('hidden');
-            if(authModal) authModal.classList.remove('show'); 
-            if(depositModal) depositModal.classList.remove('show');
-            if (withdrawModal) withdrawModal.classList.remove('show');
-        }
-        const logoElement = document.querySelector('.header-logo');
-        if(logoElement) logoElement.addEventListener('click', showHomeAndReset);
-
-        if(openLoginBtn) openLoginBtn.addEventListener('click', () => { playSound('click'); openModal('login'); });
-        if(openRegisterBtn) openRegisterBtn.addEventListener('click', () => { playSound('click'); openModal('register'); });
-        if(homeAcessarBtn) homeAcessarBtn.addEventListener('click', () => { playSound('click'); openModal('login'); });
-        if(closeAuthModalBtn) closeAuthModalBtn.addEventListener('click', () => { if(authModal) authModal.classList.remove('show'); });
-        if(showRegisterFormBtn) showRegisterFormBtn.addEventListener('click', () => { playSound('click'); if(loginFormDiv) loginFormDiv.classList.add('hidden'); if(registerFormDiv) registerFormDiv.classList.remove('hidden'); });
-        if(showLoginFormBtn) showLoginFormBtn.addEventListener('click', () => { playSound('click'); if(registerFormDiv) registerFormDiv.classList.add('hidden'); if(loginFormDiv) loginFormDiv.classList.remove('hidden'); });
-        
-        if(entrarBtn) {
-            entrarBtn.addEventListener('click', () => {
-                playSound('click');
-                const usuario = loginUsuarioInput.value.trim();
-                const senha = loginSenhaInput.value.trim();
-                if (usuario.length < 3 || senha.length < 3) {
-                    playSound('error');
-                    if(loginFormDiv) loginFormDiv.classList.add('shake');
-                    mostrarAlerta('Tá de sacanagem? Preenche direito esses campos ou o Tio Pool vai te dar um cascudo virtual!', 'error');
-                    setTimeout(() => {if(loginFormDiv) loginFormDiv.classList.remove('shake')}, 600);
-                    return;
-                }
-                // const rememberMeCheckbox = document.getElementById('rememberMe');
-                // if (rememberMeCheckbox && rememberMeCheckbox.checked) { localStorage.setItem('rememberedUser', usuario); } else { localStorage.removeItem('rememberedUser'); }
-                
-                entrarBtn.disabled = true;
-                entrarBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validando sua "importância"...';
-                
-                setTimeout(() => {
-                    if(authModal) authModal.classList.remove('show');
-                    if(homeSection) homeSection.classList.add('hidden');
-                    if(playerPanel) playerPanel.classList.remove('hidden');
-                    if(playerPanel) playerPanel.style.animation = 'fadeIn 0.5s ease-in-out';
-                    if(authButtonsHeader) authButtonsHeader.classList.add('hidden');
-                    if(headerBalanceArea) headerBalanceArea.classList.remove('hidden');
-                    
-                    entrarBtn.disabled = false;
-                    entrarBtn.innerHTML = '<span class="btn-text">Entrar (por sua conta e risco)</span>';
-                    
-                    if (saldo === 0) { updateBalanceDisplay(100.00, false); } else { updateBalanceDisplay(saldo, false); }
-                    
-                    const nomeFormatado = formatarNomeDeEmail(usuario);
-                    showDeadpoolWelcomeAlert(nomeFormatado); 
-                    startWinnerTicker();
-                    atualizarTimerBonus();
-                }, 1500);
-            });
-        }
-        
-        if(registerAccountBtn) {
-            registerAccountBtn.addEventListener('click', () => {
-                playSound('click');
-                const regEmail = registerEmailInput.value;
-                const regPass = registerPasswordInput.value;
-                if (!regEmail.includes('@') || regPass.length < 3) {
-                    playSound('error'); if(registerFormDiv) registerFormDiv.classList.add('shake');
-                    mostrarAlerta('Preencheu errado, espertão? Ou a senha é "123"? Assim não dá pra te levar a sério (nem eu me levo).', 'error');
-                    setTimeout(() => {if(registerFormDiv) registerFormDiv.classList.remove('shake')}, 600); return;
-                }
-                mostrarAlerta('"Conta criada"! Viu? Nem doeu. Agora vai lá no login e finge que isso tudo é sério.', 'success');
-                if(showLoginFormBtn) showLoginFormBtn.click();
-            });
-        }
-
-        function showDeadpoolWelcomeAlert(nomeJogador) {
-            playSound('login'); 
-            const alertOverlay = document.createElement('div');
-            alertOverlay.className = 'deadpool-alert-overlay';
-            const alertContent = document.createElement('div');
-            alertContent.className = 'deadpool-alert-content';
-            const imageUrl = "https://i.pinimg.com/originals/7a/89/47/7a89470a0f7a501542325099a6998599.gif";
-            alertContent.innerHTML = `<img src="${imageUrl}" alt="Deadpool Torrando a Grana"><p>Aí sim, ${nomeJogador}! Seu dinheiro vai ser MUITO bem gasto aqui (pela gente, claro). Prepare-se para a glória... ou para comer miojo o resto do mês!</p><button id="deadpool-ok-btn">Entendido, Capitão Óbvio!</button>`;
-            document.body.appendChild(alertOverlay);
-            alertOverlay.classList.add('show');
-            const deadpoolOkBtn = document.getElementById('deadpool-ok-btn');
-            if(deadpoolOkBtn) deadpoolOkBtn.addEventListener('click', () => { playSound('click'); alertOverlay.classList.remove('show'); setTimeout(() => { alertOverlay.remove(); }, 300); });
-        }
-        
-        function showDepositStep(stepNumber) { if(depositSteps.length > 0) depositSteps.forEach(step => step.classList.remove('active')); const targetStep = document.getElementById(`step-${stepNumber}`); if(targetStep) targetStep.classList.add('active'); }
-        if(depositBtn) depositBtn.addEventListener('click', () => { playSound('click'); showDepositStep(1); if(customAmountInput) customAmountInput.value = ''; if(depositModal) depositModal.classList.add('show'); });
-        if(closeDepositModalBtn) closeDepositModalBtn.addEventListener('click', () => {if(depositModal) depositModal.classList.remove('show');});
-        if(depositModal) depositModal.addEventListener('click', (e) => { if (e.target === depositModal) depositModal.classList.remove('show'); });
-        amountButtons.forEach(btn => { btn.addEventListener('click', () => { playSound('click');selectedAmount = parseFloat(btn.dataset.amount); showDepositStep(2); }); });
-        if(continueToMethodsBtn) continueToMethodsBtn.addEventListener('click', () => { playSound('click');const customAmount = parseFloat(customAmountInput.value); if (isNaN(customAmount) || customAmount <= 0) { mostrarAlerta('Valor inválido. Quer doar 0 reais? Esperto você, hein?', 'error'); return; } selectedAmount = customAmount; showDepositStep(2); });
-        methodButtons.forEach(btn => { btn.addEventListener('click', () => { playSound('click');const method = btn.dataset.method; showDepositStep(3); confirmationAreas.forEach(area => area.classList.add('hidden')); const targetArea = document.getElementById(`confirmation-${method}`); if(targetArea) targetArea.classList.remove('hidden'); }); });
-        confirmPaymentButtons.forEach(btn => { btn.addEventListener('click', () => { playSound('click');showDepositStep(4); if(loadingArea) loadingArea.classList.remove('hidden'); if(successArea) successArea.classList.add('hidden'); playSound('click'); setTimeout(() => { if(loadingArea) loadingArea.classList.add('hidden'); if(successArea) successArea.classList.remove('hidden'); playSound('cash'); const newBalance = saldo + selectedAmount; updateBalanceDisplay(newBalance, true); setTimeout(() => { if(depositModal) depositModal.classList.remove('show'); }, 1500); }, 2500); }); });
-
-        function atualizarTimerBonus() {
-            if(!addFundsBtn || !bonusTimerDiv) return; 
-            clearInterval(countdownInterval);
-            if (proximoBonus && new Date() < proximoBonus) {
-                addFundsBtn.disabled = true; bonusTimerDiv.classList.remove('hidden');
-                countdownInterval = setInterval(() => {
-                    const diff = proximoBonus - new Date();
-                    if (diff <= 0) {
-                        clearInterval(countdownInterval); bonusTimerDiv.classList.add('hidden'); addFundsBtn.disabled = false;
-                        addFundsBtn.innerHTML = 'Pegar Esmola Diária (não se acostuma!) <i class="fas fa-handshake-angle"></i>';
-                        localStorage.removeItem('proximoBonus'); proximoBonus = null;
-                        mostrarAlerta('Sua mixaria diária está disponível! Não gaste tudo de uma vez.', 'success');
-                    } else {
-                        addFundsBtn.innerHTML = 'Aguardando a boa vontade do sistema...';
-                        bonusTimerDiv.innerHTML = `<i class="fas fa-hourglass-half"></i> ${formatarTempo(diff)}`;
-                    }
-                }, 1000);
-            } else {
-                addFundsBtn.disabled = false;
-                addFundsBtn.innerHTML = 'Pegar Esmola Diária (não se acostuma!) <i class="fas fa-handshake-angle"></i>';
-                bonusTimerDiv.classList.add('hidden');
-            }
-        }
-        if(addFundsBtn) addFundsBtn.addEventListener('click', () => { playSound('click'); if (proximoBonus && new Date() < proximoBonus) { playSound('error'); mostrarAlerta('Segura a emoção, apressadinho! O "bônus" é só uma vez por dia.', 'error'); return; } const bonusAmount = Math.floor(Math.random() * 20) + 1; const newBalance = saldo + bonusAmount; updateBalanceDisplay(newBalance, true); playSound('cash'); mostrarAlerta(`Achou R$ ${bonusAmount.toFixed(2).replace('.',',')} perdidos no sofá! Que sorte... ou não.`, 'success'); proximoBonus = new Date(); proximoBonus.setHours(proximoBonus.getHours() + 24); localStorage.setItem('proximoBonus', proximoBonus.toISOString()); atualizarTimerBonus(); });
-        
-        const nomes = ["Wade Wilson", "Colossus (reclamando)", "Míssil Adolescente (no TikTok)", "Dopinder (atrasado de novo)", "Al Cega (mas com sorte)", "Vanessa (tentando não rir)"];
-        const jogos = ["Roleta da Incerteza Cósmica", "Blackjack do Desespero", "Caça-Níquel da Chimichanga Suprema", "Poker das Desculpas Esfarrapadas"];
-        const premios = ["um unicórnio inflável", "meio saco de balas de goma", "o direito de NÃO lavar a louça hoje", "uma foto autografada por mim (Deadpool)", "um high-five relutante"];
-        function updateWinnerTicker() { const nome = nomes[Math.floor(Math.random()*nomes.length)], jogo = jogos[Math.floor(Math.random()*jogos.length)], premio = premios[Math.floor(Math.random()*premios.length)]; if(winnerTickerText) winnerTickerText.innerHTML = `<i class="fas fa-trophy"></i> Última Fofoca: <span>${nome}</span> "ganhou" <span>${premio}</span> em <span>'${jogo}'</span>! E eu aqui só olhando...`; }
-        function startWinnerTicker() { if(winnerTickerText) {updateWinnerTicker(); setInterval(updateWinnerTicker, 7500);} }
-        
-        if (withdrawBtn) {
-            withdrawBtn.addEventListener('click', () => {
-                playSound('click');
-                if(withdrawModal) withdrawModal.classList.add('show');
-            });
-        }
-        if (closeWithdrawModalBtn) {
-            closeWithdrawModalBtn.addEventListener('click', () => {
-                if(withdrawModal) withdrawModal.classList.remove('show');
-            });
-        }
-        if (withdrawModal) {
-            withdrawModal.addEventListener('click', (e) => {
-                if (e.target === withdrawModal) {
-                    withdrawModal.classList.remove('show');
-                }
-            });
-        }
-        if (confirmTrollWithdrawBtn) {
-            confirmTrollWithdrawBtn.addEventListener('click', () => {
-                playSound('troll'); 
-                updateBalanceDisplay(0, true); 
-                if(withdrawModal) withdrawModal.classList.remove('show');
-                mostrarAlerta('Sacamos o seu dinheiro (pra nossa conta, óbvio). Valeu, trouxa! Volte sempre para mais "diversão"! HAHAHA!', 'error');
-            });
-        }
-        
-        if (spinSlotBtn) {
-            spinSlotBtn.addEventListener('click', () => {
-                playSound('click');
-                if (saldo < custoGiro) {
-                    playSound('error');
-                    mostrarAlerta(`Ops! Você precisa de pelo menos R$${custoGiro.toFixed(2).replace('.',',')} pra essa palhaçada. Vá "depositar" mais, mão de vaca!`, 'error');
-                    return;
-                }
-                updateBalanceDisplay(saldo - custoGiro, true);
-                if(slotResult) slotResult.textContent = "Girandooooo... e torcendo pra não dar M*RDA!";
-                if(spinSlotBtn) {
-                    spinSlotBtn.disabled = true;
-                    spinSlotBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sorteando sua desgraça...';
-                }
-                const reelsElements = [reel1, reel2, reel3];
-                reelsElements.forEach(r => {if(r) r.classList.add('reel-spinning'); });
-                let spinCount = 0;
-                const maxSpins = 20 + Math.floor(Math.random() * 10);
-                const spinInterval = setInterval(() => {
-                    reelsElements.forEach(r => { if(r) r.textContent = slotSymbols[Math.floor(Math.random() * slotSymbols.length)]; });
-                    spinCount++;
-                    if (spinCount >= maxSpins) {
-                        clearInterval(spinInterval);
-                        reelsElements.forEach(r => {if(r) r.classList.remove('reel-spinning'); });
-                        const r1_val = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
-                        const r2_val = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
-                        const r3_val = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
-                        if(reel1) reel1.textContent = r1_val; if(reel2) reel2.textContent = r2_val; if(reel3) reel3.textContent = r3_val;
-                        if (r1_val === '🦄' && r2_val === '🦄' && r3_val === '🦄') { playSound('cash'); const premio = 100; updateBalanceDisplay(saldo + premio, true); if(slotResult) slotResult.textContent = `UNICÓRNIOS! Você ganhou R$${premio}! ...Só que não. Mas toma aí uns trocados pra não chorar.`; }
-                        else if (r1_val === '💰' && r2_val === '💰' && r3_val === '💰') { playSound('cash'); const premio = 50; updateBalanceDisplay(saldo + premio, true); if(slotResult) slotResult.textContent = `DINHEIRO! R$${premio} pra você! (Não se acostuma, viu?)`; }
-                        else if (r1_val === '💩' && r2_val === '💩' && r3_val === '💩') { playSound('error'); if(slotResult) slotResult.textContent = "TRÊS COCÔS?! Que fase, hein? Limpa isso e tenta de novo, se tiver coragem."; }
-                        else if (r1_val === r2_val && r2_val === r3_val) { playSound('success'); const premioMenor = 10; updateBalanceDisplay(saldo + premioMenor, true); if(slotResult) slotResult.textContent = `Boa, uma trinca de ${r1_val}! Ganhou R$${premioMenor}. Já dá pra um chiclete.`; }
-                        else { playSound('error'); if(slotResult) slotResult.textContent = "NADA! Mais sorte da próxima vez (spoiler: provavelmente não)."; }
-                        if(spinSlotBtn) {spinSlotBtn.disabled = false; spinSlotBtn.innerHTML = 'Girar essa geringonça! (Custa R$5)';}
-                    }
-                }, 100);
-            });
-        }
-
-        const rememberedUserStored = localStorage.getItem('rememberedUser');
-        if (rememberedUserStored && loginUsuarioInput) {
-            loginUsuarioInput.value = rememberedUserStored;
-            // const rememberMeCheckbox = document.getElementById('rememberMe');
-            // if(rememberMeCheckbox) rememberMeCheckbox.checked = true;
-        }
-
-        updateBalanceDisplay(saldo);
-        atualizarTimerBonus();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
