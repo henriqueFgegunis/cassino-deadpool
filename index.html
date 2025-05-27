@@ -1,149 +1,467 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>openLINK Casino - Edição Mercenário Tagarela</title>
-  
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌮</text></svg>">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Teko:wght@600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deadpool Casino - Apostas e Jogos Online</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-  <div id="preloader">
-      <div class="loader-icon">🌮</div>
-      <div class="loader-text">Ajustando a máscara... Contando as balas... <br>Sua dose diária de decisões financeiras questionáveis está carregando!</div>
-  </div>
-
-  <audio id="sound-click" src="https://actions.google.com/sounds/v1/cartoon/pop.ogg" preload="auto"></audio>
-  <audio id="sound-success" src="https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg" preload="auto"></audio>
-  <audio id="sound-cash" src="https://actions.google.com/sounds/v1/impacts/arcade_game_fruit_machine_jackpot.ogg" preload="auto"></audio>
-  <audio id="sound-error" src="https://actions.google.com/sounds/v1/cartoon/cartoon_negative_bling.ogg" preload="auto"></audio>
-  <audio id="sound-login" src="https://actions.google.com/sounds/v1/doors/wood_door_close.ogg" preload="auto"></audio>
-  <audio id="sound-troll" src="https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg" preload="auto"></audio>
-  
-  <header class="main-header">
-    <div class="header-left">
-      <div class="header-logo" id="header-logo-clickable"><span class="logo-emoji">🌮</span>open<span>LINK</span></div>
-    </div>
-    <div class="header-right">
-      <div id="header-balance-area" class="header-balance hidden">
-        <i class="fa-solid fa-wallet"></i> Saldo: <span id="header-balance">R$ 0,00</span>
+  <!-- Header e navegação -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="images/casino_logo.png" alt="Deadpool Casino Logo">
+        <h1>Deadpool Casino</h1>
       </div>
-      <div id="auth-buttons" class="auth-buttons">
-        <button id="open-login-btn">Já sou da turma</button>
-        <button id="open-register-btn" class="register-btn">Quero entrar pra bagunça</button>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Início</a></li>
+        <li><a href="#games">Jogos</a></li>
+        <li><a href="#deposit">Depósito</a></li>
+        <li><a href="#withdraw">Saque</a></li>
+        <li><a href="#promotions">Promoções</a></li>
+        <li><a href="#" id="login-btn">Login</a></li>
+      </ul>
+      <div class="user-balance">
+        <i class="fas fa-coins"></i>
+        <span class="balance-amount">R$ 0,00</span>
       </div>
-    </div>
+      <div class="hamburger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
   </header>
 
-  <div class="main-wrapper">
-      <section id="home">
-          <h1><span class="logo-emoji">🌮</span>open<span>LINK</span> Casino</h1>
-          <p class="subtitle">Onde "investimento de alto risco" é um eufemismo. A gente promete diversão, adrenalina e, provavelmente, te fazer comer miojo no fim do mês. A casa sempre vence, mas as risadas são grátis!</p>
-          <button class="primary-cta" id="home-acessar-btn">Hora da Chimichanga! (Acessar)</button>
-      </section>
+  <!-- Banner principal -->
+  <section class="banner">
+    <div class="banner-content">
+      <h2>Bem-vindo ao Deadpool Casino</h2>
+      <p>O cassino mais irreverente da internet! Jogue, aposte e divirta-se com nossos jogos exclusivos.</p>
+      <a href="#games" class="btn pulse">Jogar Agora</a>
+    </div>
+  </section>
 
-      <div class="container hidden" id="player-panel">
-          <div class="balance-display">Sua grana (que já foi mais sua): <span id="panel-balance">R$ 0,00</span></div>
-          <div class="player-panel-buttons">
-            <button id="deposit-btn">Comprar mais fichas <i class="fa-solid fa-piggy-bank"></i></button>
-            <button id="withdraw-btn">Tentar sacar <i class="fa-solid fa-sack-xmark"></i></button>
-          </div>
-          
-          <div id="slot-machine-container" class="game-container">
-            <h3>Caça-Níquel do Unicórnio Explosivo!</h3>
-            <div class="slot-reels">
-              <div class="reel" id="reel1">🦄</div>
-              <div class="reel" id="reel2">💣</div>
-              <div class="reel" id="reel3">🌮</div>
+  <!-- Seção de jogos populares -->
+  <section id="games" class="games-section">
+    <div class="section-title">
+      <h2>Jogos Populares</h2>
+    </div>
+    <div class="games-grid">
+      <div class="game-card">
+        <div class="game-image">
+          <img src="images/poker_chips.png" alt="Poker">
+        </div>
+        <div class="game-info">
+          <h3>Poker</h3>
+          <p>Teste suas habilidades no jogo de cartas mais famoso do mundo.</p>
+          <button class="btn" onclick="showNotification('Em breve!', 'warning')">Jogar</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="game-image">
+          <img src="images/casino_banner.png" alt="Caça-níqueis">
+        </div>
+        <div class="game-info">
+          <h3>Caça-níqueis</h3>
+          <p>Gire os rolos e tente a sorte nos nossos caça-níqueis temáticos.</p>
+          <button class="btn" onclick="openGame('slots')">Jogar</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="game-image">
+          <img src="images/casino_banner.png" alt="Roleta">
+        </div>
+        <div class="game-info">
+          <h3>Roleta</h3>
+          <p>Aposte nos números e cores na emocionante roleta.</p>
+          <button class="btn" onclick="openGame('roulette')">Jogar</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="game-image">
+          <img src="images/casino_banner.png" alt="Blackjack">
+        </div>
+        <div class="game-info">
+          <h3>Blackjack</h3>
+          <p>Chegue o mais próximo possível de 21 sem estourar.</p>
+          <button class="btn" onclick="openGame('blackjack')">Jogar</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="game-image">
+          <img src="images/casino_banner.png" alt="Raspadinha">
+        </div>
+        <div class="game-info">
+          <h3>Raspadinha</h3>
+          <p>Raspe e descubra se você ganhou prêmios instantâneos.</p>
+          <button class="btn" onclick="openGame('scratch')">Jogar</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="game-image">
+          <img src="images/casino_banner.png" alt="Crash">
+        </div>
+        <div class="game-info">
+          <h3>Crash</h3>
+          <p>Aposte e saque antes que o multiplicador caia a zero.</p>
+          <button class="btn" onclick="showNotification('Em breve!', 'warning')">Jogar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Citação do Deadpool -->
+  <div class="deadpool-quote">
+    "Apostas são como chimichangas... você nunca sabe quando vai se queimar, mas vale a pena tentar!"
+  </div>
+
+  <!-- Seção de depósito e saque -->
+  <section id="deposit" class="deposit-section">
+    <div class="section-title">
+      <h2>Depósito e Saque</h2>
+    </div>
+    <div class="payment-options">
+      <div class="payment-card">
+        <h3>Depósito via Cartão</h3>
+        <div class="credit-card-container">
+          <div class="credit-card" id="credit-card">
+            <div class="credit-card-front">
+              <div class="card-number">1234 5678 9000 1001</div>
+              <div class="card-holder">NOME DO TITULAR</div>
+              <div class="expiry">VALIDADE: 12/25</div>
             </div>
-            <button id="spin-slot-btn">Puxar a Alavanca do Caos! (Custa R$5)</button>
-            <p id="slot-result" class="game-result-message"></p>
+            <div class="credit-card-back">
+              <div class="card-strip"></div>
+              <div class="signature">
+                <div class="cvv">123</div>
+              </div>
+            </div>
           </div>
-
-          <h2>Mais maneiras de perder dinheiro com estilo (Em Breve!)</h2>
-          <div class="game-lobby">
-              <div class="game-card"><div class="card-front"><i class="fa-solid fa-bomb"></i><h3>Roleta Russa... com Faturas</h3></div><div class="card-back"><span>Gire a roleta e reze</span> para não cair na conta do cartão de crédito. Pura emoção!</div></div>
-              <div class="game-card"><div class="card-front"><i class="fa-solid fa-hand-spock"></i><h3>Poker dos Mentirosos</h3></div><div class="card-back"><span>Sua cara de paisagem</span> é sua melhor arma. Blefar não é só permitido, é incentivado!</div></div>
-              <div class="game-card"><div class="card-front"><i class="fa-solid fa-diamond-turn-right"></i><h3>Blackjack do "Só mais uma"</h3></div><div class="card-back"><span>Pedir mais uma carta com 20?</span> Aqui a gente chama isso de "estratégia arrojada".</div></div>
+        </div>
+        <form id="card-deposit-form">
+          <div class="form-group">
+            <label for="card-number">Número do Cartão</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
           </div>
-          <button id="add-funds">Pegar Troco do Sofá (Bônus Diário) <i class="fas fa-hand-holding-dollar"></i></button>
-          <div id="bonus-timer" class="hidden"></div>
-          <div class="winner-ticker"><p id="winner-ticker-text">Carregando as últimas fofocas do cassino...</p></div>
+          <div class="form-group">
+            <label for="card-holder">Nome do Titular</label>
+            <input type="text" id="card-holder" placeholder="Nome como está no cartão" required>
+          </div>
+          <div class="form-group" style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+              <label for="expiry-date">Validade</label>
+              <input type="text" id="expiry-date" placeholder="MM/AA" maxlength="5" required>
+            </div>
+            <div style="flex: 1;">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="deposit-amount">Valor do Depósito (R$)</label>
+            <input type="number" id="deposit-amount" min="10" step="5" value="50" required>
+          </div>
+          <button type="button" class="btn" onclick="processDeposit('card')">Depositar</button>
+        </form>
       </div>
-  </div>
-
-  <div id="auth-modal" class="modal-overlay">
-      <div class="modal-content">
-        <span class="close-button" id="close-auth-modal">&times;</span>
-        <div id="login-form" class="auth-form">
-          <h2>Entrar no Covil</h2>
-          <div class="form-group"><i class="fa-solid fa-user-ninja"></i><input type="text" id="login-usuario" placeholder="Seu codinome ou e-mail"></div>
-          <div class="form-group password-wrapper"><i class="fa-solid fa-key"></i><input type="password" id="login-senha" placeholder="Senha secreta (não use '1234')"><i class="fas fa-eye-slash toggle-password" data-target="login-senha"></i></div>
-          <button id="entrar-btn"><span class="btn-text">Quebrar a 4ª parede (Entrar)</span></button>
-          <div class="auth-switcher">Primeira vez? <span id="show-register-form">Junte-se aos malucos</span></div>
+      <div class="payment-card">
+        <h3>Depósito via PIX</h3>
+        <div class="pix-container">
+          <div class="pix-qrcode">
+            <img src="images/pix_qrcode.png" alt="QR Code PIX">
+          </div>
+          <div class="pix-code">
+            <input type="text" value="00020126580014BR.GOV.BCB.PIX0136deadpoolcasino@email.com5204000053039865802BR5913Deadpool Casino6008Sao Paulo62070503***6304E2CA" readonly>
+            <button class="copy-btn" onclick="copyPixCode()">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
         </div>
-        <div id="register-form" class="auth-form hidden">
-          <h2>Assinar o contrato (com letras miúdas)</h2>
-          <div class="form-group"><i class="fa-solid fa-envelope-circle-check"></i><input type="email" id="register-email" placeholder="Seu melhor e-mail"></div>
-          <div class="form-group password-wrapper"><i class="fa-solid fa-user-secret"></i><input type="password" id="register-password" placeholder="Crie uma senha forte, por favor"><i class="fas fa-eye-slash toggle-password" data-target="register-password"></i></div>
-          <button id="register-account-btn"><span class="btn-text">Vender a alma (Criar conta)</span></button>
-          <div class="auth-switcher">Já é de casa? <span id="show-login-form">Voltar para o login</span></div>
+        <form id="pix-deposit-form">
+          <div class="form-group">
+            <label for="pix-amount">Valor do Depósito (R$)</label>
+            <input type="number" id="pix-amount" min="10" step="5" value="50" required>
+          </div>
+          <div class="form-group">
+            <label for="pix-sender">Nome do Remetente</label>
+            <input type="text" id="pix-sender" placeholder="Seu nome completo" required>
+          </div>
+          <button type="button" class="btn" onclick="processDeposit('pix')">Confirmar Pagamento</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Histórico de transações -->
+    <div class="transaction-history">
+      <h3>Histórico de Transações</h3>
+      <table class="transaction-table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Método</th>
+            <th>Valor</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="transaction-list">
+          <!-- Transações serão adicionadas via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Seção de saque -->
+  <section id="withdraw" class="deposit-section">
+    <div class="section-title">
+      <h2>Solicitar Saque</h2>
+    </div>
+    <div class="payment-options">
+      <div class="payment-card">
+        <h3>Saque via PIX</h3>
+        <form id="withdraw-form">
+          <div class="form-group">
+            <label for="withdraw-amount">Valor do Saque (R$)</label>
+            <input type="number" id="withdraw-amount" min="20" step="5" value="100" required>
+          </div>
+          <div class="form-group">
+            <label for="pix-key">Chave PIX</label>
+            <input type="text" id="pix-key" placeholder="CPF, e-mail, telefone ou chave aleatória" required>
+          </div>
+          <div class="form-group">
+            <label for="pix-key-type">Tipo de Chave</label>
+            <select id="pix-key-type" required>
+              <option value="cpf">CPF</option>
+              <option value="email">E-mail</option>
+              <option value="phone">Telefone</option>
+              <option value="random">Chave Aleatória</option>
+            </select>
+          </div>
+          <button type="button" class="btn" onclick="processWithdraw()">Solicitar Saque</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de promoções -->
+  <section id="promotions" class="promotions-section">
+    <div class="section-title">
+      <h2>Promoções</h2>
+    </div>
+    <div class="promotion-card">
+      <h3>Bônus de Boas-vindas</h3>
+      <p>Ganhe 100% de bônus no seu primeiro depósito até R$ 500!</p>
+      <a href="#deposit" class="btn">Depositar Agora</a>
+    </div>
+    <div class="promotion-card">
+      <h3>Giros Grátis</h3>
+      <p>Faça um depósito de R$ 50 ou mais e ganhe 50 giros grátis nos caça-níqueis!</p>
+      <a href="#deposit" class="btn">Aproveitar</a>
+    </div>
+    <div class="promotion-card">
+      <h3>Cashback Semanal</h3>
+      <p>Receba 10% de cashback sobre suas perdas toda semana!</p>
+      <a href="#" class="btn" onclick="showNotification('Promoção ativada!', 'success')">Ativar</a>
+    </div>
+  </section>
+
+  <!-- Área de jogos -->
+  <div id="game-area" style="display: none;">
+    <!-- Roleta -->
+    <div id="roulette-game" class="roulette-game" style="display: none;">
+      <h2>Roleta</h2>
+      <div class="roulette-container">
+        <div class="roulette-wheel">
+          <div class="roulette-ball" id="roulette-ball"></div>
+        </div>
+        <div class="roulette-betting">
+          <div class="bet-option" data-value="red" onclick="selectBet(this)">Vermelho</div>
+          <div class="bet-option" data-value="black" onclick="selectBet(this)">Preto</div>
+          <div class="bet-option" data-value="green" onclick="selectBet(this)">Verde (0)</div>
+          <div class="bet-option" data-value="1-12" onclick="selectBet(this)">1-12</div>
+          <div class="bet-option" data-value="13-24" onclick="selectBet(this)">13-24</div>
+          <div class="bet-option" data-value="25-36" onclick="selectBet(this)">25-36</div>
+          <div class="bet-option" data-value="even" onclick="selectBet(this)">Par</div>
+          <div class="bet-option" data-value="odd" onclick="selectBet(this)">Ímpar</div>
+          <div class="bet-option" data-value="1-18" onclick="selectBet(this)">1-18</div>
+        </div>
+        <div class="form-group">
+          <label for="roulette-bet-amount">Valor da Aposta (R$)</label>
+          <input type="number" id="roulette-bet-amount" min="5" step="5" value="10">
+        </div>
+        <div class="game-controls">
+          <button class="game-btn" id="spin-btn" onclick="spinRoulette()">Girar</button>
+          <button class="game-btn" onclick="closeGame()">Sair</button>
         </div>
       </div>
-  </div>
-  
-  <div id="deposit-modal" class="modal-overlay">
-       <div class="modal-content">
-         <span class="close-button" id="close-deposit-modal">&times;</span>
-         <div id="step-1" class="deposit-step active">
-           <h3>Quanto de poder de fogo você quer?</h3>
-           <div class="amount-options"><button class="amount-btn" data-amount="20">R$ 20</button><button class="amount-btn" data-amount="50">R$ 50</button><button class="amount-btn" data-amount="100">R$ 100</button></div>
-           <p>Ou digite um valor personalizado:</p>
-           <input type="number" id="custom-amount" placeholder="Ex: 999 (nível máximo de esforço!)" />
-           <button id="continue-to-methods">Continuar</button>
-         </div>
-         <div id="step-2" class="deposit-step">
-           <h3>Método de "Investimento"</h3>
-           <div class="method-options"><button class="method-btn" data-method="pix"><i class="fa-brands fa-pix"></i> Pix</button><button class="method-btn" data-method="card"><i class="far fa-credit-card"></i> Cartão</button></div>
-         </div>
-         <div id="step-3" class="deposit-step">
-           <div id="confirmation-pix" class="confirmation-area hidden"><h3>Pix? Direto e reto.</h3><p>Escaneie o código. Se o dinheiro não cair, a culpa é do estagiário.</p><img src="https://i.ibb.co/G9q4jKv/qr-code-deadpool.png" alt="QR Code de um unicórnio dançando"><button class="confirm-payment-btn">"Paguei", e que a sorte esteja comigo</button></div>
-           <div id="confirmation-card" class="confirmation-area hidden"><h3>Cartão? Adoro o som do limite estourando.</h3><p>Finja que preenche seus dados aqui. A gente confia em você (só que não).</p><div class="form-group"><input type="text" placeholder="Wade Wilson"></div><div class="form-group"><input type="text" placeholder="123.456.789-00"></div><button class="confirm-payment-btn">Passar o cartão</button></div>
-         </div>
-         <div id="step-4" class="deposit-step"><div id="loading-area" class="loading-area hidden"><h3>Processando sua contribuição...</h3><i class="fas fa-sync fa-spin"></i></div><div id="success-area" class="success-area hidden"><h3>Dinheiro na conta!</h3><i class="fas fa-sack-dollar"></i></div></div>
-       </div>
-  </div>
+    </div>
 
-  <div id="withdraw-modal" class="modal-overlay">
-    <div class="modal-content withdraw-modal-content">
-      <span class="close-button" id="close-withdraw-modal">&times;</span>
-      <span class="troll-face">😏</span>
-      <h3>Sério que você quer sacar?</h3>
-      <p>Ah, que gracinha! Você achou mesmo que ia ser fácil assim? Saques passam por uma "análise de risco" e uma "taxa de conveniência". Resumindo: seu dinheiro agora mora aqui. Acostume-se.</p>
-      <p style="font-weight: bold; color: var(--deadpool-red);">Lembre-se da regra número 1: a casa SEMPRE ganha.</p>
-      <button id="confirm-troll-withdraw">Entendi, fui tapeado com estilo</button>
+    <!-- Blackjack -->
+    <div id="blackjack-game" class="blackjack-game" style="display: none;">
+      <h2>Blackjack</h2>
+      <div class="blackjack-table">
+        <h3>Dealer: <span id="dealer-score">0</span></h3>
+        <div class="dealer-hand" id="dealer-hand"></div>
+        <h3>Jogador: <span id="player-score">0</span></h3>
+        <div class="player-hand" id="player-hand"></div>
+        <div class="form-group">
+          <label for="blackjack-bet-amount">Valor da Aposta (R$)</label>
+          <input type="number" id="blackjack-bet-amount" min="5" step="5" value="10">
+        </div>
+        <div class="game-controls">
+          <button class="game-btn" id="deal-btn" onclick="dealBlackjack()">Distribuir</button>
+          <button class="game-btn" id="hit-btn" onclick="hitBlackjack()" disabled>Mais uma</button>
+          <button class="game-btn" id="stand-btn" onclick="standBlackjack()" disabled>Parar</button>
+          <button class="game-btn" onclick="closeGame()">Sair</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Raspadinha -->
+    <div id="scratch-game" class="scratch-card" style="display: none;">
+      <h2>Raspadinha</h2>
+      <div class="scratch-card-container">
+        <div class="scratch-card-prize" id="scratch-prize">?</div>
+        <div class="scratch-card-overlay" id="scratch-overlay" onclick="scratchCard()">
+          Raspe para revelar
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="scratch-bet-amount">Valor da Raspadinha (R$)</label>
+        <input type="number" id="scratch-bet-amount" min="5" step="5" value="5">
+      </div>
+      <div class="game-controls">
+        <button class="game-btn" id="new-card-btn" onclick="newScratchCard()">Nova Raspadinha</button>
+        <button class="game-btn" onclick="closeGame()">Sair</button>
+      </div>
+    </div>
+
+    <!-- Caça-níqueis -->
+    <div id="slots-game" class="slots-game" style="display: none;">
+      <h2>Caça-níqueis</h2>
+      <div class="slots-container">
+        <div class="slots-reels">
+          <div class="reel" id="reel1">7</div>
+          <div class="reel" id="reel2">7</div>
+          <div class="reel" id="reel3">7</div>
+        </div>
+        <div class="form-group">
+          <label for="slots-bet-amount">Valor da Aposta (R$)</label>
+          <input type="number" id="slots-bet-amount" min="1" step="1" value="5">
+        </div>
+        <div class="game-controls">
+          <button class="game-btn" id="spin-slots-btn" onclick="spinSlots()">Girar</button>
+          <button class="game-btn" onclick="closeGame()">Sair</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="deadpool-alert-overlay" id="deadpool-alert-welcome">
-    <div class="deadpool-alert-content">
-      <img src="https://i.pinimg.com/originals/7a/89/47/7a89470a0f7a501542325099a6998599.gif" alt="Deadpool jogando dinheiro para o alto">
-      <p id="deadpool-welcome-text"></p>
-      <button id="deadpool-ok-btn">Beleza, pode vir!</button>
+  <!-- Modal de login e registro -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <div class="modal-tabs">
+        <div class="tab active" onclick="switchTab('login')">Login</div>
+        <div class="tab" onclick="switchTab('register')">Registro</div>
+      </div>
+      <div id="login-tab" class="tab-content active">
+        <h3 class="modal-title">Entrar na sua conta</h3>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-email">E-mail</label>
+            <input type="email" id="login-email" placeholder="seu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Senha</label>
+            <input type="password" id="login-password" placeholder="Sua senha" required>
+          </div>
+          <button type="button" class="btn" onclick="login()">Entrar</button>
+        </form>
+        <p style="text-align: center; margin-top: 20px;">
+          <a href="#" style="color: var(--primary-color);">Esqueceu sua senha?</a>
+        </p>
+      </div>
+      <div id="register-tab" class="tab-content">
+        <h3 class="modal-title">Criar uma nova conta</h3>
+        <form id="register-form">
+          <div class="form-group">
+            <label for="register-name">Nome completo</label>
+            <input type="text" id="register-name" placeholder="Seu nome completo" required>
+          </div>
+          <div class="form-group">
+            <label for="register-email">E-mail</label>
+            <input type="email" id="register-email" placeholder="seu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="register-password">Senha</label>
+            <input type="password" id="register-password" placeholder="Crie uma senha forte" required>
+          </div>
+          <div class="form-group">
+            <label for="register-confirm">Confirmar senha</label>
+            <input type="password" id="register-confirm" placeholder="Confirme sua senha" required>
+          </div>
+          <button type="button" class="btn" onclick="register()">Registrar</button>
+        </form>
+      </div>
     </div>
   </div>
 
-  <footer class="footer">
-    © 2025 openLINK Corp. "Sua carteira é nossa maior preocupação". <br> 
-    Este site é uma obra de ficção. Qualquer semelhança com a sua vontade de apostar é mera coincidência.
+  <!-- Notificação -->
+  <div class="notification" id="notification">
+    <span class="notification-icon"><i class="fas fa-info-circle"></i></span>
+    <span id="notification-message">Mensagem de notificação</span>
+    <span class="notification-close" onclick="closeNotification()">&times;</span>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Deadpool Casino</h3>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="#">Termos e Condições</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Jogo Responsável</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Jogos</h3>
+        <ul>
+          <li><a href="#games">Caça-níqueis</a></li>
+          <li><a href="#games">Roleta</a></li>
+          <li><a href="#games">Blackjack</a></li>
+          <li><a href="#games">Poker</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Pagamentos</h3>
+        <ul>
+          <li><a href="#deposit">Depósitos</a></li>
+          <li><a href="#withdraw">Saques</a></li>
+          <li><a href="#">Métodos de Pagamento</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Contato</h3>
+        <ul>
+          <li><a href="mailto:suporte@deadpoolcasino.com">suporte@deadpoolcasino.com</a></li>
+          <li><a href="#">Chat ao vivo</a></li>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Deadpool Casino. Todos os direitos reservados. Apenas para maiores de 18 anos.</p>
+      <p class="deadpool-accent">Lembre-se: Deadpool aprova o jogo responsável!</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>

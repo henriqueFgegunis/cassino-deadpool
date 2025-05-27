@@ -1,310 +1,1032 @@
-/**
- * SCRIPT PARA O OPENLINK CASINO - EDIÇÃO MERCENÁRIO TAGARELA
- * * Ei, você aí, fuçando no meu código! 
- * Se quebrar alguma coisa, a culpa é sua. Mas se melhorar, me dá os créditos.
- * Assinado: Deadpool.
- */
+// Script para o Cassino Deadpool
 
-document.addEventListener('DOMContentLoaded', () => {
+// Variáveis globais
+let userBalance = 0;
+let currentGame = null;
+let selectedBet = null;
+let transactions = [];
+let isLoggedIn = false;
+let username = '';
 
-    // --- SELETORES DE ELEMENTOS (A lista de compras do caos) ---
-    const allElements = {
-        preloader: document.getElementById('preloader'),
-        authModal: document.getElementById('auth-modal'),
-        closeAuthModalBtn: document.getElementById('close-auth-modal'),
-        openLoginBtn: document.getElementById('open-login-btn'),
-        openRegisterBtn: document.getElementById('open-register-btn'),
-        homeAcessarBtn: document.getElementById('home-acessar-btn'),
-        showRegisterFormBtn: document.getElementById('show-register-form'),
-        showLoginFormBtn: document.getElementById('show-login-form'),
-        loginFormDiv: document.getElementById('login-form'),
-        registerFormDiv: document.getElementById('register-form'),
-        headerBalanceArea: document.getElementById('header-balance-area'),
-        authButtonsHeader: document.getElementById('auth-buttons'),
-        headerBalanceSpan: document.getElementById('header-balance'),
-        panelBalanceSpan: document.getElementById('panel-balance'),
-        homeSection: document.getElementById('home'),
-        playerPanel: document.getElementById('player-panel'),
-        entrarBtn: document.getElementById('entrar-btn'),
-        registerAccountBtn: document.getElementById('register-account-btn'),
-        loginUsuarioInput: document.getElementById('login-usuario'),
-        loginSenhaInput: document.getElementById('login-senha'),
-        registerEmailInput: document.getElementById('register-email'),
-        registerPasswordInput: document.getElementById('register-password'),
-        depositBtn: document.getElementById('deposit-btn'),
-        addFundsBtn: document.getElementById('add-funds'),
-        bonusTimerDiv: document.getElementById('bonus-timer'),
-        winnerTickerText: document.getElementById('winner-ticker-text'),
-        depositModal: document.getElementById('deposit-modal'),
-        closeDepositModalBtn: document.getElementById('close-deposit-modal'),
-        depositSteps: document.querySelectorAll('.deposit-step'),
-        amountButtons: document.querySelectorAll('.amount-btn'),
-        customAmountInput: document.getElementById('custom-amount'),
-        continueToMethodsBtn: document.getElementById('continue-to-methods'),
-        methodButtons: document.querySelectorAll('.method-btn'),
-        confirmationAreas: document.querySelectorAll('.confirmation-area'),
-        confirmPaymentButtons: document.querySelectorAll('.confirm-payment-btn'),
-        loadingArea: document.getElementById('loading-area'),
-        successArea: document.getElementById('success-area'),
-        togglePasswordButtons: document.querySelectorAll('.toggle-password'),
-        withdrawBtn: document.getElementById('withdraw-btn'),
-        withdrawModal: document.getElementById('withdraw-modal'),
-        closeWithdrawModalBtn: document.getElementById('close-withdraw-modal'),
-        confirmTrollWithdrawBtn: document.getElementById('confirm-troll-withdraw'),
-        spinSlotBtn: document.getElementById('spin-slot-btn'),
-        reels: [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')],
-        slotResult: document.getElementById('slot-result'),
-        logoClickable: document.getElementById('header-logo-clickable'),
-        deadpoolAlert: document.getElementById('deadpool-alert-welcome'),
-        deadpoolAlertText: document.getElementById('deadpool-welcome-text'),
-        deadpoolAlertBtn: document.getElementById('deadpool-ok-btn')
-    };
-
-    // --- ESTADO DO JOGO E VARIÁVEIS GLOBAIS ---
-    let saldo = parseFloat(localStorage.getItem('playerBalance')) || 0;
-    let proximoBonus = localStorage.getItem('proximoBonus') ? new Date(localStorage.getItem('proximoBonus')) : null;
-    let countdownInterval;
-    let selectedAmount = 0;
-    const slotSymbols = ['🦄', '🌮', '💩', '💰', '💣', '💎', '🍓', '🍕'];
-    const custoGiro = 5;
-
-    // --- FUNÇÕES AUXILIARES (A caixa de ferramentas) ---
-
-    // Função para tocar sons (com segurança)
-    const playSound = (sound) => {
-        const soundElement = document.getElementById(`sound-${sound}`);
-        if (soundElement) {
-            soundElement.currentTime = 0;
-            soundElement.play().catch(() => {}); // Ignora erros se o áudio não puder tocar
-        }
-    };
-
-    // Animação de atualização de saldo
-    const animateBalance = (targetValue) => {
-        const startValue = saldo;
-        const duration = 1000;
-        let startTime = null;
-
-        const step = (currentTime) => {
-            if (!startTime) startTime = currentTime;
-            const progress = Math.min((currentTime - startTime) / duration, 1);
-            const currentBalance = startValue + (targetValue - startValue) * progress;
-            const formattedBalance = `R$ ${currentBalance.toFixed(2).replace('.', ',')}`;
-            allElements.headerBalanceSpan.textContent = formattedBalance;
-            allElements.panelBalanceSpan.textContent = formattedBalance;
-
-            if (progress < 1) {
-                requestAnimationFrame(step);
-            } else {
-                saldo = targetValue;
-                localStorage.setItem('playerBalance', saldo);
-            }
-        };
-        requestAnimationFrame(step);
-    };
-
-    // Atualiza o saldo na tela
-    const updateBalanceDisplay = (newValue, isAnimated = false) => {
-        if (isAnimated) {
-            animateBalance(newValue);
-        } else {
-            saldo = newValue;
-            const formattedBalance = `R$ ${saldo.toFixed(2).replace('.', ',')}`;
-            allElements.headerBalanceSpan.textContent = formattedBalance;
-            allElements.panelBalanceSpan.textContent = formattedBalance;
-            localStorage.setItem('playerBalance', saldo);
-        }
-    };
-
-    // Mostra alertas customizados na tela
-    const showAlert = (message, type = 'error') => {
-        const existingAlert = document.querySelector('.custom-alert');
-        if (existingAlert) existingAlert.remove();
-
-        const alertDiv = document.createElement('div');
-        alertDiv.className = `custom-alert alert-${type}`;
-        alertDiv.innerHTML = `<p>${message}</p>`;
-        document.body.appendChild(alertDiv);
-        setTimeout(() => alertDiv.classList.add('show'), 10);
-        setTimeout(() => {
-            alertDiv.classList.remove('show');
-            setTimeout(() => alertDiv.remove(), 500);
-        }, 4000);
-    };
-    
-    // Transforma o e-mail em um nome de jogador "digno"
-    const formatarNomeDeEmail = (email) => {
-        if (!email || !email.includes('@')) return `"${email || 'Agente Anônimo'}"`;
-        let nome = email.split('@')[0].replace(/[._0-9]/g, ' ').trim();
-        return nome.split(' ').map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ') || "Herói Misterioso";
-    };
-
-    // --- LÓGICA DE INTERFACE (Onde a mágica acontece) ---
-
-    // Preloader some após um tempo
-    window.onload = () => {
-        setTimeout(() => {
-            if (allElements.preloader) allElements.preloader.classList.add('hidden');
-        }, 2000); // Tempo reduzido para melhor experiência
-    };
-
-    // Gerencia a visibilidade dos Modais
-    const toggleModal = (modal, show) => {
-        if (modal) modal.classList.toggle('show', show);
-    };
-
-    // Mostra o painel do jogador e esconde o resto
-    const showPlayerPanel = (usuario) => {
-        allElements.homeSection.classList.add('hidden');
-        allElements.playerPanel.classList.remove('hidden');
-        allElements.playerPanel.classList.add('fadeIn');
-        allElements.authButtonsHeader.classList.add('hidden');
-        allElements.headerBalanceArea.classList.remove('hidden');
-
-        toggleModal(allElements.authModal, false);
-        
-        const nomeFormatado = formatarNomeDeEmail(usuario);
-        allElements.deadpoolAlertText.innerHTML = `E aí, ${nomeFormatado}! Cansou de ser normal? Ótimo! Seu dinheiro vai ser MUITO bem aproveitado aqui (por nós, claro). Boa sorte, você vai precisar!`;
-        toggleModal(allElements.deadpoolAlert, true);
-        
-        updateBalanceDisplay(saldo === 0 ? 100.00 : saldo);
-        startWinnerTicker();
-        atualizarTimerBonus();
-    };
-
-    // Reseta a interface para o estado inicial
-    const showHomeAndReset = () => {
-        playSound('click');
-        allElements.homeSection.classList.remove('hidden');
-        allElements.playerPanel.classList.add('hidden');
-        allElements.authButtonsHeader.classList.remove('hidden');
-        allElements.headerBalanceArea.classList.add('hidden');
-        toggleModal(allElements.authModal, false);
-        toggleModal(allElements.depositModal, false);
-        toggleModal(allElements.withdrawModal, false);
-    };
-
-    // --- EVENT LISTENERS (Os gatilhos da bagunça) ---
-
-    allElements.logoClickable.addEventListener('click', showHomeAndReset);
-    allElements.openLoginBtn.addEventListener('click', () => { playSound('click'); toggleModal(allElements.authModal, true); });
-    allElements.openRegisterBtn.addEventListener('click', () => { playSound('click'); toggleModal(allElements.authModal, true); allElements.loginFormDiv.classList.add('hidden'); allElements.registerFormDiv.classList.remove('hidden'); });
-    allElements.homeAcessarBtn.addEventListener('click', () => { playSound('click'); toggleModal(allElements.authModal, true); });
-    allElements.closeAuthModalBtn.addEventListener('click', () => toggleModal(allElements.authModal, false));
-    allElements.showRegisterFormBtn.addEventListener('click', () => { playSound('click'); allElements.loginFormDiv.classList.add('hidden'); allElements.registerFormDiv.classList.remove('hidden'); });
-    allElements.showLoginFormBtn.addEventListener('click', () => { playSound('click'); allElements.registerFormDiv.classList.add('hidden'); allElements.loginFormDiv.classList.remove('hidden'); });
-    allElements.deadpoolAlertBtn.addEventListener('click', () => { playSound('click'); toggleModal(allElements.deadpoolAlert, false); });
-
-    // Lógica de Login
-    allElements.entrarBtn.addEventListener('click', () => {
-        playSound('click');
-        const usuario = allElements.loginUsuarioInput.value.trim();
-        const senha = allElements.loginSenhaInput.value.trim();
-
-        if (usuario.length < 3 || senha.length < 3) {
-            playSound('error');
-            allElements.loginFormDiv.classList.add('shake');
-            setTimeout(() => allElements.loginFormDiv.classList.remove('shake'), 500);
-            return;
-        }
-
-        allElements.entrarBtn.disabled = true;
-        allElements.entrarBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-        setTimeout(() => {
-            playSound('login');
-            showPlayerPanel(usuario);
-            allElements.entrarBtn.disabled = false;
-            allElements.entrarBtn.innerHTML = '<span class="btn-text">Quebrar a 4ª parede (Entrar)</span>';
-        }, 1500);
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+  // Inicializar o menu mobile
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('toggle');
     });
+  }
 
-    // Lógica de Registro
-    allElements.registerAccountBtn.addEventListener('click', () => {
-        // ... (lógica de registro pode ser adicionada aqui)
-        playSound('success');
-        showAlert('Conta "criada"! Agora vai pro login e entra na festa.', 'success');
-        allElements.showLoginFormBtn.click();
+  // Inicializar o modal de login
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', openModal);
+  }
+
+  // Verificar se há um usuário logado no localStorage
+  const savedUser = localStorage.getItem('deadpoolCasinoUser');
+  if (savedUser) {
+    const user = JSON.parse(savedUser);
+    isLoggedIn = true;
+    username = user.name;
+    userBalance = user.balance;
+    updateBalanceDisplay();
+    showNotification(`Bem-vindo de volta, ${username}!`, 'success');
+  }
+
+  // Carregar transações do localStorage
+  const savedTransactions = localStorage.getItem('deadpoolCasinoTransactions');
+  if (savedTransactions) {
+    transactions = JSON.parse(savedTransactions);
+    updateTransactionHistory();
+  }
+
+  // Adicionar algumas transações de exemplo se não houver nenhuma
+  if (transactions.length === 0) {
+    addSampleTransactions();
+  }
+
+  // Efeito de flip no cartão de crédito
+  const creditCard = document.getElementById('credit-card');
+  if (creditCard) {
+    creditCard.addEventListener('click', function() {
+      this.classList.toggle('flipped');
+    });
+  }
+
+  // Formatar inputs de cartão
+  const cardNumber = document.getElementById('card-number');
+  if (cardNumber) {
+    cardNumber.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 0) {
+        value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+      }
+      e.target.value = value;
+    });
+  }
+
+  const expiryDate = document.getElementById('expiry-date');
+  if (expiryDate) {
+    expiryDate.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      e.target.value = value;
+    });
+  }
+
+  // Adicionar efeito de hover nos cards de jogos
+  const gameCards = document.querySelectorAll('.game-card');
+  gameCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.querySelector('.game-image img').style.transform = 'scale(1.1)';
     });
     
-    // Ver/Ocultar senha
-    allElements.togglePasswordButtons.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const targetInput = document.getElementById(this.dataset.target);
-            if (targetInput) {
-                const type = targetInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                targetInput.setAttribute('type', type);
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
-            }
-        });
+    card.addEventListener('mouseleave', function() {
+      this.querySelector('.game-image img').style.transform = 'scale(1)';
     });
+  });
+});
 
-    // --- LÓGICA DO CAÇA-NÍQUEL ---
-    allElements.spinSlotBtn.addEventListener('click', () => {
-        if (saldo < custoGiro) {
-            playSound('error');
-            showAlert(`Sem grana, sem festa! Você precisa de R$${custoGiro.toFixed(2)}.`);
-            return;
-        }
+// Funções para o sistema de autenticação
+function openModal() {
+  document.getElementById('auth-modal').style.display = 'block';
+}
 
-        updateBalanceDisplay(saldo - custoGiro, true);
-        playSound('click');
-        allElements.spinSlotBtn.disabled = true;
-        allElements.spinSlotBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        allElements.slotResult.textContent = 'Girando...';
+function closeModal() {
+  document.getElementById('auth-modal').style.display = 'none';
+}
 
-        let spinCount = 0;
-        const spinInterval = setInterval(() => {
-            allElements.reels.forEach(reel => {
-                if (reel) reel.textContent = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
-            });
-            spinCount++;
-            if (spinCount > 20) {
-                clearInterval(spinInterval);
-                const finalReels = allElements.reels.map(() => slotSymbols[Math.floor(Math.random() * slotSymbols.length)]);
-                allElements.reels.forEach((reel, i) => reel.textContent = finalReels[i]);
+function switchTab(tab) {
+  const tabs = document.querySelectorAll('.tab');
+  const tabContents = document.querySelectorAll('.tab-content');
+  
+  tabs.forEach(t => t.classList.remove('active'));
+  tabContents.forEach(c => c.classList.remove('active'));
+  
+  document.querySelector(`.tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+  document.getElementById(`${tab}-tab`).classList.add('active');
+}
 
-                // Lógica de prêmios
-                if (finalReels.every(s => s === '🦄')) {
-                    playSound('cash');
-                    updateBalanceDisplay(saldo + 100, true);
-                    allElements.slotResult.textContent = "JACKPOT DE UNICÓRNIOS! +R$100!";
-                } else if (finalReels.every(s => s === '💰')) {
-                    playSound('cash');
-                    updateBalanceDisplay(saldo + 50, true);
-                    allElements.slotResult.textContent = "Chuva de dinheiro! +R$50!";
-                } else if (finalReels.every(s => s === '💩')) {
-                    playSound('troll');
-                    allElements.slotResult.textContent = "Três... disso? Que MÁXIMO esforço!";
-                } else if (finalReels[0] === finalReels[1] && finalReels[1] === finalReels[2]) {
-                    playSound('success');
-                    updateBalanceDisplay(saldo + 15, true);
-                    allElements.slotResult.textContent = `Trinca de ${finalReels[0]}! +R$15!`;
-                } else {
-                    playSound('error');
-                    allElements.slotResult.textContent = "Quase! Tente de novo (nós insistimos).";
-                }
-                
-                allElements.spinSlotBtn.disabled = false;
-                allElements.spinSlotBtn.innerHTML = `Puxar a Alavanca do Caos! (Custa R$${custoGiro})`;
-            }
-        }, 100);
-    });
+function login() {
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  
+  if (!email || !password) {
+    showNotification('Por favor, preencha todos os campos', 'error');
+    return;
+  }
+  
+  // Simulação de login bem-sucedido
+  isLoggedIn = true;
+  username = email.split('@')[0];
+  userBalance = 100; // Saldo inicial para novos usuários
+  
+  // Salvar no localStorage
+  localStorage.setItem('deadpoolCasinoUser', JSON.stringify({
+    name: username,
+    email: email,
+    balance: userBalance
+  }));
+  
+  updateBalanceDisplay();
+  closeModal();
+  showNotification(`Login realizado com sucesso! Bem-vindo, ${username}!`, 'success');
+}
 
-    // --- OUTRAS FUNCIONALIDADES (Bônus, Saque, etc.) ---
+function register() {
+  const name = document.getElementById('register-name').value;
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-password').value;
+  const confirm = document.getElementById('register-confirm').value;
+  
+  if (!name || !email || !password || !confirm) {
+    showNotification('Por favor, preencha todos os campos', 'error');
+    return;
+  }
+  
+  if (password !== confirm) {
+    showNotification('As senhas não coincidem', 'error');
+    return;
+  }
+  
+  // Simulação de registro bem-sucedido
+  isLoggedIn = true;
+  username = name;
+  userBalance = 200; // Bônus de boas-vindas
+  
+  // Salvar no localStorage
+  localStorage.setItem('deadpoolCasinoUser', JSON.stringify({
+    name: name,
+    email: email,
+    balance: userBalance
+  }));
+  
+  updateBalanceDisplay();
+  closeModal();
+  showNotification('Registro realizado com sucesso! Você ganhou R$ 200 de bônus!', 'success');
+  
+  // Adicionar transação de bônus
+  addTransaction({
+    date: new Date(),
+    type: 'Depósito',
+    method: 'Bônus',
+    amount: 200,
+    status: 'Concluído'
+  });
+}
+
+// Funções para o sistema de depósito e saque
+function processDeposit(method) {
+  if (!isLoggedIn) {
+    showNotification('Faça login para realizar um depósito', 'warning');
+    openModal();
+    return;
+  }
+  
+  let amount = 0;
+  let formValid = true;
+  
+  if (method === 'card') {
+    const cardNumber = document.getElementById('card-number').value;
+    const cardHolder = document.getElementById('card-holder').value;
+    const expiryDate = document.getElementById('expiry-date').value;
+    const cvv = document.getElementById('cvv').value;
+    amount = parseFloat(document.getElementById('deposit-amount').value);
     
-    // ... (O restante das suas funções, como depósito, saque e bônus podem ser adicionadas aqui.
-    // A estrutura já está pronta para recebê-las.)
+    if (!cardNumber || !cardHolder || !expiryDate || !cvv || !amount) {
+      formValid = false;
+    }
+  } else if (method === 'pix') {
+    const pixSender = document.getElementById('pix-sender').value;
+    amount = parseFloat(document.getElementById('pix-amount').value);
+    
+    if (!pixSender || !amount) {
+      formValid = false;
+    }
+  }
+  
+  if (!formValid) {
+    showNotification('Por favor, preencha todos os campos corretamente', 'error');
+    return;
+  }
+  
+  if (amount <= 0) {
+    showNotification('O valor do depósito deve ser maior que zero', 'error');
+    return;
+  }
+  
+  // Simulação de processamento de depósito
+  showNotification('Processando depósito...', 'info');
+  
+  setTimeout(() => {
+    // Atualizar saldo
+    userBalance += amount;
+    updateBalanceDisplay();
+    
+    // Adicionar à lista de transações
+    addTransaction({
+      date: new Date(),
+      type: 'Depósito',
+      method: method === 'card' ? 'Cartão de Crédito' : 'PIX',
+      amount: amount,
+      status: 'Concluído'
+    });
+    
+    // Limpar formulário
+    if (method === 'card') {
+      document.getElementById('card-deposit-form').reset();
+    } else {
+      document.getElementById('pix-deposit-form').reset();
+    }
+    
+    showNotification(`Depósito de R$ ${amount.toFixed(2)} realizado com sucesso!`, 'success');
+  }, 2000);
+}
 
-    const startWinnerTicker = () => {
-        // Sua função de ticker
-    };
-    const atualizarTimerBonus = () => {
-        // Sua função de bônus
-    };
+function processWithdraw() {
+  if (!isLoggedIn) {
+    showNotification('Faça login para realizar um saque', 'warning');
+    openModal();
+    return;
+  }
+  
+  const amount = parseFloat(document.getElementById('withdraw-amount').value);
+  const pixKey = document.getElementById('pix-key').value;
+  const pixKeyType = document.getElementById('pix-key-type').value;
+  
+  if (!amount || !pixKey) {
+    showNotification('Por favor, preencha todos os campos', 'error');
+    return;
+  }
+  
+  if (amount <= 0) {
+    showNotification('O valor do saque deve ser maior que zero', 'error');
+    return;
+  }
+  
+  if (amount > userBalance) {
+    showNotification('Saldo insuficiente para realizar este saque', 'error');
+    return;
+  }
+  
+  // Simulação de processamento de saque
+  showNotification('Processando solicitação de saque...', 'info');
+  
+  setTimeout(() => {
+    // Atualizar saldo
+    userBalance -= amount;
+    updateBalanceDisplay();
+    
+    // Adicionar à lista de transações
+    addTransaction({
+      date: new Date(),
+      type: 'Saque',
+      method: 'PIX',
+      amount: amount,
+      status: 'Em processamento'
+    });
+    
+    // Limpar formulário
+    document.getElementById('withdraw-form').reset();
+    
+    showNotification(`Solicitação de saque de R$ ${amount.toFixed(2)} enviada com sucesso!`, 'success');
+  }, 2000);
+}
 
-    // Inicialização
-    updateBalanceDisplay(saldo);
+function copyPixCode() {
+  const pixCode = document.querySelector('.pix-code input');
+  pixCode.select();
+  document.execCommand('copy');
+  showNotification('Código PIX copiado para a área de transferência!', 'success');
+}
 
+// Funções para os jogos
+function openGame(game) {
+  if (!isLoggedIn) {
+    showNotification('Faça login para jogar', 'warning');
+    openModal();
+    return;
+  }
+  
+  currentGame = game;
+  
+  // Esconder todos os jogos
+  document.querySelectorAll('#game-area > div').forEach(div => {
+    div.style.display = 'none';
+  });
+  
+  // Mostrar a área de jogos e o jogo selecionado
+  document.getElementById('game-area').style.display = 'block';
+  document.getElementById(`${game}-game`).style.display = 'block';
+  
+  // Inicializar o jogo específico
+  switch (game) {
+    case 'roulette':
+      initRoulette();
+      break;
+    case 'blackjack':
+      initBlackjack();
+      break;
+    case 'scratch':
+      initScratchCard();
+      break;
+    case 'slots':
+      initSlots();
+      break;
+  }
+}
+
+function closeGame() {
+  document.getElementById('game-area').style.display = 'none';
+  currentGame = null;
+}
+
+// Funções para o jogo de roleta
+function initRoulette() {
+  // Resetar seleção de aposta
+  selectedBet = null;
+  document.querySelectorAll('.bet-option').forEach(option => {
+    option.classList.remove('selected');
+  });
+  
+  // Resetar posição da bola
+  const ball = document.getElementById('roulette-ball');
+  if (ball) {
+    ball.style.transform = 'translate(-50%, -50%)';
+  }
+}
+
+function selectBet(element) {
+  // Remover seleção anterior
+  document.querySelectorAll('.bet-option').forEach(option => {
+    option.classList.remove('selected');
+  });
+  
+  // Selecionar nova aposta
+  element.classList.add('selected');
+  selectedBet = element.dataset.value;
+}
+
+function spinRoulette() {
+  if (!selectedBet) {
+    showNotification('Selecione uma aposta antes de girar', 'warning');
+    return;
+  }
+  
+  const betAmount = parseFloat(document.getElementById('roulette-bet-amount').value);
+  
+  if (betAmount <= 0) {
+    showNotification('O valor da aposta deve ser maior que zero', 'error');
+    return;
+  }
+  
+  if (betAmount > userBalance) {
+    showNotification('Saldo insuficiente para realizar esta aposta', 'error');
+    return;
+  }
+  
+  // Desabilitar botão durante o giro
+  const spinBtn = document.getElementById('spin-btn');
+  spinBtn.disabled = true;
+  
+  // Animar a roleta
+  const ball = document.getElementById('roulette-ball');
+  const wheel = document.querySelector('.roulette-wheel');
+  
+  wheel.classList.add('spinning');
+  
+  // Simular movimento da bola
+  let angle = 0;
+  const radius = 120;
+  const centerX = 150;
+  const centerY = 150;
+  
+  const moveBall = setInterval(() => {
+    angle += 10;
+    const x = centerX + radius * Math.cos(angle * Math.PI / 180);
+    const y = centerY + radius * Math.sin(angle * Math.PI / 180);
+    ball.style.left = `${x}px`;
+    ball.style.top = `${y}px`;
+  }, 50);
+  
+  // Determinar resultado após 3 segundos
+  setTimeout(() => {
+    clearInterval(moveBall);
+    wheel.classList.remove('spinning');
+    
+    // Gerar resultado aleatório
+    const result = Math.floor(Math.random() * 37); // 0-36
+    let resultColor = 'green';
+    if (result > 0) {
+      resultColor = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36].includes(result) ? 'red' : 'black';
+    }
+    
+    // Verificar se o jogador ganhou
+    let won = false;
+    let multiplier = 0;
+    
+    switch (selectedBet) {
+      case 'red':
+        won = resultColor === 'red';
+        multiplier = 2;
+        break;
+      case 'black':
+        won = resultColor === 'black';
+        multiplier = 2;
+        break;
+      case 'green':
+        won = resultColor === 'green';
+        multiplier = 36;
+        break;
+      case '1-12':
+        won = result >= 1 && result <= 12;
+        multiplier = 3;
+        break;
+      case '13-24':
+        won = result >= 13 && result <= 24;
+        multiplier = 3;
+        break;
+      case '25-36':
+        won = result >= 25 && result <= 36;
+        multiplier = 3;
+        break;
+      case 'even':
+        won = result > 0 && result % 2 === 0;
+        multiplier = 2;
+        break;
+      case 'odd':
+        won = result > 0 && result % 2 === 1;
+        multiplier = 2;
+        break;
+      case '1-18':
+        won = result >= 1 && result <= 18;
+        multiplier = 2;
+        break;
+    }
+    
+    // Atualizar saldo
+    userBalance -= betAmount;
+    
+    if (won) {
+      const winAmount = betAmount * multiplier;
+      userBalance += winAmount;
+      showNotification(`Parabéns! Você ganhou R$ ${winAmount.toFixed(2)}!`, 'success');
+    } else {
+      showNotification(`Que pena! Você perdeu R$ ${betAmount.toFixed(2)}.`, 'error');
+    }
+    
+    updateBalanceDisplay();
+    
+    // Reativar botão
+    spinBtn.disabled = false;
+  }, 3000);
+}
+
+// Funções para o jogo de blackjack
+function initBlackjack() {
+  // Limpar mãos
+  document.getElementById('dealer-hand').innerHTML = '';
+  document.getElementById('player-hand').innerHTML = '';
+  
+  // Resetar pontuações
+  document.getElementById('dealer-score').textContent = '0';
+  document.getElementById('player-score').textContent = '0';
+  
+  // Resetar botões
+  document.getElementById('deal-btn').disabled = false;
+  document.getElementById('hit-btn').disabled = true;
+  document.getElementById('stand-btn').disabled = true;
+}
+
+function dealBlackjack() {
+  const betAmount = parseFloat(document.getElementById('blackjack-bet-amount').value);
+  
+  if (betAmount <= 0) {
+    showNotification('O valor da aposta deve ser maior que zero', 'error');
+    return;
+  }
+  
+  if (betAmount > userBalance) {
+    showNotification('Saldo insuficiente para realizar esta aposta', 'error');
+    return;
+  }
+  
+  // Descontar aposta do saldo
+  userBalance -= betAmount;
+  updateBalanceDisplay();
+  
+  // Limpar mãos
+  document.getElementById('dealer-hand').innerHTML = '';
+  document.getElementById('player-hand').innerHTML = '';
+  
+  // Distribuir cartas iniciais
+  // Dealer recebe uma carta virada para cima e uma para baixo
+  addCard('dealer', getRandomCard(), false);
+  addCard('dealer', getRandomCard(), true);
+  
+  // Jogador recebe duas cartas viradas para cima
+  addCard('player', getRandomCard(), false);
+  addCard('player', getRandomCard(), false);
+  
+  // Atualizar pontuações
+  updateBlackjackScores();
+  
+  // Verificar se o jogador tem blackjack
+  const playerScore = parseInt(document.getElementById('player-score').textContent);
+  if (playerScore === 21) {
+    // Blackjack! Jogador ganha 1.5x a aposta
+    const winAmount = betAmount * 2.5;
+    userBalance += winAmount;
+    updateBalanceDisplay();
+    showNotification(`Blackjack! Você ganhou R$ ${winAmount.toFixed(2)}!`, 'success');
+    document.getElementById('deal-btn').disabled = false;
+    document.getElementById('hit-btn').disabled = true;
+    document.getElementById('stand-btn').disabled = true;
+    return;
+  }
+  
+  // Atualizar botões
+  document.getElementById('deal-btn').disabled = true;
+  document.getElementById('hit-btn').disabled = false;
+  document.getElementById('stand-btn').disabled = false;
+}
+
+function hitBlackjack() {
+  // Jogador pede mais uma carta
+  addCard('player', getRandomCard(), false);
+  
+  // Atualizar pontuações
+  updateBlackjackScores();
+  
+  // Verificar se o jogador estourou
+  const playerScore = parseInt(document.getElementById('player-score').textContent);
+  if (playerScore > 21) {
+    showNotification('Você estourou! Perdeu a aposta.', 'error');
+    document.getElementById('deal-btn').disabled = false;
+    document.getElementById('hit-btn').disabled = true;
+    document.getElementById('stand-btn').disabled = true;
+  }
+}
+
+function standBlackjack() {
+  // Revelar a carta do dealer
+  const dealerHand = document.getElementById('dealer-hand');
+  const hiddenCard = dealerHand.querySelector('.card[data-hidden="true"]');
+  if (hiddenCard) {
+    hiddenCard.dataset.hidden = "false";
+    hiddenCard.innerHTML = hiddenCard.dataset.value;
+  }
+  
+  // Atualizar pontuação do dealer
+  updateBlackjackScores();
+  
+  // Dealer pega cartas até ter pelo menos 17 pontos
+  let dealerScore = parseInt(document.getElementById('dealer-score').textContent);
+  
+  const dealerPlay = setInterval(() => {
+    if (dealerScore < 17) {
+      addCard('dealer', getRandomCard(), false);
+      updateBlackjackScores();
+      dealerScore = parseInt(document.getElementById('dealer-score').textContent);
+    } else {
+      clearInterval(dealerPlay);
+      determineBlackjackWinner();
+    }
+  }, 1000);
+  
+  // Desabilitar botões durante a jogada do dealer
+  document.getElementById('hit-btn').disabled = true;
+  document.getElementById('stand-btn').disabled = true;
+}
+
+function determineBlackjackWinner() {
+  const playerScore = parseInt(document.getElementById('player-score').textContent);
+  const dealerScore = parseInt(document.getElementById('dealer-score').textContent);
+  const betAmount = parseFloat(document.getElementById('blackjack-bet-amount').value);
+  
+  // Determinar o vencedor
+  if (dealerScore > 21) {
+    // Dealer estourou, jogador ganha
+    const winAmount = betAmount * 2;
+    userBalance += winAmount;
+    showNotification(`Dealer estourou! Você ganhou R$ ${winAmount.toFixed(2)}!`, 'success');
+  } else if (playerScore > dealerScore) {
+    // Jogador tem pontuação maior, jogador ganha
+    const winAmount = betAmount * 2;
+    userBalance += winAmount;
+    showNotification(`Você ganhou R$ ${winAmount.toFixed(2)}!`, 'success');
+  } else if (playerScore === dealerScore) {
+    // Empate, jogador recupera a aposta
+    userBalance += betAmount;
+    showNotification('Empate! Sua aposta foi devolvida.', 'info');
+  } else {
+    // Dealer tem pontuação maior, jogador perde
+    showNotification(`Dealer ganhou! Você perdeu R$ ${betAmount.toFixed(2)}.`, 'error');
+  }
+  
+  updateBalanceDisplay();
+  
+  // Reativar botão de distribuir
+  document.getElementById('deal-btn').disabled = false;
+}
+
+function getRandomCard() {
+  const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+  const suits = ['♠', '♥', '♦', '♣'];
+  
+  const randomValue = values[Math.floor(Math.random() * values.length)];
+  const randomSuit = suits[Math.floor(Math.random() * suits.length)];
+  
+  return { value: randomValue, suit: randomSuit };
+}
+
+function addCard(player, card, hidden) {
+  const hand = document.getElementById(`${player}-hand`);
+  
+  const cardElement = document.createElement('div');
+  cardElement.className = 'card dealing';
+  
+  if (hidden) {
+    cardElement.innerHTML = '?';
+    cardElement.dataset.hidden = "true";
+    cardElement.dataset.value = `<div class="card-value">${card.value}</div><div class="card-suit">${card.suit}</div>`;
+  } else {
+    cardElement.innerHTML = `<div class="card-value">${card.value}</div><div class="card-suit">${card.suit}</div>`;
+    cardElement.dataset.hidden = "false";
+  }
+  
+  cardElement.dataset.cardValue = card.value;
+  
+  // Definir cor da carta baseada no naipe
+  if (card.suit === '♥' || card.suit === '♦') {
+    cardElement.style.color = 'red';
+  }
+  
+  hand.appendChild(cardElement);
+  
+  // Remover a classe de animação após a animação terminar
+  setTimeout(() => {
+    cardElement.classList.remove('dealing');
+  }, 500);
+}
+
+function updateBlackjackScores() {
+  // Calcular pontuação do dealer
+  const dealerCards = document.querySelectorAll('#dealer-hand .card[data-hidden="false"]');
+  const dealerScore = calculateBlackjackScore(dealerCards);
+  document.getElementById('dealer-score').textContent = dealerScore;
+  
+  // Calcular pontuação do jogador
+  const playerCards = document.querySelectorAll('#player-hand .card');
+  const playerScore = calculateBlackjackScore(playerCards);
+  document.getElementById('player-score').textContent = playerScore;
+}
+
+function calculateBlackjackScore(cards) {
+  let score = 0;
+  let aces = 0;
+  
+  cards.forEach(card => {
+    const value = card.dataset.cardValue;
+    
+    if (value === 'A') {
+      aces++;
+      score += 11;
+    } else if (value === 'K' || value === 'Q' || value === 'J') {
+      score += 10;
+    } else {
+      score += parseInt(value);
+    }
+  });
+  
+  // Ajustar valor dos ases se necessário
+  while (score > 21 && aces > 0) {
+    score -= 10;
+    aces--;
+  }
+  
+  return score;
+}
+
+// Funções para o jogo de raspadinha
+function initScratchCard() {
+  // Resetar a raspadinha
+  document.getElementById('scratch-prize').textContent = '?';
+  document.getElementById('scratch-overlay').style.display = 'flex';
+  document.getElementById('new-card-btn').disabled = true;
+}
+
+function newScratchCard() {
+  const betAmount = parseFloat(document.getElementById('scratch-bet-amount').value);
+  
+  if (betAmount <= 0) {
+    showNotification('O valor da raspadinha deve ser maior que zero', 'error');
+    return;
+  }
+  
+  if (betAmount > userBalance) {
+    showNotification('Saldo insuficiente para comprar esta raspadinha', 'error');
+    return;
+  }
+  
+  // Descontar valor da raspadinha
+  userBalance -= betAmount;
+  updateBalanceDisplay();
+  
+  // Resetar a raspadinha
+  document.getElementById('scratch-prize').textContent = '?';
+  document.getElementById('scratch-overlay').style.display = 'flex';
+  document.getElementById('new-card-btn').disabled = true;
+  
+  // Determinar o prêmio
+  const random = Math.random();
+  let prize = 0;
+  
+  if (random < 0.01) {
+    // 1% de chance de ganhar 50x
+    prize = betAmount * 50;
+  } else if (random < 0.05) {
+    // 4% de chance de ganhar 10x
+    prize = betAmount * 10;
+  } else if (random < 0.15) {
+    // 10% de chance de ganhar 5x
+    prize = betAmount * 5;
+  } else if (random < 0.30) {
+    // 15% de chance de ganhar 2x
+    prize = betAmount * 2;
+  } else if (random < 0.50) {
+    // 20% de chance de ganhar 1x (recuperar o valor)
+    prize = betAmount;
+  }
+  
+  // Armazenar o prêmio para revelar depois
+  document.getElementById('scratch-prize').dataset.prize = prize.toFixed(2);
+}
+
+function scratchCard() {
+  const overlay = document.getElementById('scratch-overlay');
+  overlay.style.display = 'none';
+  
+  const prizeElement = document.getElementById('scratch-prize');
+  const prize = parseFloat(prizeElement.dataset.prize || 0);
+  
+  if (prize > 0) {
+    prizeElement.textContent = `R$ ${prize.toFixed(2)}`;
+    prizeElement.style.color = 'var(--success-color)';
+    
+    // Adicionar o prêmio ao saldo
+    userBalance += prize;
+    updateBalanceDisplay();
+    
+    showNotification(`Parabéns! Você ganhou R$ ${prize.toFixed(2)}!`, 'success');
+  } else {
+    prizeElement.textContent = 'Não foi dessa vez!';
+    prizeElement.style.color = 'var(--danger-color)';
+    
+    showNotification('Que pena! Tente novamente.', 'error');
+  }
+  
+  // Habilitar botão para nova raspadinha
+  document.getElementById('new-card-btn').disabled = false;
+}
+
+// Funções para o jogo de caça-níqueis
+function initSlots() {
+  // Resetar os rolos
+  document.getElementById('reel1').textContent = '7';
+  document.getElementById('reel2').textContent = '7';
+  document.getElementById('reel3').textContent = '7';
+}
+
+function spinSlots() {
+  const betAmount = parseFloat(document.getElementById('slots-bet-amount').value);
+  
+  if (betAmount <= 0) {
+    showNotification('O valor da aposta deve ser maior que zero', 'error');
+    return;
+  }
+  
+  if (betAmount > userBalance) {
+    showNotification('Saldo insuficiente para realizar esta aposta', 'error');
+    return;
+  }
+  
+  // Descontar aposta do saldo
+  userBalance -= betAmount;
+  updateBalanceDisplay();
+  
+  // Desabilitar botão durante o giro
+  const spinBtn = document.getElementById('spin-slots-btn');
+  spinBtn.disabled = true;
+  
+  // Símbolos possíveis
+  const symbols = ['7', 'BAR', 'Cereja', 'Limão', 'Laranja', 'Uva'];
+  
+  // Animar os rolos
+  const reel1 = document.getElementById('reel1');
+  const reel2 = document.getElementById('reel2');
+  const reel3 = document.getElementById('reel3');
+  
+  let count1 = 0, count2 = 0, count3 = 0;
+  
+  const spin1 = setInterval(() => {
+    reel1.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    count1++;
+    if (count1 > 20) clearInterval(spin1);
+  }, 100);
+  
+  const spin2 = setInterval(() => {
+    reel2.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    count2++;
+    if (count2 > 30) clearInterval(spin2);
+  }, 100);
+  
+  const spin3 = setInterval(() => {
+    reel3.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    count3++;
+    if (count3 > 40) {
+      clearInterval(spin3);
+      checkSlotsResult();
+    }
+  }, 100);
+  
+  function checkSlotsResult() {
+    // Determinar resultado final
+    const result1 = symbols[Math.floor(Math.random() * symbols.length)];
+    const result2 = symbols[Math.floor(Math.random() * symbols.length)];
+    const result3 = symbols[Math.floor(Math.random() * symbols.length)];
+    
+    reel1.textContent = result1;
+    reel2.textContent = result2;
+    reel3.textContent = result3;
+    
+    // Verificar se o jogador ganhou
+    let multiplier = 0;
+    
+    if (result1 === result2 && result2 === result3) {
+      // Três iguais
+      if (result1 === '7') {
+        multiplier = 50; // Jackpot
+      } else if (result1 === 'BAR') {
+        multiplier = 20;
+      } else {
+        multiplier = 10;
+      }
+    } else if (result1 === result2 || result2 === result3 || result1 === result3) {
+      // Dois iguais
+      multiplier = 2;
+    }
+    
+    if (multiplier > 0) {
+      const winAmount = betAmount * multiplier;
+      userBalance += winAmount;
+      updateBalanceDisplay();
+      showNotification(`Parabéns! Você ganhou R$ ${winAmount.toFixed(2)}!`, 'success');
+    } else {
+      showNotification(`Que pena! Você perdeu R$ ${betAmount.toFixed(2)}.`, 'error');
+    }
+    
+    // Reativar botão
+    spinBtn.disabled = false;
+  }
+}
+
+// Funções utilitárias
+function updateBalanceDisplay() {
+  document.querySelector('.balance-amount').textContent = `R$ ${userBalance.toFixed(2)}`;
+  
+  // Salvar no localStorage
+  if (isLoggedIn) {
+    const savedUser = JSON.parse(localStorage.getItem('deadpoolCasinoUser') || '{}');
+    savedUser.balance = userBalance;
+    localStorage.setItem('deadpoolCasinoUser', JSON.stringify(savedUser));
+  }
+}
+
+function showNotification(message, type = 'info') {
+  const notification = document.getElementById('notification');
+  const notificationMessage = document.getElementById('notification-message');
+  const notificationIcon = notification.querySelector('.notification-icon i');
+  
+  // Definir ícone baseado no tipo
+  switch (type) {
+    case 'success':
+      notificationIcon.className = 'fas fa-check-circle';
+      notification.className = 'notification success';
+      break;
+    case 'error':
+      notificationIcon.className = 'fas fa-times-circle';
+      notification.className = 'notification error';
+      break;
+    case 'warning':
+      notificationIcon.className = 'fas fa-exclamation-triangle';
+      notification.className = 'notification warning';
+      break;
+    default:
+      notificationIcon.className = 'fas fa-info-circle';
+      notification.className = 'notification';
+  }
+  
+  notificationMessage.textContent = message;
+  notification.classList.add('show');
+  
+  // Esconder após 3 segundos
+  setTimeout(closeNotification, 3000);
+}
+
+function closeNotification() {
+  const notification = document.getElementById('notification');
+  notification.classList.remove('show');
+}
+
+function addTransaction(transaction) {
+  transactions.unshift(transaction);
+  
+  // Limitar a 10 transações
+  if (transactions.length > 10) {
+    transactions = transactions.slice(0, 10);
+  }
+  
+  // Salvar no localStorage
+  localStorage.setItem('deadpoolCasinoTransactions', JSON.stringify(transactions));
+  
+  // Atualizar a tabela
+  updateTransactionHistory();
+}
+
+function updateTransactionHistory() {
+  const transactionList = document.getElementById('transaction-list');
+  if (!transactionList) return;
+  
+  transactionList.innerHTML = '';
+  
+  transactions.forEach(transaction => {
+    const row = document.createElement('tr');
+    
+    // Formatar data
+    const date = new Date(transaction.date);
+    const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    
+    row.innerHTML = `
+      <td>${formattedDate}</td>
+      <td>${transaction.type}</td>
+      <td>${transaction.method}</td>
+      <td>R$ ${transaction.amount.toFixed(2)}</td>
+      <td>${transaction.status}</td>
+    `;
+    
+    transactionList.appendChild(row);
+  });
+}
+
+function addSampleTransactions() {
+  const now = new Date();
+  
+  // Adicionar algumas transações de exemplo
+  transactions = [
+    {
+      date: new Date(now.getTime() - 1000 * 60 * 60 * 2), // 2 horas atrás
+      type: 'Depósito',
+      method: 'PIX',
+      amount: 100,
+      status: 'Concluído'
+    },
+    {
+      date: new Date(now.getTime() - 1000 * 60 * 60 * 24), // 1 dia atrás
+      type: 'Depósito',
+      method: 'Cartão de Crédito',
+      amount: 200,
+      status: 'Concluído'
+    },
+    {
+      date: new Date(now.getTime() - 1000 * 60 * 60 * 24 * 2), // 2 dias atrás
+      type: 'Saque',
+      method: 'PIX',
+      amount: 150,
+      status: 'Concluído'
+    }
+  ];
+  
+  // Salvar no localStorage
+  localStorage.setItem('deadpoolCasinoTransactions', JSON.stringify(transactions));
+  
+  // Atualizar a tabela
+  updateTransactionHistory();
+}
+
+// Funções para efeitos visuais
+window.addEventListener('scroll', function() {
+  const header = document.querySelector('header');
+  if (window.scrollY > 50) {
+    header.style.background = 'rgba(0, 0, 0, 0.9)';
+  } else {
+    header.style.background = 'var(--secondary-color)';
+  }
 });
