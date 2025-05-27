@@ -2,78 +2,81 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>openLINK Casino - Agora Sim, Separado!</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>openLINK Casino - Edição Mercenário Tagarela</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌮</text></svg>">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div id="preloader">
-      <div class="loader-icon">🦄</div>
-      <div class="loader-text">Segura as calças, meu chapa!<br>O openLINK Casino tá quase abrindo a porteira da zoeira... e do seu dinheiro!</div>
+      <div class="loader-icon">🌮</div>
+      <div class="loader-text">Ajustando a máscara... Contando as balas... <br>Sua dose diária de decisões financeiras questionáveis está carregando!</div>
   </div>
 
   <audio id="sound-click" src="https://actions.google.com/sounds/v1/cartoon/pop.ogg" preload="auto"></audio>
   <audio id="sound-success" src="https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg" preload="auto"></audio>
   <audio id="sound-cash" src="https://actions.google.com/sounds/v1/impacts/arcade_game_fruit_machine_jackpot.ogg" preload="auto"></audio>
   <audio id="sound-error" src="https://actions.google.com/sounds/v1/cartoon/cartoon_negative_bling.ogg" preload="auto"></audio>
-  <audio id="sound-login" src="https://actions.google.com/sounds/v1/impacts/wind_chimes_bells.ogg" preload="auto"></audio>
+  <audio id="sound-login" src="https://actions.google.com/sounds/v1/doors/wood_door_close.ogg" preload="auto"></audio>
   <audio id="sound-troll" src="https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg" preload="auto"></audio>
-
+  
   <header class="main-header">
     <div class="header-left">
-      <div class="header-logo" id="header-logo-clickable"><span class="logo-emoji">🦄</span>open<span>LINK</span></div>
+      <div class="header-logo" id="header-logo-clickable"><span class="logo-emoji">🌮</span>open<span>LINK</span></div>
     </div>
     <div class="header-right">
       <div id="header-balance-area" class="header-balance hidden">
-        <i class="fas fa-hand-holding-usd"></i> Saldo: <span id="header-balance">R$ 0,00</span>
+        <i class="fa-solid fa-wallet"></i> Saldo: <span id="header-balance">R$ 0,00</span>
       </div>
       <div id="auth-buttons" class="auth-buttons">
-        <button id="open-login-btn">Já sou trouxa</button>
-        <button id="open-register-btn" class="register-btn">Quero ser trouxa</button>
+        <button id="open-login-btn">Já sou da turma</button>
+        <button id="open-register-btn" class="register-btn">Quero entrar pra bagunça</button>
       </div>
     </div>
   </header>
 
   <div class="main-wrapper">
       <section id="home">
-          <h1><span class="logo-emoji">🦄</span>open<span>LINK</span> Casino</h1>
-          <p class="subtitle">Onde sua carteira vem para morrer sorrindo. Esqueça a poupança, aqui a emoção (e a falência) é garantida! A casa sempre ganha, mas pelo menos a gente se diverte no processo, né?</p>
-          <button class="primary-cta" id="home-acessar-btn">Vender minha alma (e clicar aqui)</button>
+          <h1><span class="logo-emoji">🌮</span>open<span>LINK</span> Casino</h1>
+          <p class="subtitle">Onde "investimento de alto risco" é um eufemismo. A gente promete diversão, adrenalina e, provavelmente, te fazer comer miojo no fim do mês. A casa sempre vence, mas as risadas são grátis!</p>
+          <button class="primary-cta" id="home-acessar-btn">Hora da Chimichanga! (Acessar)</button>
       </section>
 
       <div class="container hidden" id="player-panel">
-          <div class="balance-display">Sua grana (virtual, claro): <span id="panel-balance">R$ 0,00</span></div>
+          <div class="balance-display">Sua grana (que já foi mais sua): <span id="panel-balance">R$ 0,00</span></div>
           <div class="player-panel-buttons">
-            <button id="deposit-btn">Engordar o porquinho <i class="fa-solid fa-piggy-bank"></i></button>
-            <button id="withdraw-btn">Sacar (HAHA!) <i class="fa-solid fa-sack-xmark"></i></button>
+            <button id="deposit-btn">Comprar mais fichas <i class="fa-solid fa-piggy-bank"></i></button>
+            <button id="withdraw-btn">Tentar sacar <i class="fa-solid fa-sack-xmark"></i></button>
           </div>
           
           <div id="slot-machine-container" class="game-container">
-            <h3>Caça-Níquel da Chimichanga Cósmica!</h3>
+            <h3>Caça-Níquel do Unicórnio Explosivo!</h3>
             <div class="slot-reels">
-              <div class="reel" id="reel1">🍓</div>
-              <div class="reel" id="reel2">🍕</div>
-              <div class="reel" id="reel3">🦄</div>
+              <div class="reel" id="reel1">🦄</div>
+              <div class="reel" id="reel2">💣</div>
+              <div class="reel" id="reel3">🌮</div>
             </div>
-            <button id="spin-slot-btn">Girar essa geringonça! (Custa R$5)</button>
+            <button id="spin-slot-btn">Puxar a Alavanca do Caos! (Custa R$5)</button>
             <p id="slot-result" class="game-result-message"></p>
           </div>
 
-          <h2 style="margin-top: 1rem;">Nossos Outros Jogos "Justos" (Em Breve!)</h2>
+          <h2>Mais maneiras de perder dinheiro com estilo (Em Breve!)</h2>
           <div class="game-lobby">
-              <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fas fa-question-circle"></i><h3>Poker dos Sem-Noção</h3></div><div class="card-back"><span>Blefe à vontade!</span> Ninguém aqui sabe o que tá fazendo mesmo.</div></div>
-              <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fas fa-compass"></i><h3>Roleta Russa... com Boletos</h3></div><div class="card-back"><span>Emocionante!</span> Gire e torça pra não cair na sua conta de luz.</div></div>
-              <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fas fa-hand-paper"></i><h3>Blackjack do "Só Mais Uma"</h3></div><div class="card-back"><span>Estourar é uma arte.</span> E você, meu amigo, é um Picasso.</div></div>
-               <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fa-solid fa-puzzle-piece"></i><h3>Adivinhe a Carta</h3></div><div class="card-back"><span>Onde está a Rainha de Copas?</span> Ou será o Coringa? Boa sorte, vai precisar!</div></div>
+              <div class="game-card"><div class="card-front"><i class="fa-solid fa-bomb"></i><h3>Roleta Russa... com Faturas</h3></div><div class="card-back"><span>Gire a roleta e reze</span> para não cair na conta do cartão de crédito. Pura emoção!</div></div>
+              <div class="game-card"><div class="card-front"><i class="fa-solid fa-hand-spock"></i><h3>Poker dos Mentirosos</h3></div><div class="card-back"><span>Sua cara de paisagem</span> é sua melhor arma. Blefar não é só permitido, é incentivado!</div></div>
+              <div class="game-card"><div class="card-front"><i class="fa-solid fa-diamond-turn-right"></i><h3>Blackjack do "Só mais uma"</h3></div><div class="card-back"><span>Pedir mais uma carta com 20?</span> Aqui a gente chama isso de "estratégia arrojada".</div></div>
           </div>
-          <button id="add-funds">Pegar Esmola Diária (não se acostuma!) <i class="fas fa-handshake-angle"></i></button>
-          <div id="bonus-timer" class="hidden" style="margin-top: 1rem;"></div>
-          <div class="winner-ticker"><p id="winner-ticker-text"></p></div>
+          <button id="add-funds">Pegar Troco do Sofá (Bônus Diário) <i class="fas fa-hand-holding-dollar"></i></button>
+          <div id="bonus-timer" class="hidden"></div>
+          <div class="winner-ticker"><p id="winner-ticker-text">Carregando as últimas fofocas do cassino...</p></div>
       </div>
   </div>
 
@@ -81,70 +84,66 @@
       <div class="modal-content">
         <span class="close-button" id="close-auth-modal">&times;</span>
         <div id="login-form" class="auth-form">
-          <h2>Acessar a "Diversão"</h2>
-          <div class="form-group"><i class="fa-solid fa-user-ninja"></i><input type="text" id="login-usuario" placeholder="Email (ou vulgo de perdedor)"></div>
-          <div class="form-group password-wrapper"><i class="fa-solid fa-key"></i><input type="password" id="login-senha" placeholder="Senha (aquela que você usa pra tudo)"><i class="fas fa-eye-slash toggle-password" data-target="login-senha"></i></div>
-          <div class="extra-options"><a href="#">Esqueceu? Acontece com os melhores (e piores).</a></div>
-          <button id="entrar-btn"><span class="btn-text">Entrar (por sua conta e risco)</span></button>
-          <div class="auth-switcher">Novo por aqui? <span id="show-register-form">Junte-se ao clube dos otimistas</span></div>
+          <h2>Entrar no Covil</h2>
+          <div class="form-group"><i class="fa-solid fa-user-ninja"></i><input type="text" id="login-usuario" placeholder="Seu codinome ou e-mail"></div>
+          <div class="form-group password-wrapper"><i class="fa-solid fa-key"></i><input type="password" id="login-senha" placeholder="Senha secreta (não use '1234')"><i class="fas fa-eye-slash toggle-password" data-target="login-senha"></i></div>
+          <button id="entrar-btn"><span class="btn-text">Quebrar a 4ª parede (Entrar)</span></button>
+          <div class="auth-switcher">Primeira vez? <span id="show-register-form">Junte-se aos malucos</span></div>
         </div>
         <div id="register-form" class="auth-form hidden">
-          <h2>Criar Conta (pra quê, né?)</h2>
-          <div class="form-group"><i class="fa-solid fa-envelope-circle-check"></i><input type="email" id="register-email" placeholder="Seu melhor E-mail"></div>
-          <div class="form-group password-wrapper"><i class="fa-solid fa-user-secret"></i><input type="password" id="register-password" placeholder="Senha (capricha, hacker agradece)"><i class="fas fa-eye-slash toggle-password" data-target="register-password"></i></div>
-          <div class="form-group"><i class="fa-solid fa-cake-candles"></i><input type="text" id="register-birthdate" placeholder="Nascido em (DD/MM/AAAA)"></div>
-          <button id="register-account-btn"><span class="btn-text">Criar Conta (e se arrepender depois)</span></button>
-          <div class="auth-switcher">Já se arrependeu? <span id="show-login-form">Voltar pro Login</span></div>
+          <h2>Assinar o contrato (com letras miúdas)</h2>
+          <div class="form-group"><i class="fa-solid fa-envelope-circle-check"></i><input type="email" id="register-email" placeholder="Seu melhor e-mail"></div>
+          <div class="form-group password-wrapper"><i class="fa-solid fa-user-secret"></i><input type="password" id="register-password" placeholder="Crie uma senha forte, por favor"><i class="fas fa-eye-slash toggle-password" data-target="register-password"></i></div>
+          <button id="register-account-btn"><span class="btn-text">Vender a alma (Criar conta)</span></button>
+          <div class="auth-switcher">Já é de casa? <span id="show-login-form">Voltar para o login</span></div>
         </div>
       </div>
   </div>
   
   <div id="deposit-modal" class="modal-overlay">
-      <div class="modal-content">
-        <span class="close-button" id="close-deposit-modal">&times;</span>
-        <div id="step-1" class="deposit-step active">
-          <h3>Quanto você quer perder hoje?</h3>
-          <div class="amount-options"> <button class="amount-btn" data-amount="20">R$ 20 (Cafézinho)</button> <button class="amount-btn" data-amount="50">R$ 50 (Lanchinho)</button> <button class="amount-btn" data-amount="100">R$ 100 (Jantarzinho)</button> </div>
-          <p style="text-align:center; margin: 1rem 0;">Ou seja OUSADO e digite um valor:</p>
-          <input type="number" id="custom-amount" placeholder="Ex: 999 (pra mostrar que é patrão)" />
-          <button id="continue-to-methods" style="margin-top: 1.5rem;">Continuar (se tiver coragem)</button>
-        </div>
-        <div id="step-2" class="deposit-step">
-          <h3>Como você prefere doar seu dinheiro?</h3>
-          <div class="method-options"> <button class="method-btn" data-method="pix"><i class="fa-brands fa-pix"></i>Pix (Rápido e Indolor... ou não)</button> <button class="method-btn" data-method="card"><i class="far fa-credit-card"></i>Cartão (Estoura ele logo!)</button> <button class="method-btn" data-method="boleto"><i class="fa-solid fa-file-invoice-dollar"></i>Boleto (Pra pagar amanhã)</button> <button class="method-btn" data-method="crypto"><i class="fa-brands fa-bitcoin"></i>Cripto (Pros modernos)</button> </div>
-        </div>
-        <div id="step-3" class="deposit-step">
-          <div id="confirmation-pix" class="confirmation-area hidden"><h3>Pix? Boa sorte!</h3><p>Escaneia aí, gênio. Se o dinheiro sumir, não fui eu.</p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt="QR Code Falso"><button class="confirm-payment-btn">"Paguei" (e que Deus me ajude)</button></div>
-          <div id="confirmation-card" class="confirmation-area hidden"><h3>Cartão? Que corajoso!</h3><p>Só o nome e CPF, pra gente saber quem culpar depois.</p><div class="form-group"><label>Nome no Cartão (igualzinho, hein?)</label><input type="text" placeholder="Wade Wilson"></div><div class="form-group"><label>CPF (pra gente te achar no Serasa)</label><input type="text" placeholder="123.456.789-00"></div><button class="confirm-payment-btn">Passar o rodo no cartão</button></div>
-          <div id="confirmation-boleto" class="confirmation-area hidden"><h3>Boleto? Clássico!</h3><p>Aqui está seu "convite" para a falência. Pague e reze.</p><i class="fa-solid fa-file-invoice-dollar" style="font-size: 8em; margin: 1rem 0; color: var(--texto);"></i><button class="confirm-payment-btn">Gerar Boleto da Tristeza</button></div>
-          <div id="confirmation-crypto" class="confirmation-area hidden"><h3>Cripto? Tá se achando, né?</h3><p>Manda pra cá seus Dogecoins. Ou eram Bitcoins? Ah, tanto faz.</p><input type="text" readonly value="1DEADPooLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" style="text-align:center; font-size:0.8em; word-break:break-all;"><button class="confirm-payment-btn">Enviar e torcer pra não ser scam</button></div>
-        </div>
-        <div id="step-4" class="deposit-step"><div id="loading-area" class="loading-area hidden"><h3>Processando sua "doação"...</h3><i class="fas fa-sync fa-spin"></i></div><div id="success-area" class="success-area hidden"><h3>Dinheiro na conta! (Não se empolga)</h3><i class="fas fa-sack-dollar"></i></div></div>
-      </div>
+       <div class="modal-content">
+         <span class="close-button" id="close-deposit-modal">&times;</span>
+         <div id="step-1" class="deposit-step active">
+           <h3>Quanto de poder de fogo você quer?</h3>
+           <div class="amount-options"><button class="amount-btn" data-amount="20">R$ 20</button><button class="amount-btn" data-amount="50">R$ 50</button><button class="amount-btn" data-amount="100">R$ 100</button></div>
+           <p>Ou digite um valor personalizado:</p>
+           <input type="number" id="custom-amount" placeholder="Ex: 999 (nível máximo de esforço!)" />
+           <button id="continue-to-methods">Continuar</button>
+         </div>
+         <div id="step-2" class="deposit-step">
+           <h3>Método de "Investimento"</h3>
+           <div class="method-options"><button class="method-btn" data-method="pix"><i class="fa-brands fa-pix"></i> Pix</button><button class="method-btn" data-method="card"><i class="far fa-credit-card"></i> Cartão</button></div>
+         </div>
+         <div id="step-3" class="deposit-step">
+           <div id="confirmation-pix" class="confirmation-area hidden"><h3>Pix? Direto e reto.</h3><p>Escaneie o código. Se o dinheiro não cair, a culpa é do estagiário.</p><img src="https://i.ibb.co/G9q4jKv/qr-code-deadpool.png" alt="QR Code de um unicórnio dançando"><button class="confirm-payment-btn">"Paguei", e que a sorte esteja comigo</button></div>
+           <div id="confirmation-card" class="confirmation-area hidden"><h3>Cartão? Adoro o som do limite estourando.</h3><p>Finja que preenche seus dados aqui. A gente confia em você (só que não).</p><div class="form-group"><input type="text" placeholder="Wade Wilson"></div><div class="form-group"><input type="text" placeholder="123.456.789-00"></div><button class="confirm-payment-btn">Passar o cartão</button></div>
+         </div>
+         <div id="step-4" class="deposit-step"><div id="loading-area" class="loading-area hidden"><h3>Processando sua contribuição...</h3><i class="fas fa-sync fa-spin"></i></div><div id="success-area" class="success-area hidden"><h3>Dinheiro na conta!</h3><i class="fas fa-sack-dollar"></i></div></div>
+       </div>
   </div>
 
-   <div id="withdraw-modal" class="modal-overlay">
+  <div id="withdraw-modal" class="modal-overlay">
     <div class="modal-content withdraw-modal-content">
       <span class="close-button" id="close-withdraw-modal">&times;</span>
       <span class="troll-face">😏</span>
-      <h3>Tentando Sacar, É?</h3>
-      <p>Ah, que fofo! Você realmente achou que ia tirar alguma grana daqui? Você depositou, a gente se divertiu um bocado (com seu dinheiro), mas a casa... bom, a casa precisa fazer uns "pequenos ajustes contábeis" no seu saldo.</p>
-      <p style="font-weight: bold; color: var(--secundaria);">Afinal, a casa SEMPRE ganha, meu caro Padawan!</p>
-      <button id="confirm-troll-withdraw">Entendi, fui tapeado!</button>
+      <h3>Sério que você quer sacar?</h3>
+      <p>Ah, que gracinha! Você achou mesmo que ia ser fácil assim? Saques passam por uma "análise de risco" e uma "taxa de conveniência". Resumindo: seu dinheiro agora mora aqui. Acostume-se.</p>
+      <p style="font-weight: bold; color: var(--deadpool-red);">Lembre-se da regra número 1: a casa SEMPRE ganha.</p>
+      <button id="confirm-troll-withdraw">Entendi, fui tapeado com estilo</button>
     </div>
   </div>
 
-  <div class="deadpool-alert-overlay" id="deadpool-alert-welcome"> <div class="deadpool-alert-content">
-        <img src="https://i.pinimg.com/originals/7a/89/47/7a89470a0f7a501542325099a6998599.gif" alt="Deadpool Torrando a Grana">
-        <p id="deadpool-welcome-text"></p>
-        <button id="deadpool-ok-btn">Entendido, Capitão Óbvio!</button>
+  <div class="deadpool-alert-overlay" id="deadpool-alert-welcome">
+    <div class="deadpool-alert-content">
+      <img src="https://i.pinimg.com/originals/7a/89/47/7a89470a0f7a501542325099a6998599.gif" alt="Deadpool jogando dinheiro para o alto">
+      <p id="deadpool-welcome-text"></p>
+      <button id="deadpool-ok-btn">Beleza, pode vir!</button>
     </div>
   </div>
-
 
   <footer class="footer">
-    © 2025 openLINK Corp. "A gente se importa... com o seu dinheiro". <br> 
-    Este site é uma piada elaborada. Apostas reais aqui? Só se for em quem vai lavar a louça. Jogue (ou não) por sua conta e risco.
+    © 2025 openLINK Corp. "Sua carteira é nossa maior preocupação". <br> 
+    Este site é uma obra de ficção. Qualquer semelhança com a sua vontade de apostar é mera coincidência.
   </footer>
 
   <script src="script.js"></script>
