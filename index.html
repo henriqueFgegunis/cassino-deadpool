@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deadpool Casino - Apostas e Jogos Online</title>
+  <title>Infinity Slots - Apostas e Jogos Online</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <!-- Header e navegação -->
   <header>
     <nav class="navbar">
       <div class="logo">
-        <img src="images/casino_logo.png" alt="Deadpool Casino Logo">
-        <h1>Deadpool Casino</h1>
+        <img src="https://placehold.co/100x100/9d4edd/white?text=IS" alt="Infinity Slots Logo">
+        <h1>Infinity Slots</h1>
       </div>
       <ul class="nav-links">
         <li><a href="#" class="active">Início</a></li>
@@ -36,16 +35,14 @@
     </nav>
   </header>
 
-  <!-- Banner principal -->
   <section class="banner">
     <div class="banner-content">
-      <h2>Bem-vindo ao Deadpool Casino</h2>
-      <p>O cassino mais irreverente da internet! Jogue, aposte e divirta-se com nossos jogos exclusivos.</p>
+      <h2>Bem-vindo ao Infinity Slots</h2>
+      <p>Onde a diversão é infinita! Jogue, aposte e divirta-se com nossos jogos exclusivos.</p>
       <a href="#games" class="btn pulse">Jogar Agora</a>
     </div>
   </section>
 
-  <!-- Seção de jogos populares -->
   <section id="games" class="games-section">
     <div class="section-title">
       <h2>Jogos Populares</h2>
@@ -53,17 +50,17 @@
     <div class="games-grid">
       <div class="game-card">
         <div class="game-image">
-          <img src="images/poker_chips.png" alt="Poker">
+          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Mina+de+Ouro" alt="Mina de Ouro">
         </div>
         <div class="game-info">
-          <h3>Poker</h3>
-          <p>Teste suas habilidades no jogo de cartas mais famoso do mundo.</p>
-          <button class="btn" onclick="showNotification('Em breve!', 'warning')">Jogar</button>
+          <h3>Mina de Ouro</h3>
+          <p>Encontre as joias e desvie das bombas para multiplicar sua aposta.</p>
+          <button class="btn" onclick="openGame('mines')">Jogar</button>
         </div>
       </div>
-      <div class="game-card">
+       <div class="game-card">
         <div class="game-image">
-          <img src="images/casino_banner.png" alt="Caça-níqueis">
+          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Slots" alt="Caça-níqueis">
         </div>
         <div class="game-info">
           <h3>Caça-níqueis</h3>
@@ -73,7 +70,7 @@
       </div>
       <div class="game-card">
         <div class="game-image">
-          <img src="images/casino_banner.png" alt="Roleta">
+          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Roleta" alt="Roleta">
         </div>
         <div class="game-info">
           <h3>Roleta</h3>
@@ -83,7 +80,7 @@
       </div>
       <div class="game-card">
         <div class="game-image">
-          <img src="images/casino_banner.png" alt="Blackjack">
+          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Blackjack" alt="Blackjack">
         </div>
         <div class="game-info">
           <h3>Blackjack</h3>
@@ -93,7 +90,7 @@
       </div>
       <div class="game-card">
         <div class="game-image">
-          <img src="images/casino_banner.png" alt="Raspadinha">
+          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Raspadinha" alt="Raspadinha">
         </div>
         <div class="game-info">
           <h3>Raspadinha</h3>
@@ -101,25 +98,33 @@
           <button class="btn" onclick="openGame('scratch')">Jogar</button>
         </div>
       </div>
-      <div class="game-card">
+       <div class="game-card">
         <div class="game-image">
-          <img src="images/casino_banner.png" alt="Crash">
+          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Crash" alt="Crash">
         </div>
         <div class="game-info">
           <h3>Crash</h3>
           <p>Aposte e saque antes que o multiplicador caia a zero.</p>
-          <button class="btn" onclick="showNotification('Em breve!', 'warning')">Jogar</button>
+          <button class="btn" onclick="openGame('crash')">Jogar</button>
+        </div>
+      </div>
+       <div class="game-card">
+        <div class="game-image">
+          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Poker" alt="Poker">
+        </div>
+        <div class="game-info">
+          <h3>Poker</h3>
+          <p>Teste suas habilidades no jogo de cartas mais famoso do mundo.</p>
+          <button class="btn" onclick="openGame('poker')">Jogar</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Citação do Deadpool -->
-  <div class="deadpool-quote">
-    "Apostas são como chimichangas... você nunca sabe quando vai se queimar, mas vale a pena tentar!"
+  <div class="feature-quote">
+    "A sorte favorece os corajosos. E aqui, a coragem pode te levar ao infinito!"
   </div>
 
-  <!-- Seção de depósito e saque -->
   <section id="deposit" class="deposit-section">
     <div class="section-title">
       <h2>Depósito e Saque</h2>
@@ -175,7 +180,7 @@
             <img src="images/pix_qrcode.png" alt="QR Code PIX">
           </div>
           <div class="pix-code">
-            <input type="text" value="00020126580014BR.GOV.BCB.PIX0136deadpoolcasino@email.com5204000053039865802BR5913Deadpool Casino6008Sao Paulo62070503***6304E2CA" readonly>
+            <input type="text" value="00020126580014BR.GOV.BCB.PIX0136infinityslots@email.com5204000053039865802BR5913Infinity Slots6008Sao Paulo62070503***6304E2CA" readonly>
             <button class="copy-btn" onclick="copyPixCode()">
               <i class="fas fa-copy"></i>
             </button>
@@ -195,7 +200,6 @@
       </div>
     </div>
     
-    <!-- Histórico de transações -->
     <div class="transaction-history">
       <h3>Histórico de Transações</h3>
       <table class="transaction-table">
@@ -209,13 +213,11 @@
           </tr>
         </thead>
         <tbody id="transaction-list">
-          <!-- Transações serão adicionadas via JavaScript -->
-        </tbody>
+          </tbody>
       </table>
     </div>
   </section>
 
-  <!-- Seção de saque -->
   <section id="withdraw" class="deposit-section">
     <div class="section-title">
       <h2>Solicitar Saque</h2>
@@ -247,7 +249,6 @@
     </div>
   </section>
 
-  <!-- Seção de promoções -->
   <section id="promotions" class="promotions-section">
     <div class="section-title">
       <h2>Promoções</h2>
@@ -269,10 +270,28 @@
     </div>
   </section>
 
-  <!-- Área de jogos -->
   <div id="game-area" style="display: none;">
-    <!-- Roleta -->
-    <div id="roulette-game" class="roulette-game" style="display: none;">
+    
+    <div id="mines-game" class="game-container" style="display: none;">
+      <h2>Mina de Ouro</h2>
+      <div class="mines-info">
+        <span>Multiplicador: <span id="mines-multiplier">1.00x</span></span>
+        <span>Próximo Prêmio: <span id="mines-next-prize">R$ 0.00</span></span>
+      </div>
+      <div class="mines-grid" id="mines-grid">
+        </div>
+       <div class="form-group">
+        <label for="mines-bet-amount">Valor da Aposta (R$)</label>
+        <input type="number" id="mines-bet-amount" min="1" step="1" value="10">
+      </div>
+      <div class="game-controls">
+        <button class="game-btn" id="start-mines-btn" onclick="startMinesGame()">Começar Jogo</button>
+        <button class="game-btn" id="cashout-mines-btn" onclick="cashoutMines()" disabled>Retirar Ganhos</button>
+        <button class="game-btn" onclick="closeGame()">Sair</button>
+      </div>
+    </div>
+
+    <div id="roulette-game" class="game-container" style="display: none;">
       <h2>Roleta</h2>
       <div class="roulette-container">
         <div class="roulette-wheel">
@@ -300,8 +319,7 @@
       </div>
     </div>
 
-    <!-- Blackjack -->
-    <div id="blackjack-game" class="blackjack-game" style="display: none;">
+    <div id="blackjack-game" class="game-container" style="display: none;">
       <h2>Blackjack</h2>
       <div class="blackjack-table">
         <h3>Dealer: <span id="dealer-score">0</span></h3>
@@ -321,8 +339,7 @@
       </div>
     </div>
 
-    <!-- Raspadinha -->
-    <div id="scratch-game" class="scratch-card" style="display: none;">
+    <div id="scratch-game" class="game-container" style="display: none;">
       <h2>Raspadinha</h2>
       <div class="scratch-card-container">
         <div class="scratch-card-prize" id="scratch-prize">?</div>
@@ -340,8 +357,7 @@
       </div>
     </div>
 
-    <!-- Caça-níqueis -->
-    <div id="slots-game" class="slots-game" style="display: none;">
+    <div id="slots-game" class="game-container" style="display: none;">
       <h2>Caça-níqueis</h2>
       <div class="slots-container">
         <div class="slots-reels">
@@ -359,9 +375,58 @@
         </div>
       </div>
     </div>
+
+    <div id="poker-game" class="game-container" style="display: none;">
+        <h2>Poker</h2>
+        <div class="poker-table">
+            <p style="text-align:center; margin-bottom: 20px;">Em breve: Jogo de Poker Texas Hold'em!</p>
+            <h3>Mesa</h3>
+            <div class="community-cards">
+                <div class="card">?</div>
+                <div class="card">?</div>
+                <div class="card">?</div>
+                <div class="card">?</div>
+                <div class="card">?</div>
+            </div>
+            <h3>Sua Mão</h3>
+            <div class="player-hand">
+                <div class="card">?</div>
+                <div class="card">?</div>
+            </div>
+            <div class="form-group">
+                <label for="poker-bet-amount">Valor da Aposta (R$)</label>
+                <input type="number" id="poker-bet-amount" value="10" disabled>
+            </div>
+            <div class="game-controls">
+                <button class="game-btn" disabled>Apostar</button>
+                <button class="game-btn" disabled>Passar</button>
+                <button class="game-btn" disabled>Desistir</button>
+                <button class="game-btn" onclick="closeGame()">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="crash-game" class="game-container" style="display: none;">
+        <h2>Crash</h2>
+        <div class="crash-container">
+            <p style="text-align:center; margin-bottom: 20px;">Em breve: Jogo de Crash!</p>
+            <div class="crash-graph">
+                <div class="crash-multiplier-display">1.00x</div>
+            </div>
+            <div class="form-group">
+                <label for="crash-bet-amount">Valor da Aposta (R$)</label>
+                <input type="number" id="crash-bet-amount" value="10" disabled>
+            </div>
+            <div class="game-controls">
+                <button class="game-btn" disabled>Apostar</button>
+                <button class="game-btn" disabled>Retirar</button>
+                <button class="game-btn" onclick="closeGame()">Sair</button>
+            </div>
+        </div>
+    </div>
+
   </div>
 
-  <!-- Modal de login e registro -->
   <div id="auth-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -411,18 +476,16 @@
     </div>
   </div>
 
-  <!-- Notificação -->
   <div class="notification" id="notification">
     <span class="notification-icon"><i class="fas fa-info-circle"></i></span>
     <span id="notification-message">Mensagem de notificação</span>
     <span class="notification-close" onclick="closeNotification()">&times;</span>
   </div>
 
-  <!-- Footer -->
   <footer>
     <div class="footer-content">
       <div class="footer-column">
-        <h3>Deadpool Casino</h3>
+        <h3>Infinity Slots</h3>
         <ul>
           <li><a href="#">Sobre nós</a></li>
           <li><a href="#">Termos e Condições</a></li>
@@ -433,10 +496,10 @@
       <div class="footer-column">
         <h3>Jogos</h3>
         <ul>
+          <li><a href="#games">Mina de Ouro</a></li>
           <li><a href="#games">Caça-níqueis</a></li>
           <li><a href="#games">Roleta</a></li>
           <li><a href="#games">Blackjack</a></li>
-          <li><a href="#games">Poker</a></li>
         </ul>
       </div>
       <div class="footer-column">
@@ -451,7 +514,7 @@
       <div class="footer-column">
         <h3>Contato</h3>
         <ul>
-          <li><a href="mailto:suporte@deadpoolcasino.com">suporte@deadpoolcasino.com</a></li>
+          <li><a href="mailto:suporte@infinityslots.com">suporte@infinityslots.com</a></li>
           <li><a href="#">Chat ao vivo</a></li>
           <li><a href="#">WhatsApp</a></li>
           <li><a href="#">Telegram</a></li>
@@ -459,8 +522,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 Deadpool Casino. Todos os direitos reservados. Apenas para maiores de 18 anos.</p>
-      <p class="deadpool-accent">Lembre-se: Deadpool aprova o jogo responsável!</p>
+      <p>&copy; 2025 Infinity Slots. Todos os direitos reservados. Apenas para maiores de 18 anos.</p>
+      <p class="feature-accent">Lembre-se: Jogue com responsabilidade!</p>
     </div>
   </footer>
 
