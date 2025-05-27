@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>openLINK Casino - Saque... Se Puder (Agora com Botão)!</title>
+  <title>openLINK Casino - Deadpool Edição FINALMENTE Final (Revisada)!</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,9 +31,11 @@
     #preloader.hidden { opacity: 0; visibility: hidden; }
 
     .main-wrapper { position: relative; z-index: 10; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 100px; padding-bottom: 2rem; padding-left: 1rem; padding-right: 1rem; }
-    .main-header { width: 95%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(26, 12, 46, 0.6); border: 1px solid var(--borda-cor); border-radius: var(--borda-radius); position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 100; backdrop-filter: blur(10px); }
+    .main-header { width: 95%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(26, 12, 46, 0.6); border: 1px solid var(--borda-cor); border-radius: var(--borda-radius); position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 100; backdrop-filter: blur(10px); animation: slideDownHeader 0.5s ease-out forwards; }
+    @keyframes slideDownHeader { from { top: -80px; opacity: 0; } to { top: 10px; opacity: 1; } }
     .header-left { display: flex; align-items: center; gap: 1rem; }
-    .header-logo { font-family: 'Teko', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--texto); text-shadow: 0 0 10px var(--secundaria); display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .header-logo { font-family: 'Teko', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--texto); text-shadow: 0 0 10px var(--secundaria); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.3s ease; }
+    .header-logo:hover { transform: scale(1.1); }
     .header-logo .logo-emoji { font-size: 1.3em; animation: logoWiggle 3s ease-in-out infinite; display: inline-block; }
     .header-logo span { color: var(--secundaria); }
     .header-right { display: flex; align-items: center; gap: 0.5rem; }
@@ -42,18 +44,20 @@
     .auth-buttons button { background: none; border: 1px solid var(--secundaria); color: var(--texto); padding: 0.4rem 0.8rem; border-radius: var(--borda-radius); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; }
     .auth-buttons button.register-btn { background: var(--secundaria); color: var(--principal); }
     .auth-buttons button:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 0 15px var(--secundaria); filter: brightness(1.2); }
-    #home { text-align: center; max-width: 800px; animation: fadeIn 1s ease-in-out; margin-top: 0; }
-    #home h1 { font-family: 'Teko', sans-serif; font-size: 3.5rem; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px var(--destaque), 0 0 10px var(--secundaria); }
-    #home .subtitle { font-size: 1.1rem; max-width: 700px; margin: 1rem auto; opacity: 0.9; line-height: 1.4; }
-    #home .primary-cta { font-size: 1.3rem; padding: 1rem 2rem; }
+    #home { text-align: center; max-width: 800px; animation: fadeIn 1s ease-in-out 0.5s backwards; margin-top: 0; }
+    #home h1 { font-family: 'Teko', sans-serif; font-size: 3.5rem; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px var(--destaque), 0 0 10px var(--secundaria); animation: textPopIn 0.8s ease-out 0.7s backwards; }
+    @keyframes textPopIn { from { opacity:0; transform: scale(0.5); } to { opacity:1; transform: scale(1); } }
+    #home .subtitle { font-size: 1.1rem; max-width: 700px; margin: 1rem auto; opacity: 0; line-height: 1.4; animation: fadeIn 1s ease-in-out 1s forwards; }
+    #home .primary-cta { font-size: 1.3rem; padding: 1rem 2rem; animation: pulseButton 2s infinite ease-in-out 1.5s; }
+    @keyframes pulseButton { 0%, 100% { transform: scale(1); box-shadow: 0 0 15px var(--destaque); } 50% { transform: scale(1.05); box-shadow: 0 0 25px var(--destaque); } }
     .container { background: var(--gradiente-principal); padding: 2rem; border-radius: var(--borda-radius); box-shadow: var(--sombra-principal); width: 100%; max-width: 480px; text-align: center; position: relative; border: 1px solid var(--borda-cor); overflow: hidden; margin-top: 2rem; }
     h2 { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 0 15px var(--secundaria); font-size: 2rem; margin-bottom: 1.5rem; position: relative; display: inline-block; }
     h2::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 50px; height: 3px; background: var(--gradiente-destaque); border-radius: 3px; }
     .form-group { margin-bottom: 1rem; position: relative; }
-    .form-group i.fa-solid, .form-group i.fas { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; z-index: 2; }
+    .form-group i.fa-solid, .form-group i.fas { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; z-index: 2; transition: transform 0.3s ease; }
+    .form-group input:focus ~ i { color: var(--secundaria); transform: translateY(-50%) scale(1.1); }
     .form-group input { width: 100%; padding: 0.9rem 0.9rem 0.9rem 3rem; border: 1px solid var(--borda-cor); border-radius: var(--borda-radius); background: rgba(10, 12, 20, .5); color: var(--texto); font-size: 1rem; transition: all .3s ease; }
     .form-group input:focus { outline: 0; border-color: var(--secundaria); }
-    .form-group input:focus ~ i { color: var(--secundaria); }
     .password-wrapper { position: relative; }
     .toggle-password { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #999; cursor: pointer; z-index: 2;}
     .extra-options { display: flex; justify-content: flex-end; margin-bottom: 1rem; font-size: .8rem; }
@@ -72,11 +76,12 @@
     button:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
     button .fa-spinner { animation: spin 1s linear infinite; }
     .alerta { width: 90%; max-width: 400px; background: var(--principal); color: var(--texto); padding: 1rem 1.5rem; border-radius: var(--borda-radius); box-shadow: 0 5px 15px rgba(0, 0, 0, .3); position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; align-items: center; gap: 1rem; opacity: 0; animation: slideUpAndShake .7s ease forwards; border: 1px solid var(--borda-cor); }
-    .deposit-step { display: none; }.deposit-step.active { display: block; }
-    .amount-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }.amount-options button { font-size: 1.2em; padding: 1rem 0; }
-    .method-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }.method-options button { font-size: 1.1em; padding: 1.5rem 0; display: flex; flex-direction: column; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--borda-cor); }.method-options button:hover { background: var(--gradiente-botao); }.method-options button i { font-size: 2.5em; color: var(--secundaria); }
+    .deposit-step { display: none; }.deposit-step.active { display: block; animation: fadeInModalStep 0.5s ease; }
+    @keyframes fadeInModalStep { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .amount-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem; margin-bottom: 1rem; }.amount-options button { font-size: 1.2em; padding: 1rem 0; }
+    .method-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }.method-options button { font-size: 1.1em; padding: 1.5rem 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--borda-cor); }.method-options button:hover { background: var(--gradiente-botao); }.method-options button i { font-size: 2.5em; color: var(--secundaria); }
     .confirmation-area { text-align: center; }.confirmation-area img { max-width: 200px; background: #fff; padding: 10px; border-radius: var(--borda-radius); margin: 1rem 0; }.confirmation-area p { margin-bottom: 1.5rem; }.confirmation-area .form-group { margin-bottom: 1rem; text-align: left; }
-    .loading-area i, .success-area i { font-size: 6em; color: var(--secundaria); animation: spin 1.5s linear infinite; }.success-area i { animation: none; }
+    .loading-area i, .success-area i { font-size: 6em; color: var(--secundaria); animation: spin 1.5s linear infinite; }.success-area i { animation: none; color: var(--destaque); }
     .alerta.success { border-left: 5px solid var(--destaque); }.alerta.error { border-left: 5px solid var(--secundaria); }
     .game-lobby { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; perspective: 1000px; }.game-card { position: relative; border-radius: var(--borda-radius); cursor: pointer; transform-style: preserve-3d; transition: transform .6s; }.game-card:hover { transform: rotateY(180deg); }.game-card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--borda-radius); display: flex; flex-direction: column; justify-content: center; align-items: center; }.card-front { background: var(--gradiente-principal); border: 1px solid var(--borda-cor); }.card-back { background: var(--gradiente-destaque); transform: rotateY(180deg); font-size: 1em; padding: 1rem; font-weight: bold; line-height:1.3; }.game-card-placeholder { visibility: hidden; padding: 3rem 1rem; }.card-front i { font-size: 2.5em; color: var(--secundaria); margin-bottom: 1rem; }.card-front h3 { font-family: 'Teko', sans-serif; font-size: 1.5em; text-transform: uppercase; }
     .balance-display { margin-bottom: 1rem; font-size: 1.5em; }.balance-display span { font-weight: bold; color: var(--secundaria); font-size: 1.8em; text-shadow: 0 0 10px var(--secundaria); }
@@ -87,9 +92,17 @@
     #withdraw-btn:hover { box-shadow: 0 0 30px #ff416c; }
     .withdraw-modal-content p { font-size: 1.2rem; line-height: 1.5; margin-bottom: 1.5rem; }
     .withdraw-modal-content .troll-face { font-size: 4rem; color: var(--destaque); display: block; margin-bottom: 1rem; animation: trollWiggle 0.5s ease-in-out infinite alternate; }
-    @media (max-width: 768px) { .main-header { padding: 0.5rem 1rem; } .header-logo { font-size: 1.3rem; gap: 5px;} .header-right { gap: 0.5rem; } .header-balance { font-size: 0.8rem; padding: 0.3rem 0.6rem; } .auth-buttons button { font-size: 0.8rem; padding: 0.3rem 0.6rem; } #home h1 { font-size: 2.8rem; } #home .subtitle { font-size: 1rem; } #home .primary-cta { font-size: 1.1rem; padding: 0.8rem 1.5rem; } .container { padding: 1.5rem; margin-top: 1.5rem; } h2 { font-size: 1.8rem; } .form-group input { padding: 0.9rem 0.9rem 0.9rem 2.8rem; font-size: 0.9rem;} .form-group i.fa-solid, .form-group i.fas { left: 12px;} .toggle-password { right: 12px; } button { font-size: 1.1rem; padding: 0.9rem; } .game-lobby { grid-template-columns: 1fr; } #preloader .loader-icon { font-size: 4rem; } #preloader .loader-text { font-size: 1.5rem; } .modal-content h3 { font-size: 1.8rem; } .player-panel-buttons { grid-template-columns: 1fr; } }
-    @media (max-width: 480px) { .main-header { flex-direction: column; gap: 0.5rem; position: relative; top:0; transform: none; left: 0; width:100%; border-radius:0;} .header-right { width: 100%; justify-content: space-between; } .header-balance { order: -1; } #home h1 { font-size: 2.2rem; letter-spacing: 1px;} #home .subtitle { font-size: 0.9rem; } #preloader .loader-icon { font-size: 3.5rem; } #preloader .loader-text { font-size: 1.3rem; } .winner-ticker p { font-size: 0.8em; } }
+    .game-container { background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: var(--borda-radius); margin-top: 2rem; margin-bottom: 2rem; border: 1px solid var(--borda-cor); text-align: center; }
+    .game-container h3 { font-family: 'Teko', sans-serif; font-size: 1.8rem; color: var(--destaque); margin-bottom: 1rem; text-transform: uppercase; }
+    .slot-reels { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .reel { font-size: 3rem; padding: 1rem; background-color: rgba(0,0,0,0.4); border-radius: 10px; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; border: 2px solid var(--secundaria); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); transition: transform 0.1s ease-in-out; }
+    #spin-slot-btn { font-size: 1.1rem; padding: 0.8rem 1.5rem; margin-bottom: 1rem; }
+    .game-result-message { font-size: 1.1rem; color: var(--destaque); min-height: 2em; font-weight: bold; }
+    .reel-spinning { animation: spinReel 0.1s linear infinite alternate; }
+    @media (max-width: 768px) { .main-header { padding: 0.5rem 1rem; } .header-logo { font-size: 1.3rem; gap: 5px;} .header-right { gap: 0.5rem; } .header-balance { font-size: 0.8rem; padding: 0.3rem 0.6rem; } .auth-buttons button { font-size: 0.8rem; padding: 0.3rem 0.6rem; } #home h1 { font-size: 2.8rem; } #home .subtitle { font-size: 1rem; } #home .primary-cta { font-size: 1.1rem; padding: 0.8rem 1.5rem; } .container { padding: 1.5rem; margin-top: 1.5rem; } h2 { font-size: 1.8rem; } .form-group input { padding: 0.9rem 0.9rem 0.9rem 2.8rem; font-size: 0.9rem;} .form-group i.fa-solid, .form-group i.fas { left: 12px;} .toggle-password { right: 12px; } button { font-size: 1.1rem; padding: 0.9rem; } .game-lobby { grid-template-columns: 1fr; } #preloader .loader-icon { font-size: 4rem; } #preloader .loader-text { font-size: 1.5rem; } .modal-content h3 { font-size: 1.8rem; } .player-panel-buttons { grid-template-columns: 1fr; } .slot-reels { gap: 0.5rem;} .reel {font-size: 2.5rem; width: 60px; height: 60px; padding: 0.5rem;} }
+    @media (max-width: 480px) { .main-header { flex-direction: column; gap: 0.5rem; position: relative; top:0; transform: none; left: 0; width:100%; border-radius:0;} .header-right { width: 100%; justify-content: space-between; } .header-balance { order: -1; } #home h1 { font-size: 2.2rem; letter-spacing: 1px;} #home .subtitle { font-size: 0.9rem; } #preloader .loader-icon { font-size: 3.5rem; } #preloader .loader-text { font-size: 1.3rem; } .winner-ticker p { font-size: 0.8em; } .slot-reels { flex-direction: column; align-items:center;} }
     @keyframes spin { 100% { transform: rotate(360deg); } }
+    @keyframes spinReel { 0% { transform: translateY(-5px) rotateX(15deg); } 100% { transform: translateY(5px) rotateX(-15deg); } }
     @keyframes spinShake { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(15deg) scale(1.1); } 50% { transform: rotate(-10deg) scale(1); } 75% { transform: rotate(5deg) scale(1.05); } }
     @keyframes logoWiggle {0%, 100% {transform: rotate(-3deg);} 50% {transform: rotate(3deg);}}
     @keyframes ticker-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-120%); } }
@@ -97,6 +110,13 @@
     @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
     @keyframes slideUpAndShake { 0% {transform: translate(-50%, 100%); opacity: 0;} 60% {transform: translate(-50%, -10px); opacity: 1;} 70% {transform: translate(-50%, 10px) rotate(-2deg); } 80% {transform: translate(-50%, -5px) rotate(2deg); } 90% {transform: translate(-50%, 5px) rotate(-1deg); } 100% {transform: translate(-50%, 0px) rotate(0deg); opacity: 1;} }
     @keyframes trollWiggle { from { transform: rotate(-5deg) scale(1); } to { transform: rotate(5deg) scale(1.1); } }
+    .deadpool-alert-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .deadpool-alert-overlay.show { opacity: 1; visibility: visible; }
+    .deadpool-alert-content { background: var(--principal); border: 2px solid var(--secundaria); border-radius: var(--borda-radius); padding: 2rem; text-align: center; max-width: 450px; width: 90%; box-shadow: 0 0 30px var(--secundaria); transform: scale(0.7); transition: transform 0.3s ease-out .1s; }
+    .deadpool-alert-overlay.show .deadpool-alert-content { transform: scale(1); }
+    .deadpool-alert-content img { max-width: 200px; height: auto; border-radius: 10px; margin-bottom: 1.5rem; border: 3px solid var(--destaque); }
+    .deadpool-alert-content p { font-family: 'Teko', sans-serif; font-size: 1.8rem; line-height: 1.3; margin-bottom: 1.5rem; color: var(--texto); }
+    .deadpool-alert-content button { font-size: 1.1rem; padding: 0.8rem 1.5rem; }
   </style>
 </head>
 <body>
@@ -140,12 +160,24 @@
             <button id="deposit-btn">Engordar o porquinho <i class="fa-solid fa-piggy-bank"></i></button>
             <button id="withdraw-btn">Sacar (HAHA!) <i class="fa-solid fa-sack-xmark"></i></button>
           </div>
-          <h2 style="margin-top: 1rem;">Nossos Jogos "Justos"</h2>
+          
+          <div id="slot-machine-container" class="game-container">
+            <h3>Caça-Níquel da Chimichanga Cósmica!</h3>
+            <div class="slot-reels">
+              <div class="reel" id="reel1">🍓</div>
+              <div class="reel" id="reel2">🍕</div>
+              <div class="reel" id="reel3">🦄</div>
+            </div>
+            <button id="spin-slot-btn">Girar essa geringonça! (Custa R$5)</button>
+            <p id="slot-result" class="game-result-message"></p>
+          </div>
+
+          <h2 style="margin-top: 1rem;">Nossos Outros Jogos "Justos" (Em Breve!)</h2>
           <div class="game-lobby">
-              <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fas fa-bomb"></i><h3>Caça-Níquel da Sorte... Invertida</h3></div><div class="card-back"><span>Prêmio:</span> Um "parabéns" bem grande e a sensação de dever (não) cumprido.</div></div>
               <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fas fa-question-circle"></i><h3>Poker dos Sem-Noção</h3></div><div class="card-back"><span>Blefe à vontade!</span> Ninguém aqui sabe o que tá fazendo mesmo.</div></div>
               <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fas fa-compass"></i><h3>Roleta Russa... com Boletos</h3></div><div class="card-back"><span>Emocionante!</span> Gire e torça pra não cair na sua conta de luz.</div></div>
               <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fas fa-hand-paper"></i><h3>Blackjack do "Só Mais Uma"</h3></div><div class="card-back"><span>Estourar é uma arte.</span> E você, meu amigo, é um Picasso.</div></div>
+               <div class="game-card"><div class="game-card-placeholder"></div><div class="card-front"><i class="fa-solid fa-puzzle-piece"></i><h3>Adivinhe a Carta</h3></div><div class="card-back"><span>Onde está a Rainha de Copas?</span> Ou será o Coringa? Boa sorte, vai precisar!</div></div>
           </div>
           <button id="add-funds">Pegar Esmola Diária (não se acostuma!) <i class="fas fa-handshake-angle"></i></button>
           <div id="bonus-timer" class="hidden" style="margin-top: 1rem;"></div>
@@ -226,6 +258,7 @@
     };
 
     document.addEventListener('DOMContentLoaded', () => {
+        // --- SELETORES DE ELEMENTOS ---
         const authModal = document.getElementById('auth-modal');
         const closeAuthModalBtn = document.getElementById('close-auth-modal');
         const openLoginBtn = document.getElementById('open-login-btn');
@@ -268,12 +301,21 @@
         const withdrawModal = document.getElementById('withdraw-modal');
         const closeWithdrawModalBtn = document.getElementById('close-withdraw-modal');
         const confirmTrollWithdrawBtn = document.getElementById('confirm-troll-withdraw');
+        const spinSlotBtn = document.getElementById('spin-slot-btn');
+        const reel1 = document.getElementById('reel1');
+        const reel2 = document.getElementById('reel2');
+        const reel3 = document.getElementById('reel3');
+        const slotResult = document.getElementById('slot-result');
 
+        // --- ESTADO INICIAL E VARIÁVEIS GLOBAIS ---
         let saldo = parseFloat(localStorage.getItem('playerBalance')) || 0;
         let proximoBonus = localStorage.getItem('proximoBonus') ? new Date(localStorage.getItem('proximoBonus')) : null;
         let countdownInterval;
         let selectedAmount = 0;
+        const slotSymbols = ['🍓', '🍕', '🦄', '💩', '💰', '🌮', '💣', '💎'];
+        const custoGiro = 5;
 
+        // --- FUNÇÕES AUXILIARES ---
         window.playSound = (sound) => {
             const soundElement = document.getElementById(`sound-${sound}`);
             if (soundElement) {
@@ -336,48 +378,51 @@
         }
         
         togglePasswordButtons.forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                playSound('click');
-                const targetInputId = this.dataset.target;
-                const inputField = document.getElementById(targetInputId);
-                if (inputField) {
-                    const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
-                    inputField.setAttribute('type', type);
-                    this.classList.toggle('fa-eye');
-                    this.classList.toggle('fa-eye-slash');
-                }
-            });
+            if(toggle) { // Verifica se o elemento existe
+                toggle.addEventListener('click', function() {
+                    playSound('click');
+                    const targetInputId = this.dataset.target;
+                    const inputField = document.getElementById(targetInputId);
+                    if (inputField) {
+                        const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
+                        inputField.setAttribute('type', type);
+                        this.classList.toggle('fa-eye');
+                        this.classList.toggle('fa-eye-slash');
+                    }
+                });
+            }
         });
 
         window.openModal = function(formToShow = 'login') {
-            authModal.classList.add('show');
+            if(authModal) authModal.classList.add('show');
             if (formToShow === 'register') {
-                loginFormDiv.classList.add('hidden');
-                registerFormDiv.classList.remove('hidden');
+                if(loginFormDiv) loginFormDiv.classList.add('hidden');
+                if(registerFormDiv) registerFormDiv.classList.remove('hidden');
             } else {
-                loginFormDiv.classList.remove('hidden');
-                registerFormDiv.classList.add('hidden');
+                if(loginFormDiv) loginFormDiv.classList.remove('hidden');
+                if(registerFormDiv) registerFormDiv.classList.add('hidden');
             }
         }
         
         function showHomeAndReset() {
             playSound('click');
-            homeSection.classList.remove('hidden');
-            playerPanel.classList.add('hidden');
-            authButtonsHeader.classList.remove('hidden');
-            headerBalanceArea.classList.add('hidden');
-            authModal.classList.remove('show'); 
-            depositModal.classList.remove('show');
+            if(homeSection) homeSection.classList.remove('hidden');
+            if(playerPanel) playerPanel.classList.add('hidden');
+            if(authButtonsHeader) authButtonsHeader.classList.remove('hidden');
+            if(headerBalanceArea) headerBalanceArea.classList.add('hidden');
+            if(authModal) authModal.classList.remove('show'); 
+            if(depositModal) depositModal.classList.remove('show');
             if (withdrawModal) withdrawModal.classList.remove('show');
         }
-        document.querySelector('.header-logo').addEventListener('click', showHomeAndReset);
+        const logoElement = document.querySelector('.header-logo');
+        if(logoElement) logoElement.addEventListener('click', showHomeAndReset);
 
-        openLoginBtn.addEventListener('click', () => { playSound('click'); openModal('login'); });
-        openRegisterBtn.addEventListener('click', () => { playSound('click'); openModal('register'); });
+        if(openLoginBtn) openLoginBtn.addEventListener('click', () => { playSound('click'); openModal('login'); });
+        if(openRegisterBtn) openRegisterBtn.addEventListener('click', () => { playSound('click'); openModal('register'); });
         if(homeAcessarBtn) homeAcessarBtn.addEventListener('click', () => { playSound('click'); openModal('login'); });
-        closeAuthModalBtn.addEventListener('click', () => authModal.classList.remove('show'));
-        showRegisterFormBtn.addEventListener('click', () => { playSound('click'); loginFormDiv.classList.add('hidden'); registerFormDiv.classList.remove('hidden'); });
-        showLoginFormBtn.addEventListener('click', () => { playSound('click'); registerFormDiv.classList.add('hidden'); loginFormDiv.classList.remove('hidden'); });
+        if(closeAuthModalBtn) closeAuthModalBtn.addEventListener('click', () => authModal.classList.remove('show'));
+        if(showRegisterFormBtn) showRegisterFormBtn.addEventListener('click', () => { playSound('click'); loginFormDiv.classList.add('hidden'); registerFormDiv.classList.remove('hidden'); });
+        if(showLoginFormBtn) showLoginFormBtn.addEventListener('click', () => { playSound('click'); registerFormDiv.classList.add('hidden'); loginFormDiv.classList.remove('hidden'); });
         
         if(entrarBtn) {
             entrarBtn.addEventListener('click', () => {
@@ -386,25 +431,24 @@
                 const senha = loginSenhaInput.value.trim();
                 if (usuario.length < 3 || senha.length < 3) {
                     playSound('error');
-                    loginFormDiv.classList.add('shake');
+                    if(loginFormDiv) loginFormDiv.classList.add('shake');
                     mostrarAlerta('Tá de sacanagem? Preenche direito esses campos ou o Tio Pool vai te dar um cascudo virtual!', 'error');
-                    setTimeout(() => loginFormDiv.classList.remove('shake'), 600);
+                    setTimeout(() => {if(loginFormDiv) loginFormDiv.classList.remove('shake')}, 600);
                     return;
                 }
-                // Lógica de "Lembrar-me" - se o checkbox existir com id="rememberMe"
-                const rememberMeCheckbox = document.getElementById('rememberMe');
-                if (rememberMeCheckbox && rememberMeCheckbox.checked) { localStorage.setItem('rememberedUser', usuario); } else { localStorage.removeItem('rememberedUser'); }
+                // const rememberMeCheckbox = document.getElementById('rememberMe'); // Descomente se adicionar
+                // if (rememberMeCheckbox && rememberMeCheckbox.checked) { localStorage.setItem('rememberedUser', usuario); } else { localStorage.removeItem('rememberedUser'); }
                 
                 entrarBtn.disabled = true;
                 entrarBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validando sua "importância"...';
                 
                 setTimeout(() => {
-                    authModal.classList.remove('show');
-                    homeSection.classList.add('hidden');
-                    playerPanel.classList.remove('hidden');
-                    playerPanel.style.animation = 'fadeIn 0.5s ease-in-out';
-                    authButtonsHeader.classList.add('hidden');
-                    headerBalanceArea.classList.remove('hidden');
+                    if(authModal) authModal.classList.remove('show');
+                    if(homeSection) homeSection.classList.add('hidden');
+                    if(playerPanel) playerPanel.classList.remove('hidden');
+                    if(playerPanel) playerPanel.style.animation = 'fadeIn 0.5s ease-in-out';
+                    if(authButtonsHeader) authButtonsHeader.classList.add('hidden');
+                    if(headerBalanceArea) headerBalanceArea.classList.remove('hidden');
                     
                     entrarBtn.disabled = false;
                     entrarBtn.innerHTML = '<span class="btn-text">Entrar (por sua conta e risco)</span>';
@@ -427,12 +471,12 @@
                 const regEmail = registerEmailInput.value;
                 const regPass = registerPasswordInput.value;
                 if (!regEmail.includes('@') || regPass.length < 3) {
-                    playSound('error'); registerFormDiv.classList.add('shake');
+                    playSound('error'); if(registerFormDiv) registerFormDiv.classList.add('shake');
                     mostrarAlerta('Preencheu errado, espertão? Ou a senha é "123"? Assim não dá pra te levar a sério (nem eu me levo).', 'error');
-                    setTimeout(() => registerFormDiv.classList.remove('shake'), 600); return;
+                    setTimeout(() => {if(registerFormDiv) registerFormDiv.classList.remove('shake')}, 600); return;
                 }
-                mostrarAlerta('"Conta criada"! Viu? Nem doeu. Agora vai lá no login e prova que não é um bot.', 'success');
-                showLoginFormBtn.click();
+                mostrarAlerta('"Conta criada"! Viu? Nem doeu. Agora vai lá no login e finge que isso tudo é sério.', 'success');
+                if(showLoginFormBtn) showLoginFormBtn.click();
             });
         }
 
@@ -444,20 +488,20 @@
             alertContent.className = 'deadpool-alert-content';
             const imageUrl = "https://i.pinimg.com/originals/7a/89/47/7a89470a0f7a501542325099a6998599.gif";
             alertContent.innerHTML = `<img src="${imageUrl}" alt="Deadpool Torrando a Grana"><p>Aí sim, ${nomeJogador}! Seu dinheiro vai ser MUITO bem gasto aqui (pela gente, claro). Prepare-se para a glória... ou para comer miojo o resto do mês!</p><button id="deadpool-ok-btn">Entendido, Capitão Óbvio!</button>`;
-            alertOverlay.appendChild(alertContent);
             document.body.appendChild(alertOverlay);
             alertOverlay.classList.add('show');
-            document.getElementById('deadpool-ok-btn').addEventListener('click', () => { playSound('click'); alertOverlay.classList.remove('show'); setTimeout(() => { alertOverlay.remove(); }, 300); });
+            const deadpoolOkBtn = document.getElementById('deadpool-ok-btn');
+            if(deadpoolOkBtn) deadpoolOkBtn.addEventListener('click', () => { playSound('click'); alertOverlay.classList.remove('show'); setTimeout(() => { alertOverlay.remove(); }, 300); });
         }
         
-        function showDepositStep(stepNumber) { depositSteps.forEach(step => step.classList.remove('active')); const targetStep = document.getElementById(`step-${stepNumber}`); if(targetStep) targetStep.classList.add('active'); }
-        if(depositBtn) depositBtn.addEventListener('click', () => { playSound('click'); showDepositStep(1); customAmountInput.value = ''; depositModal.classList.add('show'); });
-        if(closeDepositModalBtn) closeDepositModalBtn.addEventListener('click', () => depositModal.classList.remove('show'));
-        depositModal.addEventListener('click', (e) => { if (e.target === depositModal) depositModal.classList.remove('show'); });
+        function showDepositStep(stepNumber) { if(depositSteps.length > 0) depositSteps.forEach(step => step.classList.remove('active')); const targetStep = document.getElementById(`step-${stepNumber}`); if(targetStep) targetStep.classList.add('active'); }
+        if(depositBtn) depositBtn.addEventListener('click', () => { playSound('click'); showDepositStep(1); if(customAmountInput) customAmountInput.value = ''; if(depositModal) depositModal.classList.add('show'); });
+        if(closeDepositModalBtn) closeDepositModalBtn.addEventListener('click', () => {if(depositModal) depositModal.classList.remove('show');});
+        if(depositModal) depositModal.addEventListener('click', (e) => { if (e.target === depositModal) depositModal.classList.remove('show'); });
         amountButtons.forEach(btn => { btn.addEventListener('click', () => { playSound('click');selectedAmount = parseFloat(btn.dataset.amount); showDepositStep(2); }); });
         if(continueToMethodsBtn) continueToMethodsBtn.addEventListener('click', () => { playSound('click');const customAmount = parseFloat(customAmountInput.value); if (isNaN(customAmount) || customAmount <= 0) { mostrarAlerta('Valor inválido. Quer doar 0 reais? Esperto você, hein?', 'error'); return; } selectedAmount = customAmount; showDepositStep(2); });
         methodButtons.forEach(btn => { btn.addEventListener('click', () => { playSound('click');const method = btn.dataset.method; showDepositStep(3); confirmationAreas.forEach(area => area.classList.add('hidden')); const targetArea = document.getElementById(`confirmation-${method}`); if(targetArea) targetArea.classList.remove('hidden'); }); });
-        confirmPaymentButtons.forEach(btn => { btn.addEventListener('click', () => { playSound('click');showDepositStep(4); loadingArea.classList.remove('hidden'); successArea.classList.add('hidden'); playSound('click'); setTimeout(() => { loadingArea.classList.add('hidden'); successArea.classList.remove('hidden'); playSound('cash'); const newBalance = saldo + selectedAmount; updateBalanceDisplay(newBalance, true); setTimeout(() => { depositModal.classList.remove('show'); }, 1500); }, 2500); }); });
+        confirmPaymentButtons.forEach(btn => { btn.addEventListener('click', () => { playSound('click');showDepositStep(4); if(loadingArea) loadingArea.classList.remove('hidden'); if(successArea) successArea.classList.add('hidden'); playSound('click'); setTimeout(() => { if(loadingArea) loadingArea.classList.add('hidden'); if(successArea) successArea.classList.remove('hidden'); playSound('cash'); const newBalance = saldo + selectedAmount; updateBalanceDisplay(newBalance, true); setTimeout(() => { if(depositModal) depositModal.classList.remove('show'); }, 1500); }, 2500); }); });
 
         function atualizarTimerBonus() {
             if(!addFundsBtn || !bonusTimerDiv) return; 
@@ -517,10 +561,47 @@
             });
         }
         
-        const rememberedUser = localStorage.getItem('rememberedUser');
-        if (rememberedUser && loginUsuarioInput) {
-            loginUsuarioInput.value = rememberedUser;
-            // Se você adicionar um checkbox "Lembrar-me" com id="rememberMe", descomente:
+        if (spinSlotBtn) {
+            spinSlotBtn.addEventListener('click', () => {
+                playSound('click');
+                if (saldo < custoGiro) {
+                    playSound('error');
+                    mostrarAlerta(`Ops! Você precisa de pelo menos R$${custoGiro.toFixed(2).replace('.',',')} pra essa palhaçada. Vá "depositar" mais, mão de vaca!`, 'error');
+                    return;
+                }
+                updateBalanceDisplay(saldo - custoGiro, true);
+                if(slotResult) slotResult.textContent = "Girandooooo... e torcendo pra não dar M*RDA!";
+                spinSlotBtn.disabled = true;
+                spinSlotBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sorteando sua desgraça...';
+                const reelsElements = [reel1, reel2, reel3];
+                reelsElements.forEach(r => {if(r) r.classList.add('reel-spinning'); });
+                let spinCount = 0;
+                const maxSpins = 20 + Math.floor(Math.random() * 10);
+                const spinInterval = setInterval(() => {
+                    reelsElements.forEach(r => { if(r) r.textContent = slotSymbols[Math.floor(Math.random() * slotSymbols.length)]; });
+                    spinCount++;
+                    if (spinCount >= maxSpins) {
+                        clearInterval(spinInterval);
+                        reelsElements.forEach(r => {if(r) r.classList.remove('reel-spinning'); });
+                        const r1_val = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                        const r2_val = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                        const r3_val = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                        if(reel1) reel1.textContent = r1_val; if(reel2) reel2.textContent = r2_val; if(reel3) reel3.textContent = r3_val;
+                        if (r1_val === '🦄' && r2_val === '🦄' && r3_val === '🦄') { playSound('cash'); const premio = 100; updateBalanceDisplay(saldo + premio, true); if(slotResult) slotResult.textContent = `UNICÓRNIOS! Você ganhou R$${premio}! ...Só que não. Mas toma aí uns trocados pra não chorar.`; }
+                        else if (r1_val === '💰' && r2_val === '💰' && r3_val === '💰') { playSound('cash'); const premio = 50; updateBalanceDisplay(saldo + premio, true); if(slotResult) slotResult.textContent = `DINHEIRO! R$${premio} pra você! (Não se acostuma, viu?)`; }
+                        else if (r1_val === '💩' && r2_val === '💩' && r3_val === '💩') { playSound('error'); if(slotResult) slotResult.textContent = "TRÊS COCÔS?! Que fase, hein? Limpa isso e tenta de novo, se tiver coragem."; }
+                        else if (r1_val === r2_val && r2_val === r3_val) { playSound('success'); const premioMenor = 10; updateBalanceDisplay(saldo + premioMenor, true); if(slotResult) slotResult.textContent = `Boa, uma trinca de ${r1_val}! Ganhou R$${premioMenor}. Já dá pra um chiclete.`; }
+                        else { playSound('error'); if(slotResult) slotResult.textContent = "NADA! Mais sorte da próxima vez (spoiler: provavelmente não)."; }
+                        spinSlotBtn.disabled = false;
+                        spinSlotBtn.innerHTML = 'Girar essa geringonça! (Custa R$5)';
+                    }
+                }, 100);
+            });
+        }
+
+        const rememberedUserStored = localStorage.getItem('rememberedUser');
+        if (rememberedUserStored && loginUsuarioInput) {
+            loginUsuarioInput.value = rememberedUserStored;
             // const rememberMeCheckbox = document.getElementById('rememberMe');
             // if(rememberMeCheckbox) rememberMeCheckbox.checked = true;
         }
