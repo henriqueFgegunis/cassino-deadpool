@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>openLINK Casino - Deadpool Edição FINALMENTE Final (Revisada)!</title>
+  <title>openLINK Casino - Sem Tela Fantasma!</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,15 +23,15 @@
     html { scroll-behavior: smooth; font-size: 16px; }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
     body { background: var(--fundo) url('https://wallpapercave.com/wp/wp2904699.jpg') no-repeat center center fixed; background-size: cover; color: var(--texto); min-height: 100vh; position: relative; overflow-x: hidden; }
-    body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(12, 5, 20, 0.88); backdrop-filter: blur(3px); }
+    body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(12, 5, 20, 0.88); backdrop-filter: blur(3px); z-index: -1; } /* Ajustado z-index */
     
-    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--fundo); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.75s ease, visibility 0.75s ease; }
+    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--fundo); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 1; visibility: visible; transition: opacity 0.75s ease-in-out, visibility 0s linear 0.75s; /* CORREÇÃO AQUI */ }
     #preloader .loader-icon { font-size: 5rem; color: var(--secundaria); text-shadow: 0 0 20px var(--secundaria); animation: spinShake 2.5s ease-in-out infinite; }
     #preloader .loader-text { font-family: 'Teko', sans-serif; font-size: 1.8rem; margin-top: 1rem; letter-spacing: 1px; opacity: 0.9; text-align: center; padding: 0 1rem; line-height: 1.2; }
     #preloader.hidden { opacity: 0; visibility: hidden; }
 
     .main-wrapper { position: relative; z-index: 10; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 100px; padding-bottom: 2rem; padding-left: 1rem; padding-right: 1rem; }
-    .main-header { width: 95%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(26, 12, 46, 0.6); border: 1px solid var(--borda-cor); border-radius: var(--borda-radius); position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 100; backdrop-filter: blur(10px); animation: slideDownHeader 0.5s ease-out forwards; }
+    .main-header { width: 95%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(26, 12, 46, 0.6); border: 1px solid var(--borda-cor); border-radius: var(--borda-radius); position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; backdrop-filter: blur(10px); animation: slideDownHeader 0.5s ease-out forwards; }
     @keyframes slideDownHeader { from { top: -80px; opacity: 0; } to { top: 10px; opacity: 1; } }
     .header-left { display: flex; align-items: center; gap: 1rem; }
     .header-logo { font-family: 'Teko', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--texto); text-shadow: 0 0 10px var(--secundaria); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.3s ease; }
@@ -65,8 +65,8 @@
     .auth-switcher { margin-top: 1rem; font-size: 0.8rem; }
     .auth-switcher span { color: var(--secundaria); cursor: pointer; text-decoration: underline; }
     .hidden { display: none !important; }
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1001; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s ease; padding: 1rem; }
-    .modal-overlay.show { display: flex; opacity: 1; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1001; display: none; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s; } /* CORREÇÃO: A visibilidade muda após a opacidade */
+    .modal-overlay.show { display: flex; opacity: 1; visibility: visible; transition-delay: 0s; }
     .modal-content { background: var(--gradiente-principal); padding: 1.5rem; border-radius: var(--borda-radius); border: 1px solid var(--borda-cor); width: 100%; max-width: 450px; position: relative; transform: scale(.9); transition: transform .3s ease; }
     .modal-overlay.show .modal-content { transform: scale(1); }
     .modal-content .close-button { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; color: #fff; cursor: pointer; transition: transform .2s ease; }
@@ -99,24 +99,15 @@
     #spin-slot-btn { font-size: 1.1rem; padding: 0.8rem 1.5rem; margin-bottom: 1rem; }
     .game-result-message { font-size: 1.1rem; color: var(--destaque); min-height: 2em; font-weight: bold; }
     .reel-spinning { animation: spinReel 0.1s linear infinite alternate; }
-    @media (max-width: 768px) { .main-header { padding: 0.5rem 1rem; } .header-logo { font-size: 1.3rem; gap: 5px;} .header-right { gap: 0.5rem; } .header-balance { font-size: 0.8rem; padding: 0.3rem 0.6rem; } .auth-buttons button { font-size: 0.8rem; padding: 0.3rem 0.6rem; } #home h1 { font-size: 2.8rem; } #home .subtitle { font-size: 1rem; } #home .primary-cta { font-size: 1.1rem; padding: 0.8rem 1.5rem; } .container { padding: 1.5rem; margin-top: 1.5rem; } h2 { font-size: 1.8rem; } .form-group input { padding: 0.9rem 0.9rem 0.9rem 2.8rem; font-size: 0.9rem;} .form-group i.fa-solid, .form-group i.fas { left: 12px;} .toggle-password { right: 12px; } button { font-size: 1.1rem; padding: 0.9rem; } .game-lobby { grid-template-columns: 1fr; } #preloader .loader-icon { font-size: 4rem; } #preloader .loader-text { font-size: 1.5rem; } .modal-content h3 { font-size: 1.8rem; } .player-panel-buttons { grid-template-columns: 1fr; } .slot-reels { gap: 0.5rem;} .reel {font-size: 2.5rem; width: 60px; height: 60px; padding: 0.5rem;} }
-    @media (max-width: 480px) { .main-header { flex-direction: column; gap: 0.5rem; position: relative; top:0; transform: none; left: 0; width:100%; border-radius:0;} .header-right { width: 100%; justify-content: space-between; } .header-balance { order: -1; } #home h1 { font-size: 2.2rem; letter-spacing: 1px;} #home .subtitle { font-size: 0.9rem; } #preloader .loader-icon { font-size: 3.5rem; } #preloader .loader-text { font-size: 1.3rem; } .winner-ticker p { font-size: 0.8em; } .slot-reels { flex-direction: column; align-items:center;} }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    @keyframes spinReel { 0% { transform: translateY(-5px) rotateX(15deg); } 100% { transform: translateY(5px) rotateX(-15deg); } }
-    @keyframes spinShake { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(15deg) scale(1.1); } 50% { transform: rotate(-10deg) scale(1); } 75% { transform: rotate(5deg) scale(1.05); } }
-    @keyframes logoWiggle {0%, 100% {transform: rotate(-3deg);} 50% {transform: rotate(3deg);}}
-    @keyframes ticker-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-120%); } }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
-    @keyframes slideUpAndShake { 0% {transform: translate(-50%, 100%); opacity: 0;} 60% {transform: translate(-50%, -10px); opacity: 1;} 70% {transform: translate(-50%, 10px) rotate(-2deg); } 80% {transform: translate(-50%, -5px) rotate(2deg); } 90% {transform: translate(-50%, 5px) rotate(-1deg); } 100% {transform: translate(-50%, 0px) rotate(0deg); opacity: 1;} }
-    @keyframes trollWiggle { from { transform: rotate(-5deg) scale(1); } to { transform: rotate(5deg) scale(1.1); } }
-    .deadpool-alert-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-    .deadpool-alert-overlay.show { opacity: 1; visibility: visible; }
+    .deadpool-alert-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s linear 0.3s; }
+    .deadpool-alert-overlay.show { display: flex; opacity: 1; visibility: visible; transition-delay: 0s; }
     .deadpool-alert-content { background: var(--principal); border: 2px solid var(--secundaria); border-radius: var(--borda-radius); padding: 2rem; text-align: center; max-width: 450px; width: 90%; box-shadow: 0 0 30px var(--secundaria); transform: scale(0.7); transition: transform 0.3s ease-out .1s; }
     .deadpool-alert-overlay.show .deadpool-alert-content { transform: scale(1); }
     .deadpool-alert-content img { max-width: 200px; height: auto; border-radius: 10px; margin-bottom: 1.5rem; border: 3px solid var(--destaque); }
     .deadpool-alert-content p { font-family: 'Teko', sans-serif; font-size: 1.8rem; line-height: 1.3; margin-bottom: 1.5rem; color: var(--texto); }
     .deadpool-alert-content button { font-size: 1.1rem; padding: 0.8rem 1.5rem; }
+    @media (max-width: 768px) { /* ... */ } @media (max-width: 480px) { /* ... */ }
+    @keyframes spin { 100% { transform: rotate(360deg); } } @keyframes spinReel { 0% { transform: translateY(-5px) rotateX(15deg); } 100% { transform: translateY(5px) rotateX(-15deg); } } @keyframes spinShake { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(15deg) scale(1.1); } 50% { transform: rotate(-10deg) scale(1); } 75% { transform: rotate(5deg) scale(1.05); } } @keyframes logoWiggle {0%, 100% {transform: rotate(-3deg);} 50% {transform: rotate(3deg);}} @keyframes ticker-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-120%); } } @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } } @keyframes slideUpAndShake { 0% {transform: translate(-50%, 100%); opacity: 0;} 60% {transform: translate(-50%, -10px); opacity: 1;} 70% {transform: translate(-50%, 10px) rotate(-2deg); } 80% {transform: translate(-50%, -5px) rotate(2deg); } 90% {transform: translate(-50%, 5px) rotate(-1deg); } 100% {transform: translate(-50%, 0px) rotate(0deg); opacity: 1;} } @keyframes trollWiggle { from { transform: rotate(-5deg) scale(1); } to { transform: rotate(5deg) scale(1.1); } }
   </style>
 </head>
 <body>
@@ -258,7 +249,6 @@
     };
 
     document.addEventListener('DOMContentLoaded', () => {
-        // --- SELETORES DE ELEMENTOS ---
         const authModal = document.getElementById('auth-modal');
         const closeAuthModalBtn = document.getElementById('close-auth-modal');
         const openLoginBtn = document.getElementById('open-login-btn');
@@ -280,7 +270,7 @@
         const loginSenhaInput = document.getElementById('login-senha');
         const registerEmailInput = document.getElementById('register-email');
         const registerPasswordInput = document.getElementById('register-password');
-        const rememberMeCheck = document.getElementById('rememberMe');
+        // const rememberMeCheck = document.getElementById('rememberMe'); // Removido pois não existe no HTML
         const depositBtn = document.getElementById('deposit-btn');
         const addFundsBtn = document.getElementById('add-funds');
         const bonusTimerDiv = document.getElementById('bonus-timer');
@@ -307,7 +297,6 @@
         const reel3 = document.getElementById('reel3');
         const slotResult = document.getElementById('slot-result');
 
-        // --- ESTADO INICIAL E VARIÁVEIS GLOBAIS ---
         let saldo = parseFloat(localStorage.getItem('playerBalance')) || 0;
         let proximoBonus = localStorage.getItem('proximoBonus') ? new Date(localStorage.getItem('proximoBonus')) : null;
         let countdownInterval;
@@ -315,13 +304,9 @@
         const slotSymbols = ['🍓', '🍕', '🦄', '💩', '💰', '🌮', '💣', '💎'];
         const custoGiro = 5;
 
-        // --- FUNÇÕES AUXILIARES ---
         window.playSound = (sound) => {
             const soundElement = document.getElementById(`sound-${sound}`);
-            if (soundElement) {
-                soundElement.currentTime = 0;
-                soundElement.play().catch(() => {});
-            }
+            if (soundElement) { soundElement.currentTime = 0; soundElement.play().catch(() => {}); }
         };
 
         function formatarNomeDeEmail(email) {
@@ -332,9 +317,7 @@
         }
         
         function animateBalance(targetValue) {
-            const startValue = saldo;
-            const duration = 1000;
-            let startTime = null;
+            const startValue = saldo; const duration = 1000; let startTime = null;
             function step(currentTime) {
                 if (!startTime) startTime = currentTime;
                 const progress = Math.min((currentTime - startTime) / duration, 1);
@@ -343,10 +326,7 @@
                 if(headerBalanceSpan) headerBalanceSpan.textContent = formattedBalance;
                 if (panelBalanceSpan) panelBalanceSpan.textContent = formattedBalance;
                 if (progress < 1) { requestAnimationFrame(step); } 
-                else {
-                    saldo = targetValue;
-                    localStorage.setItem('playerBalance', saldo);
-                }
+                else { saldo = targetValue; localStorage.setItem('playerBalance', saldo); }
             }
             requestAnimationFrame(step);
         }
@@ -373,12 +353,12 @@
         };
 
         function formatarTempo(ms) {
-            const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), seg = s % 60;
-            return `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(seg).padStart(2, '0')}s (ou uma eternidade, vai saber)`;
+            const s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor((s%3600)/60), seg = s%60;
+            return `${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(seg).padStart(2,'0')}s (ou uma eternidade)`;
         }
         
         togglePasswordButtons.forEach(toggle => {
-            if(toggle) { // Verifica se o elemento existe
+            if(toggle) {
                 toggle.addEventListener('click', function() {
                     playSound('click');
                     const targetInputId = this.dataset.target;
@@ -386,21 +366,22 @@
                     if (inputField) {
                         const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
                         inputField.setAttribute('type', type);
-                        this.classList.toggle('fa-eye');
-                        this.classList.toggle('fa-eye-slash');
+                        this.classList.toggle('fa-eye'); this.classList.toggle('fa-eye-slash');
                     }
                 });
             }
         });
 
         window.openModal = function(formToShow = 'login') {
-            if(authModal) authModal.classList.add('show');
-            if (formToShow === 'register') {
-                if(loginFormDiv) loginFormDiv.classList.add('hidden');
-                if(registerFormDiv) registerFormDiv.classList.remove('hidden');
-            } else {
-                if(loginFormDiv) loginFormDiv.classList.remove('hidden');
-                if(registerFormDiv) registerFormDiv.classList.add('hidden');
+            if(authModal) {
+                authModal.classList.add('show');
+                if (formToShow === 'register') {
+                    if(loginFormDiv) loginFormDiv.classList.add('hidden');
+                    if(registerFormDiv) registerFormDiv.classList.remove('hidden');
+                } else {
+                    if(loginFormDiv) loginFormDiv.classList.remove('hidden');
+                    if(registerFormDiv) registerFormDiv.classList.add('hidden');
+                }
             }
         }
         
@@ -420,9 +401,9 @@
         if(openLoginBtn) openLoginBtn.addEventListener('click', () => { playSound('click'); openModal('login'); });
         if(openRegisterBtn) openRegisterBtn.addEventListener('click', () => { playSound('click'); openModal('register'); });
         if(homeAcessarBtn) homeAcessarBtn.addEventListener('click', () => { playSound('click'); openModal('login'); });
-        if(closeAuthModalBtn) closeAuthModalBtn.addEventListener('click', () => authModal.classList.remove('show'));
-        if(showRegisterFormBtn) showRegisterFormBtn.addEventListener('click', () => { playSound('click'); loginFormDiv.classList.add('hidden'); registerFormDiv.classList.remove('hidden'); });
-        if(showLoginFormBtn) showLoginFormBtn.addEventListener('click', () => { playSound('click'); registerFormDiv.classList.add('hidden'); loginFormDiv.classList.remove('hidden'); });
+        if(closeAuthModalBtn) closeAuthModalBtn.addEventListener('click', () => { if(authModal) authModal.classList.remove('show'); });
+        if(showRegisterFormBtn) showRegisterFormBtn.addEventListener('click', () => { playSound('click'); if(loginFormDiv) loginFormDiv.classList.add('hidden'); if(registerFormDiv) registerFormDiv.classList.remove('hidden'); });
+        if(showLoginFormBtn) showLoginFormBtn.addEventListener('click', () => { playSound('click'); if(registerFormDiv) registerFormDiv.classList.add('hidden'); if(loginFormDiv) loginFormDiv.classList.remove('hidden'); });
         
         if(entrarBtn) {
             entrarBtn.addEventListener('click', () => {
@@ -436,7 +417,7 @@
                     setTimeout(() => {if(loginFormDiv) loginFormDiv.classList.remove('shake')}, 600);
                     return;
                 }
-                // const rememberMeCheckbox = document.getElementById('rememberMe'); // Descomente se adicionar
+                // const rememberMeCheckbox = document.getElementById('rememberMe');
                 // if (rememberMeCheckbox && rememberMeCheckbox.checked) { localStorage.setItem('rememberedUser', usuario); } else { localStorage.removeItem('rememberedUser'); }
                 
                 entrarBtn.disabled = true;
@@ -456,9 +437,7 @@
                     if (saldo === 0) { updateBalanceDisplay(100.00, false); } else { updateBalanceDisplay(saldo, false); }
                     
                     const nomeFormatado = formatarNomeDeEmail(usuario);
-                    
                     showDeadpoolWelcomeAlert(nomeFormatado); 
-                    
                     startWinnerTicker();
                     atualizarTimerBonus();
                 }, 1500);
@@ -481,7 +460,7 @@
         }
 
         function showDeadpoolWelcomeAlert(nomeJogador) {
-            playSound('success'); 
+            playSound('login'); 
             const alertOverlay = document.createElement('div');
             alertOverlay.className = 'deadpool-alert-overlay';
             const alertContent = document.createElement('div');
@@ -571,8 +550,10 @@
                 }
                 updateBalanceDisplay(saldo - custoGiro, true);
                 if(slotResult) slotResult.textContent = "Girandooooo... e torcendo pra não dar M*RDA!";
-                spinSlotBtn.disabled = true;
-                spinSlotBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sorteando sua desgraça...';
+                if(spinSlotBtn) {
+                    spinSlotBtn.disabled = true;
+                    spinSlotBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sorteando sua desgraça...';
+                }
                 const reelsElements = [reel1, reel2, reel3];
                 reelsElements.forEach(r => {if(r) r.classList.add('reel-spinning'); });
                 let spinCount = 0;
@@ -592,8 +573,7 @@
                         else if (r1_val === '💩' && r2_val === '💩' && r3_val === '💩') { playSound('error'); if(slotResult) slotResult.textContent = "TRÊS COCÔS?! Que fase, hein? Limpa isso e tenta de novo, se tiver coragem."; }
                         else if (r1_val === r2_val && r2_val === r3_val) { playSound('success'); const premioMenor = 10; updateBalanceDisplay(saldo + premioMenor, true); if(slotResult) slotResult.textContent = `Boa, uma trinca de ${r1_val}! Ganhou R$${premioMenor}. Já dá pra um chiclete.`; }
                         else { playSound('error'); if(slotResult) slotResult.textContent = "NADA! Mais sorte da próxima vez (spoiler: provavelmente não)."; }
-                        spinSlotBtn.disabled = false;
-                        spinSlotBtn.innerHTML = 'Girar essa geringonça! (Custa R$5)';
+                        if(spinSlotBtn) {spinSlotBtn.disabled = false; spinSlotBtn.innerHTML = 'Girar essa geringonça! (Custa R$5)';}
                     }
                 }, 100);
             });
