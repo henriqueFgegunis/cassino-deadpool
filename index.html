@@ -12,7 +12,7 @@
   <header>
     <nav class="navbar">
       <div class="logo">
-        <img src="https://placehold.co/100x100/9d4edd/white?text=IS" alt="Infinity Slots Logo">
+        <img src="images/infinity_slots_logo.png" alt="Infinity Slots Logo">
         <h1>Infinity Slots</h1>
       </div>
       <ul class="nav-links">
@@ -35,7 +35,7 @@
     </nav>
   </header>
 
-  <section class="banner">
+  <section class="banner" style="background-image: url('images/banner/casino_banner.png');">
     <div class="banner-content">
       <h2>Bem-vindo ao Infinity Slots</h2>
       <p>Onde a diversão é infinita! Jogue, aposte e divirta-se com nossos jogos exclusivos.</p>
@@ -50,7 +50,7 @@
     <div class="games-grid">
       <div class="game-card">
         <div class="game-image">
-          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Mina+de+Ouro" alt="Mina de Ouro">
+          <img src="images/games/mines_game.png" alt="Mina de Ouro">
         </div>
         <div class="game-info">
           <h3>Mina de Ouro</h3>
@@ -60,7 +60,7 @@
       </div>
        <div class="game-card">
         <div class="game-image">
-          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Slots" alt="Caça-níqueis">
+          <img src="images/games/slot_machine.png" alt="Caça-níqueis">
         </div>
         <div class="game-info">
           <h3>Caça-níqueis</h3>
@@ -70,7 +70,7 @@
       </div>
       <div class="game-card">
         <div class="game-image">
-          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Roleta" alt="Roleta">
+          <img src="images/games/roulette_wheel.png" alt="Roleta">
         </div>
         <div class="game-info">
           <h3>Roleta</h3>
@@ -80,7 +80,7 @@
       </div>
       <div class="game-card">
         <div class="game-image">
-          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Blackjack" alt="Blackjack">
+          <img src="images/games/blackjack_table.png" alt="Blackjack">
         </div>
         <div class="game-info">
           <h3>Blackjack</h3>
@@ -90,7 +90,7 @@
       </div>
       <div class="game-card">
         <div class="game-image">
-          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Raspadinha" alt="Raspadinha">
+          <img src="https://placehold.co/400x300/1a1a2e/9d4edd?text=Raspadinha" alt="Raspadinha">
         </div>
         <div class="game-info">
           <h3>Raspadinha</h3>
@@ -100,7 +100,7 @@
       </div>
        <div class="game-card">
         <div class="game-image">
-          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Crash" alt="Crash">
+          <img src="images/games/crash_game.png" alt="Crash">
         </div>
         <div class="game-info">
           <h3>Crash</h3>
@@ -110,12 +110,22 @@
       </div>
        <div class="game-card">
         <div class="game-image">
-          <img src="https://placehold.co/400x300/2a2a2a/9d4edd?text=Poker" alt="Poker">
+          <img src="https://placehold.co/400x300/1a1a2e/9d4edd?text=Poker" alt="Poker">
         </div>
         <div class="game-info">
           <h3>Poker</h3>
           <p>Teste suas habilidades no jogo de cartas mais famoso do mundo.</p>
           <button class="btn" onclick="openGame('poker')">Jogar</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="game-image">
+          <img src="https://placehold.co/400x300/1a1a2e/9d4edd?text=Baccarat" alt="Baccarat">
+        </div>
+        <div class="game-info">
+          <h3>Baccarat</h3>
+          <p>Aposte no jogador, no banco ou no empate neste clássico jogo de cartas.</p>
+          <button class="btn" onclick="openGame('baccarat')">Jogar</button>
         </div>
       </div>
     </div>
@@ -177,7 +187,7 @@
         <h3>Depósito via PIX</h3>
         <div class="pix-container">
           <div class="pix-qrcode">
-            <img src="images/pix_qrcode.png" alt="QR Code PIX">
+            <img src="https://placehold.co/300x300/ffffff/000000?text=QR+Code+PIX" alt="QR Code PIX">
           </div>
           <div class="pix-code">
             <input type="text" value="00020126580014BR.GOV.BCB.PIX0136infinityslots@email.com5204000053039865802BR5913Infinity Slots6008Sao Paulo62070503***6304E2CA" readonly>
@@ -279,7 +289,8 @@
         <span>Próximo Prêmio: <span id="mines-next-prize">R$ 0.00</span></span>
       </div>
       <div class="mines-grid" id="mines-grid">
-        </div>
+        <!-- Células geradas via JavaScript -->
+      </div>
        <div class="form-group">
         <label for="mines-bet-amount">Valor da Aposta (R$)</label>
         <input type="number" id="mines-bet-amount" min="1" step="1" value="10">
@@ -388,19 +399,19 @@
                 <div class="card">?</div>
                 <div class="card">?</div>
             </div>
-            <h3>Sua Mão</h3>
+            <h3>Suas Cartas</h3>
             <div class="player-hand">
                 <div class="card">?</div>
                 <div class="card">?</div>
             </div>
             <div class="form-group">
                 <label for="poker-bet-amount">Valor da Aposta (R$)</label>
-                <input type="number" id="poker-bet-amount" value="10" disabled>
+                <input type="number" id="poker-bet-amount" min="5" step="5" value="10">
             </div>
             <div class="game-controls">
                 <button class="game-btn" disabled>Apostar</button>
-                <button class="game-btn" disabled>Passar</button>
-                <button class="game-btn" disabled>Desistir</button>
+                <button class="game-btn" disabled>Aumentar</button>
+                <button class="game-btn" disabled>Correr</button>
                 <button class="game-btn" onclick="closeGame()">Sair</button>
             </div>
         </div>
@@ -409,123 +420,125 @@
     <div id="crash-game" class="game-container" style="display: none;">
         <h2>Crash</h2>
         <div class="crash-container">
-            <p style="text-align:center; margin-bottom: 20px;">Em breve: Jogo de Crash!</p>
             <div class="crash-graph">
-                <div class="crash-multiplier-display">1.00x</div>
+                <div class="crash-multiplier-display" id="crash-multiplier">1.00x</div>
             </div>
             <div class="form-group">
                 <label for="crash-bet-amount">Valor da Aposta (R$)</label>
-                <input type="number" id="crash-bet-amount" value="10" disabled>
+                <input type="number" id="crash-bet-amount" min="1" step="1" value="10">
             </div>
             <div class="game-controls">
-                <button class="game-btn" disabled>Apostar</button>
-                <button class="game-btn" disabled>Retirar</button>
+                <button class="game-btn" id="start-crash-btn" onclick="startCrashGame()">Iniciar</button>
+                <button class="game-btn" id="cashout-crash-btn" onclick="cashoutCrash()" disabled>Retirar</button>
                 <button class="game-btn" onclick="closeGame()">Sair</button>
             </div>
         </div>
     </div>
-
   </div>
 
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Sobre Nós</h3>
+        <ul>
+          <li><a href="#">Quem Somos</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Jogo Responsável</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Suporte</h3>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contato</a></li>
+          <li><a href="#">Regras dos Jogos</a></li>
+          <li><a href="#">Como Jogar</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Métodos de Pagamento</h3>
+        <ul>
+          <li><a href="#">Cartão de Crédito</a></li>
+          <li><a href="#">PIX</a></li>
+          <li><a href="#">Boleto Bancário</a></li>
+          <li><a href="#">Transferência Bancária</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Redes Sociais</h3>
+        <ul>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Infinity Slots. Todos os direitos reservados. Jogue com responsabilidade. +18</p>
+    </div>
+  </footer>
+
+  <!-- Modal de Login e Registro -->
   <div id="auth-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2 class="modal-title">Acesse sua conta</h2>
       <div class="modal-tabs">
         <div class="tab active" onclick="switchTab('login')">Login</div>
-        <div class="tab" onclick="switchTab('register')">Registro</div>
+        <div class="tab" onclick="switchTab('register')">Cadastro</div>
       </div>
       <div id="login-tab" class="tab-content active">
-        <h3 class="modal-title">Entrar na sua conta</h3>
         <form id="login-form">
           <div class="form-group">
             <label for="login-email">E-mail</label>
-            <input type="email" id="login-email" placeholder="seu@email.com" required>
+            <input type="email" id="login-email" placeholder="Seu e-mail" required>
           </div>
           <div class="form-group">
             <label for="login-password">Senha</label>
             <input type="password" id="login-password" placeholder="Sua senha" required>
           </div>
           <button type="button" class="btn" onclick="login()">Entrar</button>
+          <p style="text-align: center; margin-top: 15px;">
+            <a href="#" style="color: var(--primary-color);">Esqueceu sua senha?</a>
+          </p>
         </form>
-        <p style="text-align: center; margin-top: 20px;">
-          <a href="#" style="color: var(--primary-color);">Esqueceu sua senha?</a>
-        </p>
       </div>
       <div id="register-tab" class="tab-content">
-        <h3 class="modal-title">Criar uma nova conta</h3>
         <form id="register-form">
           <div class="form-group">
-            <label for="register-name">Nome completo</label>
+            <label for="register-name">Nome Completo</label>
             <input type="text" id="register-name" placeholder="Seu nome completo" required>
           </div>
           <div class="form-group">
             <label for="register-email">E-mail</label>
-            <input type="email" id="register-email" placeholder="seu@email.com" required>
+            <input type="email" id="register-email" placeholder="Seu e-mail" required>
           </div>
           <div class="form-group">
             <label for="register-password">Senha</label>
-            <input type="password" id="register-password" placeholder="Crie uma senha forte" required>
+            <input type="password" id="register-password" placeholder="Crie uma senha" required>
           </div>
           <div class="form-group">
-            <label for="register-confirm">Confirmar senha</label>
+            <label for="register-confirm">Confirmar Senha</label>
             <input type="password" id="register-confirm" placeholder="Confirme sua senha" required>
           </div>
-          <button type="button" class="btn" onclick="register()">Registrar</button>
+          <button type="button" class="btn" onclick="register()">Cadastrar</button>
         </form>
       </div>
     </div>
   </div>
 
+  <!-- Notificação -->
   <div class="notification" id="notification">
-    <span class="notification-icon"><i class="fas fa-info-circle"></i></span>
-    <span id="notification-message">Mensagem de notificação</span>
-    <span class="notification-close" onclick="closeNotification()">&times;</span>
+    <div class="notification-icon">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    <div class="notification-message">Mensagem de notificação</div>
+    <div class="notification-close" onclick="closeNotification()">
+      <i class="fas fa-times"></i>
+    </div>
   </div>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Infinity Slots</h3>
-        <ul>
-          <li><a href="#">Sobre nós</a></li>
-          <li><a href="#">Termos e Condições</a></li>
-          <li><a href="#">Política de Privacidade</a></li>
-          <li><a href="#">Jogo Responsável</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Jogos</h3>
-        <ul>
-          <li><a href="#games">Mina de Ouro</a></li>
-          <li><a href="#games">Caça-níqueis</a></li>
-          <li><a href="#games">Roleta</a></li>
-          <li><a href="#games">Blackjack</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Pagamentos</h3>
-        <ul>
-          <li><a href="#deposit">Depósitos</a></li>
-          <li><a href="#withdraw">Saques</a></li>
-          <li><a href="#">Métodos de Pagamento</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Contato</h3>
-        <ul>
-          <li><a href="mailto:suporte@infinityslots.com">suporte@infinityslots.com</a></li>
-          <li><a href="#">Chat ao vivo</a></li>
-          <li><a href="#">WhatsApp</a></li>
-          <li><a href="#">Telegram</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2025 Infinity Slots. Todos os direitos reservados. Apenas para maiores de 18 anos.</p>
-      <p class="feature-accent">Lembre-se: Jogue com responsabilidade!</p>
-    </div>
-  </footer>
 
   <script src="script.js"></script>
 </body>
