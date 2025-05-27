@@ -16,11 +16,12 @@
         <h1>Infinity Slots</h1>
       </div>
       <ul class="nav-links">
-        <li><a href="#" class="active">Início</a></li>
-        <li><a href="#games">Jogos</a></li>
-        <li><a href="#deposit">Depósito</a></li>
-        <li><a href="#withdraw">Saque</a></li>
-        <li><a href="#promotions">Promoções</a></li>
+        <li><a href="#" class="active" data-tab="home">Início</a></li>
+        <li><a href="#" data-tab="casino">Cassino</a></li>
+        <li><a href="#" data-tab="originals">Originais</a></li>
+        <li><a href="#" data-tab="deposit">Depósito</a></li>
+        <li><a href="#" data-tab="withdraw">Saque</a></li>
+        <li><a href="#" data-tab="promotions">Promoções</a></li>
         <li><a href="#" id="login-btn">Login</a></li>
       </ul>
       <div class="user-balance">
@@ -35,253 +36,292 @@
     </nav>
   </header>
 
-  <section class="banner" style="background-image: url('images/banner/casino_banner.png');">
-    <div class="banner-content">
-      <h2>Bem-vindo ao Infinity Slots</h2>
-      <p>Onde a diversão é infinita! Jogue, aposte e divirta-se com nossos jogos exclusivos.</p>
-      <a href="#games" class="btn pulse">Jogar Agora</a>
-    </div>
-  </section>
+  <main class="main-content">
+    <!-- Aba Início (Banner) -->
+    <section id="home-tab" class="tab-panel active">
+      <section class="banner" style="background-image: url(\'images/banner/casino_banner.png\');">
+        <div class="banner-content">
+          <h2>Bem-vindo ao Infinity Slots</h2>
+          <p>Onde a diversão é infinita! Jogue, aposte e divirta-se com nossos jogos exclusivos.</p>
+          <a href="#" class="btn pulse" onclick="switchContentTab(\'casino\')">Jogar Agora</a>
+        </div>
+      </section>
+      <div class="feature-quote">
+        "A sorte favorece os corajosos. E aqui, a coragem pode te levar ao infinito!"
+      </div>
+    </section>
 
-  <section id="games" class="games-section">
-    <div class="section-title">
-      <h2>Jogos Populares</h2>
-    </div>
-    <div class="games-grid">
-      <div class="game-card">
-        <div class="game-image">
-          <img src="images/games/mines_game.png" alt="Mina de Ouro">
+    <!-- Aba Cassino -->
+    <section id="casino-tab" class="tab-panel">
+      <section id="casino-games" class="games-section">
+        <div class="section-title">
+          <h2>Jogos de Cassino</h2>
         </div>
-        <div class="game-info">
-          <h3>Mina de Ouro</h3>
-          <p>Encontre as joias e desvie das bombas para multiplicar sua aposta.</p>
-          <button class="btn" onclick="openGame('mines')">Jogar</button>
-        </div>
-      </div>
-       <div class="game-card">
-        <div class="game-image">
-          <img src="images/games/slot_machine.png" alt="Caça-níqueis">
-        </div>
-        <div class="game-info">
-          <h3>Caça-níqueis</h3>
-          <p>Gire os rolos e tente a sorte nos nossos caça-níqueis temáticos.</p>
-          <button class="btn" onclick="openGame('slots')">Jogar</button>
-        </div>
-      </div>
-      <div class="game-card">
-        <div class="game-image">
-          <img src="images/games/roulette_wheel.png" alt="Roleta">
-        </div>
-        <div class="game-info">
-          <h3>Roleta</h3>
-          <p>Aposte nos números e cores na emocionante roleta.</p>
-          <button class="btn" onclick="openGame('roulette')">Jogar</button>
-        </div>
-      </div>
-      <div class="game-card">
-        <div class="game-image">
-          <img src="images/games/blackjack_table.png" alt="Blackjack">
-        </div>
-        <div class="game-info">
-          <h3>Blackjack</h3>
-          <p>Chegue o mais próximo possível de 21 sem estourar.</p>
-          <button class="btn" onclick="openGame('blackjack')">Jogar</button>
-        </div>
-      </div>
-      <div class="game-card">
-        <div class="game-image">
-          <img src="https://placehold.co/400x300/1a1a2e/9d4edd?text=Raspadinha" alt="Raspadinha">
-        </div>
-        <div class="game-info">
-          <h3>Raspadinha</h3>
-          <p>Raspe e descubra se você ganhou prêmios instantâneos.</p>
-          <button class="btn" onclick="openGame('scratch')">Jogar</button>
-        </div>
-      </div>
-       <div class="game-card">
-        <div class="game-image">
-          <img src="images/games/crash_game.png" alt="Crash">
-        </div>
-        <div class="game-info">
-          <h3>Crash</h3>
-          <p>Aposte e saque antes que o multiplicador caia a zero.</p>
-          <button class="btn" onclick="openGame('crash')">Jogar</button>
-        </div>
-      </div>
-       <div class="game-card">
-        <div class="game-image">
-          <img src="https://placehold.co/400x300/1a1a2e/9d4edd?text=Poker" alt="Poker">
-        </div>
-        <div class="game-info">
-          <h3>Poker</h3>
-          <p>Teste suas habilidades no jogo de cartas mais famoso do mundo.</p>
-          <button class="btn" onclick="openGame('poker')">Jogar</button>
-        </div>
-      </div>
-      <div class="game-card">
-        <div class="game-image">
-          <img src="https://placehold.co/400x300/1a1a2e/9d4edd?text=Baccarat" alt="Baccarat">
-        </div>
-        <div class="game-info">
-          <h3>Baccarat</h3>
-          <p>Aposte no jogador, no banco ou no empate neste clássico jogo de cartas.</p>
-          <button class="btn" onclick="openGame('baccarat')">Jogar</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="feature-quote">
-    "A sorte favorece os corajosos. E aqui, a coragem pode te levar ao infinito!"
-  </div>
-
-  <section id="deposit" class="deposit-section">
-    <div class="section-title">
-      <h2>Depósito e Saque</h2>
-    </div>
-    <div class="payment-options">
-      <div class="payment-card">
-        <h3>Depósito via Cartão</h3>
-        <div class="credit-card-container">
-          <div class="credit-card" id="credit-card">
-            <div class="credit-card-front">
-              <div class="card-number">1234 5678 9000 1001</div>
-              <div class="card-holder">NOME DO TITULAR</div>
-              <div class="expiry">VALIDADE: 12/25</div>
+        <div class="games-grid">
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/slot_machine.png" alt="Caça-níqueis">
             </div>
-            <div class="credit-card-back">
-              <div class="card-strip"></div>
-              <div class="signature">
-                <div class="cvv">123</div>
+            <div class="game-info">
+              <h3>Caça-níqueis</h3>
+              <p>Gire os rolos e tente a sorte nos nossos caça-níqueis temáticos.</p>
+              <button class="btn" onclick="openGame(\'slots\')">Jogar</button>
+            </div>
+          </div>
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/roulette_wheel.png" alt="Roleta">
+            </div>
+            <div class="game-info">
+              <h3>Roleta</h3>
+              <p>Aposte nos números e cores na emocionante roleta.</p>
+              <button class="btn" onclick="openGame(\'roulette\')">Jogar</button>
+            </div>
+          </div>
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/blackjack_table.png" alt="Blackjack">
+            </div>
+            <div class="game-info">
+              <h3>Blackjack</h3>
+              <p>Chegue o mais próximo possível de 21 sem estourar.</p>
+              <button class="btn" onclick="openGame(\'blackjack\')">Jogar</button>
+            </div>
+          </div>
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/baccarat_game.png" alt="Baccarat">
+            </div>
+            <div class="game-info">
+              <h3>Baccarat</h3>
+              <p>Aposte no jogador, no banco ou no empate neste clássico jogo de cartas.</p>
+              <button class="btn" onclick="openGame(\'baccarat\')">Jogar</button>
+            </div>
+          </div>
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/poker_game.png" alt="Poker">
+            </div>
+            <div class="game-info">
+              <h3>Poker</h3>
+              <p>Teste suas habilidades no jogo de cartas mais famoso do mundo.</p>
+              <button class="btn" onclick="openGame(\'poker\')">Jogar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Aba Originais -->
+    <section id="originals-tab" class="tab-panel">
+      <section id="original-games" class="games-section">
+        <div class="section-title">
+          <h2>Jogos Originais Infinity</h2>
+        </div>
+        <div class="games-grid">
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/mines_game.png" alt="Mina de Ouro">
+            </div>
+            <div class="game-info">
+              <h3>Mina de Ouro</h3>
+              <p>Encontre as joias e desvie das bombas para multiplicar sua aposta.</p>
+              <button class="btn" onclick="openGame(\'mines\')">Jogar</button>
+            </div>
+          </div>
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/crash_game.png" alt="Crash">
+            </div>
+            <div class="game-info">
+              <h3>Crash</h3>
+              <p>Aposte e saque antes que o multiplicador caia a zero.</p>
+              <button class="btn" onclick="openGame(\'crash\')">Jogar</button>
+            </div>
+          </div>
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/scratch_game.png" alt="Raspadinha">
+            </div>
+            <div class="game-info">
+              <h3>Raspadinha</h3>
+              <p>Raspe e descubra se você ganhou prêmios instantâneos.</p>
+              <button class="btn" onclick="openGame(\'scratch\')">Jogar</button>
+            </div>
+          </div>
+          <div class="game-card">
+            <div class="game-image">
+              <img src="images/games/truco_game.png" alt="Truco">
+            </div>
+            <div class="game-info">
+              <h3>Truco</h3>
+              <p>Desafie o dealer no clássico jogo de cartas brasileiro.</p>
+              <button class="btn" onclick="openGame(\'truco\')">Jogar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Aba Depósito -->
+    <section id="deposit-tab" class="tab-panel">
+      <section id="deposit" class="deposit-section">
+        <div class="section-title">
+          <h2>Depósito</h2>
+        </div>
+        <div class="payment-options">
+          <div class="payment-card">
+            <h3>Depósito via Cartão</h3>
+            <div class="credit-card-container">
+              <div class="credit-card" id="credit-card">
+                <div class="credit-card-front">
+                  <div class="card-number">1234 5678 9000 1001</div>
+                  <div class="card-holder">NOME DO TITULAR</div>
+                  <div class="expiry">VALIDADE: 12/25</div>
+                </div>
+                <div class="credit-card-back">
+                  <div class="card-strip"></div>
+                  <div class="signature">
+                    <div class="cvv">123</div>
+                  </div>
+                </div>
               </div>
             </div>
+            <form id="card-deposit-form">
+              <div class="form-group">
+                <label for="card-number">Número do Cartão</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+              </div>
+              <div class="form-group">
+                <label for="card-holder">Nome do Titular</label>
+                <input type="text" id="card-holder" placeholder="Nome como está no cartão" required>
+              </div>
+              <div class="form-group" style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                  <label for="expiry-date">Validade</label>
+                  <input type="text" id="expiry-date" placeholder="MM/AA" maxlength="5" required>
+                </div>
+                <div style="flex: 1;">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="deposit-amount">Valor do Depósito (R$)</label>
+                <input type="number" id="deposit-amount" min="10" step="5" value="50" required>
+              </div>
+              <button type="button" class="btn" onclick="processDeposit(\'card\')">Depositar</button>
+            </form>
+          </div>
+          <div class="payment-card">
+            <h3>Depósito via PIX</h3>
+            <div class="pix-container">
+              <div class="pix-qrcode">
+                <img src="https://placehold.co/300x300/ffffff/000000?text=QR+Code+PIX" alt="QR Code PIX">
+              </div>
+              <div class="pix-code">
+                <input type="text" value="00020126580014BR.GOV.BCB.PIX0136infinityslots@email.com5204000053039865802BR5913Infinity Slots6008Sao Paulo62070503***6304E2CA" readonly>
+                <button class="copy-btn" onclick="copyPixCode()">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <form id="pix-deposit-form">
+              <div class="form-group">
+                <label for="pix-amount">Valor do Depósito (R$)</label>
+                <input type="number" id="pix-amount" min="10" step="5" value="50" required>
+              </div>
+              <div class="form-group">
+                <label for="pix-sender">Nome do Remetente</label>
+                <input type="text" id="pix-sender" placeholder="Seu nome completo" required>
+              </div>
+              <button type="button" class="btn" onclick="processDeposit(\'pix\')">Confirmar Pagamento</button>
+            </form>
           </div>
         </div>
-        <form id="card-deposit-form">
-          <div class="form-group">
-            <label for="card-number">Número do Cartão</label>
-            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
-          </div>
-          <div class="form-group">
-            <label for="card-holder">Nome do Titular</label>
-            <input type="text" id="card-holder" placeholder="Nome como está no cartão" required>
-          </div>
-          <div class="form-group" style="display: flex; gap: 10px;">
-            <div style="flex: 1;">
-              <label for="expiry-date">Validade</label>
-              <input type="text" id="expiry-date" placeholder="MM/AA" maxlength="5" required>
-            </div>
-            <div style="flex: 1;">
-              <label for="cvv">CVV</label>
-              <input type="text" id="cvv" placeholder="123" maxlength="3" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="deposit-amount">Valor do Depósito (R$)</label>
-            <input type="number" id="deposit-amount" min="10" step="5" value="50" required>
-          </div>
-          <button type="button" class="btn" onclick="processDeposit('card')">Depositar</button>
-        </form>
-      </div>
-      <div class="payment-card">
-        <h3>Depósito via PIX</h3>
-        <div class="pix-container">
-          <div class="pix-qrcode">
-            <img src="https://placehold.co/300x300/ffffff/000000?text=QR+Code+PIX" alt="QR Code PIX">
-          </div>
-          <div class="pix-code">
-            <input type="text" value="00020126580014BR.GOV.BCB.PIX0136infinityslots@email.com5204000053039865802BR5913Infinity Slots6008Sao Paulo62070503***6304E2CA" readonly>
-            <button class="copy-btn" onclick="copyPixCode()">
-              <i class="fas fa-copy"></i>
-            </button>
+        <div class="transaction-history">
+          <h3>Histórico de Transações</h3>
+          <table class="transaction-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Método</th>
+                <th>Valor</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="transaction-list">
+              </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <!-- Aba Saque -->
+    <section id="withdraw-tab" class="tab-panel">
+      <section id="withdraw" class="deposit-section">
+        <div class="section-title">
+          <h2>Solicitar Saque</h2>
+        </div>
+        <div class="payment-options">
+          <div class="payment-card">
+            <h3>Saque via PIX</h3>
+            <form id="withdraw-form">
+              <div class="form-group">
+                <label for="withdraw-amount">Valor do Saque (R$)</label>
+                <input type="number" id="withdraw-amount" min="20" step="5" value="100" required>
+              </div>
+              <div class="form-group">
+                <label for="pix-key">Chave PIX</label>
+                <input type="text" id="pix-key" placeholder="CPF, e-mail, telefone ou chave aleatória" required>
+              </div>
+              <div class="form-group">
+                <label for="pix-key-type">Tipo de Chave</label>
+                <select id="pix-key-type" required>
+                  <option value="cpf">CPF</option>
+                  <option value="email">E-mail</option>
+                  <option value="phone">Telefone</option>
+                  <option value="random">Chave Aleatória</option>
+                </select>
+              </div>
+              <button type="button" class="btn" onclick="processWithdraw()">Solicitar Saque</button>
+            </form>
           </div>
         </div>
-        <form id="pix-deposit-form">
-          <div class="form-group">
-            <label for="pix-amount">Valor do Depósito (R$)</label>
-            <input type="number" id="pix-amount" min="10" step="5" value="50" required>
-          </div>
-          <div class="form-group">
-            <label for="pix-sender">Nome do Remetente</label>
-            <input type="text" id="pix-sender" placeholder="Seu nome completo" required>
-          </div>
-          <button type="button" class="btn" onclick="processDeposit('pix')">Confirmar Pagamento</button>
-        </form>
-      </div>
-    </div>
-    
-    <div class="transaction-history">
-      <h3>Histórico de Transações</h3>
-      <table class="transaction-table">
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Tipo</th>
-            <th>Método</th>
-            <th>Valor</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="transaction-list">
-          </tbody>
-      </table>
-    </div>
-  </section>
+      </section>
+    </section>
 
-  <section id="withdraw" class="deposit-section">
-    <div class="section-title">
-      <h2>Solicitar Saque</h2>
-    </div>
-    <div class="payment-options">
-      <div class="payment-card">
-        <h3>Saque via PIX</h3>
-        <form id="withdraw-form">
-          <div class="form-group">
-            <label for="withdraw-amount">Valor do Saque (R$)</label>
-            <input type="number" id="withdraw-amount" min="20" step="5" value="100" required>
-          </div>
-          <div class="form-group">
-            <label for="pix-key">Chave PIX</label>
-            <input type="text" id="pix-key" placeholder="CPF, e-mail, telefone ou chave aleatória" required>
-          </div>
-          <div class="form-group">
-            <label for="pix-key-type">Tipo de Chave</label>
-            <select id="pix-key-type" required>
-              <option value="cpf">CPF</option>
-              <option value="email">E-mail</option>
-              <option value="phone">Telefone</option>
-              <option value="random">Chave Aleatória</option>
-            </select>
-          </div>
-          <button type="button" class="btn" onclick="processWithdraw()">Solicitar Saque</button>
-        </form>
-      </div>
-    </div>
-  </section>
+    <!-- Aba Promoções -->
+    <section id="promotions-tab" class="tab-panel">
+      <section id="promotions" class="promotions-section">
+        <div class="section-title">
+          <h2>Promoções</h2>
+        </div>
+        <div class="promotion-card">
+          <h3>Bônus de Boas-vindas</h3>
+          <p>Ganhe 100% de bônus no seu primeiro depósito até R$ 500!</p>
+          <a href="#" class="btn" onclick="switchContentTab(\'deposit\')">Depositar Agora</a>
+        </div>
+        <div class="promotion-card">
+          <h3>Giros Grátis</h3>
+          <p>Faça um depósito de R$ 50 ou mais e ganhe 50 giros grátis nos caça-níqueis!</p>
+          <a href="#" class="btn" onclick="switchContentTab(\'deposit\')">Aproveitar</a>
+        </div>
+        <div class="promotion-card">
+          <h3>Cashback Semanal</h3>
+          <p>Receba 10% de cashback sobre suas perdas toda semana!</p>
+          <a href="#" class="btn" onclick="showNotification(\'Promoção ativada!\', \'success\')">Ativar</a>
+        </div>
+      </section>
+    </section>
+  </main>
 
-  <section id="promotions" class="promotions-section">
-    <div class="section-title">
-      <h2>Promoções</h2>
-    </div>
-    <div class="promotion-card">
-      <h3>Bônus de Boas-vindas</h3>
-      <p>Ganhe 100% de bônus no seu primeiro depósito até R$ 500!</p>
-      <a href="#deposit" class="btn">Depositar Agora</a>
-    </div>
-    <div class="promotion-card">
-      <h3>Giros Grátis</h3>
-      <p>Faça um depósito de R$ 50 ou mais e ganhe 50 giros grátis nos caça-níqueis!</p>
-      <a href="#deposit" class="btn">Aproveitar</a>
-    </div>
-    <div class="promotion-card">
-      <h3>Cashback Semanal</h3>
-      <p>Receba 10% de cashback sobre suas perdas toda semana!</p>
-      <a href="#" class="btn" onclick="showNotification('Promoção ativada!', 'success')">Ativar</a>
-    </div>
-  </section>
-
+  <!-- Área de Jogo (Modal ou Div Separada) -->
   <div id="game-area" style="display: none;">
+    <button class="close-game-btn" onclick="closeGame()"><i class="fas fa-times"></i></button>
     
+    <!-- Jogo Mina de Ouro -->
     <div id="mines-game" class="game-container" style="display: none;">
       <h2>Mina de Ouro</h2>
       <div class="mines-info">
@@ -298,10 +338,10 @@
       <div class="game-controls">
         <button class="game-btn" id="start-mines-btn" onclick="startMinesGame()">Começar Jogo</button>
         <button class="game-btn" id="cashout-mines-btn" onclick="cashoutMines()" disabled>Retirar Ganhos</button>
-        <button class="game-btn" onclick="closeGame()">Sair</button>
       </div>
     </div>
 
+    <!-- Jogo Roleta -->
     <div id="roulette-game" class="game-container" style="display: none;">
       <h2>Roleta</h2>
       <div class="roulette-container">
@@ -325,11 +365,11 @@
         </div>
         <div class="game-controls">
           <button class="game-btn" id="spin-btn" onclick="spinRoulette()">Girar</button>
-          <button class="game-btn" onclick="closeGame()">Sair</button>
         </div>
       </div>
     </div>
 
+    <!-- Jogo Blackjack -->
     <div id="blackjack-game" class="game-container" style="display: none;">
       <h2>Blackjack</h2>
       <div class="blackjack-table">
@@ -345,11 +385,11 @@
           <button class="game-btn" id="deal-btn" onclick="dealBlackjack()">Distribuir</button>
           <button class="game-btn" id="hit-btn" onclick="hitBlackjack()" disabled>Mais uma</button>
           <button class="game-btn" id="stand-btn" onclick="standBlackjack()" disabled>Parar</button>
-          <button class="game-btn" onclick="closeGame()">Sair</button>
         </div>
       </div>
     </div>
 
+    <!-- Jogo Raspadinha -->
     <div id="scratch-game" class="game-container" style="display: none;">
       <h2>Raspadinha</h2>
       <div class="scratch-card-container">
@@ -364,10 +404,10 @@
       </div>
       <div class="game-controls">
         <button class="game-btn" id="new-card-btn" onclick="newScratchCard()">Nova Raspadinha</button>
-        <button class="game-btn" onclick="closeGame()">Sair</button>
       </div>
     </div>
 
+    <!-- Jogo Caça-níqueis -->
     <div id="slots-game" class="game-container" style="display: none;">
       <h2>Caça-níqueis</h2>
       <div class="slots-container">
@@ -382,41 +422,44 @@
         </div>
         <div class="game-controls">
           <button class="game-btn" id="spin-slots-btn" onclick="spinSlots()">Girar</button>
-          <button class="game-btn" onclick="closeGame()">Sair</button>
         </div>
       </div>
     </div>
 
+    <!-- Jogo Poker -->
     <div id="poker-game" class="game-container" style="display: none;">
         <h2>Poker</h2>
         <div class="poker-table">
-            <p style="text-align:center; margin-bottom: 20px;">Em breve: Jogo de Poker Texas Hold'em!</p>
-            <h3>Mesa</h3>
-            <div class="community-cards">
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
+            <div class="poker-info">
+              <span>Pote: <span id="poker-pot">R$ 0.00</span></span>
             </div>
-            <h3>Suas Cartas</h3>
-            <div class="player-hand">
-                <div class="card">?</div>
-                <div class="card">?</div>
+            <h3>Mesa</h3>
+            <div class="community-cards" id="community-cards">
+                <!-- Cartas comunitárias -->
+            </div>
+            <h3>Dealer</h3>
+            <div class="dealer-poker-hand" id="dealer-poker-hand">
+                <!-- Cartas do dealer -->
+            </div>
+            <h3>Jogador</h3>
+            <div class="player-poker-hand" id="player-poker-hand">
+                <!-- Cartas do jogador -->
             </div>
             <div class="form-group">
-                <label for="poker-bet-amount">Valor da Aposta (R$)</label>
+                <label for="poker-bet-amount">Valor da Aposta/Aumento (R$)</label>
                 <input type="number" id="poker-bet-amount" min="5" step="5" value="10">
             </div>
             <div class="game-controls">
-                <button class="game-btn" disabled>Apostar</button>
-                <button class="game-btn" disabled>Aumentar</button>
-                <button class="game-btn" disabled>Correr</button>
-                <button class="game-btn" onclick="closeGame()">Sair</button>
+                <button class="game-btn" id="start-poker-btn" onclick="startPokerGame()">Iniciar Jogo</button>
+                <button class="game-btn" id="call-poker-btn" onclick="callPoker()" disabled>Chamar</button>
+                <button class="game-btn" id="raise-poker-btn" onclick="raisePoker()" disabled>Aumentar</button>
+                <button class="game-btn" id="fold-poker-btn" onclick="foldPoker()" disabled>Desistir</button>
             </div>
+            <p id="poker-message" class="game-message"></p>
         </div>
     </div>
 
+    <!-- Jogo Crash -->
     <div id="crash-game" class="game-container" style="display: none;">
         <h2>Crash</h2>
         <div class="crash-container">
@@ -430,10 +473,71 @@
             <div class="game-controls">
                 <button class="game-btn" id="start-crash-btn" onclick="startCrashGame()">Iniciar</button>
                 <button class="game-btn" id="cashout-crash-btn" onclick="cashoutCrash()" disabled>Retirar</button>
-                <button class="game-btn" onclick="closeGame()">Sair</button>
             </div>
         </div>
     </div>
+
+    <!-- Jogo Truco -->
+    <div id="truco-game" class="game-container" style="display: none;">
+      <h2>Truco</h2>
+      <div class="truco-table">
+        <div class="truco-info">
+          <span>Placar: Jogador <span id="player-truco-score">0</span> x <span id="dealer-truco-score">0</span> Dealer</span>
+          <span>Valor: <span id="truco-value">1 ponto</span></span>
+        </div>
+        <h3>Vira</h3>
+        <div class="vira-card" id="vira-card"></div>
+        <p id="manilha-value"></p>
+        <h3>Mesa</h3>
+        <div class="table-cards" id="table-cards"></div>
+        <h3>Dealer</h3>
+        <div class="dealer-truco-hand" id="dealer-truco-hand"></div>
+        <h3>Jogador</h3>
+        <div class="player-truco-hand" id="player-truco-hand"></div>
+        <div class="form-group">
+          <label for="truco-bet-amount">Valor da Aposta Inicial (R$)</label>
+          <input type="number" id="truco-bet-amount" min="1" step="1" value="5">
+        </div>
+        <div class="game-controls">
+          <button class="game-btn" id="start-truco-btn" onclick="startTrucoGame()">Iniciar Jogo</button>
+          <button class="game-btn" id="play-card-btn" onclick="playSelectedTrucoCard()" disabled>Jogar Carta</button>
+          <button class="game-btn" id="truco-btn" onclick="askTruco()" disabled>Truco!</button>
+          <button class="game-btn" id="fold-truco-btn" onclick="foldTruco()" disabled>Correr</button>
+        </div>
+        <p id="truco-message" class="game-message"></p>
+      </div>
+    </div>
+
+    <!-- Jogo Baccarat -->
+    <div id="baccarat-game" class="game-container" style="display: none;">
+      <h2>Baccarat</h2>
+      <div class="baccarat-table">
+        <div class="baccarat-scores">
+          <div id="player-result">Jogador: <span id="player-baccarat-score">0</span></div>
+          <div id="banker-result">Banqueiro: <span id="banker-baccarat-score">0</span></div>
+          <div id="tie-result">Empate</div>
+        </div>
+        <h3>Banqueiro</h3>
+        <div class="baccarat-hand" id="banker-baccarat-hand"></div>
+        <h3>Jogador</h3>
+        <div class="baccarat-hand" id="player-baccarat-hand"></div>
+        <div class="form-group">
+          <label for="baccarat-bet-amount">Valor da Aposta (R$)</label>
+          <input type="number" id="baccarat-bet-amount" min="5" step="5" value="10">
+        </div>
+        <div class="baccarat-betting-area">
+          <button class="bet-area-btn" id="player-bet-btn" onclick="selectBaccaratBet(\'player\')">Apostar Jogador (1:1)</button>
+          <button class="bet-area-btn" id="banker-bet-btn" onclick="selectBaccaratBet(\'banker\')">Apostar Banqueiro (0.95:1)</button>
+          <button class="bet-area-btn" id="tie-bet-btn" onclick="selectBaccaratBet(\'tie\')">Apostar Empate (8:1)</button>
+        </div>
+        <div class="game-controls">
+          <button class="game-btn" id="deal-baccarat-btn" onclick="dealBaccarat()" disabled>Distribuir</button>
+          <button class="game-btn" id="new-baccarat-btn" onclick="newBaccaratRound()" disabled>Nova Rodada</button>
+        </div>
+        <p id="baccarat-message" class="game-message"></p>
+      </div>
+    </div>
+
   </div>
 
   <footer>
@@ -477,6 +581,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; 2025 Infinity Slots. Todos os direitos reservados. Jogue com responsabilidade. +18</p>
+      <p class="creator-credit">Criado por Henrique F Gegunis</p>
     </div>
   </footer>
 
@@ -486,10 +591,10 @@
       <span class="close-btn" onclick="closeModal()">&times;</span>
       <h2 class="modal-title">Acesse sua conta</h2>
       <div class="modal-tabs">
-        <div class="tab active" onclick="switchTab('login')">Login</div>
-        <div class="tab" onclick="switchTab('register')">Cadastro</div>
+        <div class="tab active" onclick="switchAuthTab(\'login\')">Login</div>
+        <div class="tab" onclick="switchAuthTab(\'register\')">Cadastro</div>
       </div>
-      <div id="login-tab" class="tab-content active">
+      <div id="login-tab" class="auth-tab-content active">
         <form id="login-form">
           <div class="form-group">
             <label for="login-email">E-mail</label>
@@ -505,7 +610,7 @@
           </p>
         </form>
       </div>
-      <div id="register-tab" class="tab-content">
+      <div id="register-tab" class="auth-tab-content">
         <form id="register-form">
           <div class="form-group">
             <label for="register-name">Nome Completo</label>
@@ -540,6 +645,9 @@
     </div>
   </div>
 
+  <script src="poker_functions.js"></script>
+  <script src="truco_functions.js"></script>
+  <script src="baccarat_functions.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

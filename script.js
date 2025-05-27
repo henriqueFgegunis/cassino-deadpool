@@ -1,25 +1,13 @@
-// Script para o Infinity Slots
+// Script para o Infinity Slots Casino - Versão 2.0
 
-// === VARIÁVEIS GLOBAIS ===
+// Variáveis globais
 let userBalance = 0;
-let currentGame = null;
+let isLoggedIn = false;
 let selectedBet = null;
 let transactions = [];
-let isLoggedIn = false;
-let username = '';
+let currentGame = null;
 
-// === VARIÁVEIS DO JOGO MINA DE OURO ===
-let minesGameActive = false;
-let mineLocations = [];
-let minesSafeClicks = 0;
-const MINES_COUNT = 5;
-const GRID_SIZE = 25;
-const minesMultipliers = [
-  1.15, 1.35, 1.6, 1.9, 2.25, 2.65, 3.1, 3.7, 4.4, 5.2,
-  6.1, 7.2, 8.5, 10, 12, 15, 18, 22, 27, 40
-]; // Multiplicadores para 1 a 20 cliques seguros
-
-// === INICIALIZAÇÃO ===
+// Inicialização
 document.addEventListener('DOMContentLoaded', function() {
   // Inicializar o menu mobile
   const hamburger = document.querySelector('.hamburger');
@@ -27,131 +15,92 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (hamburger) {
     hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+      navLinks.classList.toggle('nav-active');
       hamburger.classList.toggle('toggle');
     });
   }
-
-  // Efeito de scroll no header
-  window.addEventListener('scroll', function() {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
+  
+  // Inicializar as abas de conteúdo
+  const tabLinks = document.querySelectorAll('.nav-links a[data-tab]');
+  tabLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabId = link.getAttribute('data-tab');
+      switchContentTab(tabId);
+    });
   });
-
+  
   // Inicializar o modal de login
   const loginBtn = document.getElementById('login-btn');
   if (loginBtn) {
-    loginBtn.addEventListener('click', openModal);
-  }
-
-  // Verificar se há um usuário logado no localStorage
-  const savedUser = localStorage.getItem('infinitySlotsUser');
-  if (savedUser) {
-    const user = JSON.parse(savedUser);
-    isLoggedIn = true;
-    username = user.name;
-    userBalance = user.balance;
-    updateBalanceDisplay();
-    showNotification(`Bem-vindo de volta, ${username}!`, 'success');
-  }
-
-  // Carregar transações do localStorage
-  const savedTransactions = localStorage.getItem('infinitySlotsTransactions');
-  if (savedTransactions) {
-    transactions = JSON.parse(savedTransactions);
-    updateTransactionHistory();
-  }
-
-  // Adicionar algumas transações de exemplo se não houver nenhuma
-  if (transactions.length === 0) {
-    addSampleTransactions();
-  }
-
-  // Efeito de flip no cartão de crédito
-  const creditCard = document.getElementById('credit-card');
-  if (creditCard) {
-    creditCard.addEventListener('click', function() {
-      this.classList.toggle('flipped');
+    loginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
     });
   }
-
-  // Formatar inputs de cartão
-  const cardNumber = document.getElementById('card-number');
-  if (cardNumber) {
-    cardNumber.addEventListener('input', function(e) {
-      let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 0) {
-        value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
-      }
-      e.target.value = value;
-    });
-  }
-
-  const expiryDate = document.getElementById('expiry-date');
-  if (expiryDate) {
-    expiryDate.addEventListener('input', function(e) {
-      let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 2) {
-        value = value.substring(0, 2) + '/' + value.substring(2, 4);
-      }
-      e.target.value = value;
-    });
-  }
-
-  // Adicionar efeito de hover nos cards de jogos
-  const gameCards = document.querySelectorAll('.game-card');
-  gameCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.querySelector('.game-image img').style.transform = 'scale(1.1)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-      this.querySelector('.game-image img').style.transform = 'scale(1)';
-    });
-  });
-
-  // Adicionar animações aos elementos quando eles entram na viewport
-  const animateOnScroll = function() {
-    const elements = document.querySelectorAll('.game-card, .payment-card, .promotion-card');
-    
-    elements.forEach(element => {
-      const elementPosition = element.getBoundingClientRect().top;
-      const screenPosition = window.innerHeight / 1.2;
-      
-      if (elementPosition < screenPosition) {
-        element.classList.add('animate');
-      }
-    });
-  };
   
-  window.addEventListener('scroll', animateOnScroll);
-  animateOnScroll(); // Executar uma vez no carregamento
+  // Inicializar jogos
+  initMines();
+  initRoulette();
+  initBlackjack();
+  initScratch();
+  initSlots();
+  initCrash();
+  initPoker();
+  initTruco();
+  initBaccarat();
 });
 
-// === SISTEMA DE AUTENTICAÇÃO ===
+// Funções de navegação
+function switchContentTab(tabId) {
+  // Remover classe active de todas as abas
+  document.querySelectorAll('.tab-panel').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.classList.remove('active');
+  });
+  
+  // Adicionar classe active à aba selecionada
+  document.getElementById(`${tabId}-tab`).classList.add('active');
+  
+  // Destacar o link da navegação
+  const navLink = document.querySelector(`.nav-links a[data-tab="${tabId}"]`);
+  if (navLink) {
+    navLink.classList.add('active');
+  }
+  
+  // Fechar o menu mobile se estiver aberto
+  const navLinks = document.querySelector('.nav-links');
+  const hamburger = document.querySelector('.hamburger');
+  if (navLinks.classList.contains('nav-active')) {
+    navLinks.classList.remove('nav-active');
+    hamburger.classList.remove('toggle');
+  }
+}
+
+// Funções de autenticação
 function openModal() {
   document.getElementById('auth-modal').style.display = 'block';
-  document.body.style.overflow = 'hidden'; // Impedir rolagem do body
+  switchAuthTab('login');
 }
 
 function closeModal() {
   document.getElementById('auth-modal').style.display = 'none';
-  document.body.style.overflow = 'auto'; // Restaurar rolagem do body
 }
 
-function switchTab(tab) {
-  const tabs = document.querySelectorAll('.tab');
-  const tabContents = document.querySelectorAll('.tab-content');
+function switchAuthTab(tabId) {
+  document.querySelectorAll('.auth-tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
   
-  tabs.forEach(t => t.classList.remove('active'));
-  tabContents.forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.modal-tabs .tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
   
-  document.querySelector(`.tab[onclick="switchTab('${tab}')"]`).classList.add('active');
-  document.getElementById(`${tab}-tab`).classList.add('active');
+  document.getElementById(`${tabId}-tab`).classList.add('active');
+  document.querySelector(`.modal-tabs .tab[onclick="switchAuthTab('${tabId}')"]`).classList.add('active');
 }
 
 function login() {
@@ -163,19 +112,28 @@ function login() {
     return;
   }
   
+  // Simulação de login bem-sucedido
   isLoggedIn = true;
-  username = email.split('@')[0];
-  userBalance = 100; 
-  
-  localStorage.setItem('infinitySlotsUser', JSON.stringify({
-    name: username,
-    email: email,
-    balance: userBalance
-  }));
-  
+  userBalance = 1000; // Saldo inicial
   updateBalanceDisplay();
+  
+  // Atualizar a interface
+  document.getElementById('login-btn').textContent = 'Minha Conta';
+  
+  // Fechar o modal
   closeModal();
-  showNotification(`Login realizado com sucesso! Bem-vindo, ${username}!`, 'success');
+  
+  // Mostrar notificação
+  showNotification('Login realizado com sucesso!', 'success');
+  
+  // Adicionar algumas transações de exemplo
+  addTransaction({
+    date: new Date(),
+    type: 'Depósito',
+    method: 'PIX',
+    amount: 1000,
+    status: 'Concluído'
+  });
 }
 
 function register() {
@@ -194,30 +152,123 @@ function register() {
     return;
   }
   
+  // Simulação de registro bem-sucedido
   isLoggedIn = true;
-  username = name;
-  userBalance = 200; // Bônus de boas-vindas
-  
-  localStorage.setItem('infinitySlotsUser', JSON.stringify({
-    name: name,
-    email: email,
-    balance: userBalance
-  }));
-  
+  userBalance = 500; // Saldo inicial para novos usuários
   updateBalanceDisplay();
-  closeModal();
-  showNotification('Registro realizado com sucesso! Você ganhou R$ 200 de bônus!', 'success');
   
+  // Atualizar a interface
+  document.getElementById('login-btn').textContent = 'Minha Conta';
+  
+  // Fechar o modal
+  closeModal();
+  
+  // Mostrar notificação
+  showNotification('Cadastro realizado com sucesso! Bônus de R$ 500 adicionado.', 'success');
+  
+  // Adicionar transação de bônus
   addTransaction({
     date: new Date(),
-    type: 'Depósito',
-    method: 'Bônus',
-    amount: 200,
+    type: 'Bônus',
+    method: 'Cadastro',
+    amount: 500,
     status: 'Concluído'
   });
 }
 
-// === DEPÓSITO E SAQUE ===
+// Funções de notificação
+function showNotification(message, type = 'info') {
+  const notification = document.getElementById('notification');
+  const notificationMessage = document.querySelector('.notification-message');
+  const notificationIcon = document.querySelector('.notification-icon i');
+  
+  // Definir o ícone com base no tipo
+  switch (type) {
+    case 'success':
+      notificationIcon.className = 'fas fa-check-circle';
+      break;
+    case 'warning':
+      notificationIcon.className = 'fas fa-exclamation-triangle';
+      break;
+    case 'error':
+      notificationIcon.className = 'fas fa-times-circle';
+      break;
+    default:
+      notificationIcon.className = 'fas fa-info-circle';
+  }
+  
+  // Definir a mensagem
+  notificationMessage.textContent = message;
+  
+  // Adicionar classes
+  notification.className = 'notification';
+  notification.classList.add(type);
+  notification.classList.add('show');
+  
+  // Esconder após 5 segundos
+  setTimeout(() => {
+    notification.classList.remove('show');
+  }, 5000);
+}
+
+function closeNotification() {
+  document.getElementById('notification').classList.remove('show');
+}
+
+// Funções de transação
+function addTransaction(transaction) {
+  transactions.unshift(transaction); // Adicionar no início do array
+  updateTransactionList();
+}
+
+function updateTransactionList() {
+  const transactionList = document.getElementById('transaction-list');
+  if (!transactionList) return;
+  
+  transactionList.innerHTML = '';
+  
+  transactions.forEach(transaction => {
+    const row = document.createElement('tr');
+    
+    // Formatar a data
+    const date = new Date(transaction.date);
+    const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    
+    // Definir a cor do status
+    let statusClass = '';
+    switch (transaction.status) {
+      case 'Concluído':
+      case 'Ganha':
+        statusClass = 'text-success';
+        break;
+      case 'Pendente':
+        statusClass = 'text-warning';
+        break;
+      case 'Perdida':
+        statusClass = 'text-danger';
+        break;
+    }
+    
+    row.innerHTML = `
+      <td>${formattedDate}</td>
+      <td>${transaction.type}</td>
+      <td>${transaction.method}</td>
+      <td>R$ ${transaction.amount.toFixed(2)}</td>
+      <td class="${statusClass}">${transaction.status}</td>
+    `;
+    
+    transactionList.appendChild(row);
+  });
+}
+
+function updateBalanceDisplay() {
+  const balanceElement = document.querySelector('.balance-amount');
+  if (balanceElement) {
+    balanceElement.textContent = `R$ ${userBalance.toFixed(2)}`;
+  }
+}
+
+// Funções de depósito e saque
 function processDeposit(method) {
   if (!isLoggedIn) {
     showNotification('Faça login para realizar um depósito', 'warning');
@@ -225,47 +276,64 @@ function processDeposit(method) {
     return;
   }
   
-  let amount = 0;
-  let formValid = true;
+  let amount;
+  let sender;
   
   if (method === 'card') {
+    const cardNumber = document.getElementById('card-number').value;
+    const cardHolder = document.getElementById('card-holder').value;
+    const expiryDate = document.getElementById('expiry-date').value;
+    const cvv = document.getElementById('cvv').value;
     amount = parseFloat(document.getElementById('deposit-amount').value);
-    if (!document.getElementById('card-number').value || !document.getElementById('card-holder').value || !document.getElementById('expiry-date').value || !document.getElementById('cvv').value || !amount) {
-      formValid = false;
+    
+    if (!cardNumber || !cardHolder || !expiryDate || !cvv || !amount) {
+      showNotification('Por favor, preencha todos os campos', 'error');
+      return;
     }
+    
+    if (cardNumber.length < 16) {
+      showNotification('Número de cartão inválido', 'error');
+      return;
+    }
+    
+    sender = cardHolder;
   } else if (method === 'pix') {
     amount = parseFloat(document.getElementById('pix-amount').value);
-    if (!document.getElementById('pix-sender').value || !amount) {
-      formValid = false;
+    sender = document.getElementById('pix-sender').value;
+    
+    if (!amount || !sender) {
+      showNotification('Por favor, preencha todos os campos', 'error');
+      return;
     }
   }
   
-  if (!formValid) {
-    showNotification('Por favor, preencha todos os campos corretamente', 'error');
-    return;
-  }
-  
-  if (amount <= 0) {
-    showNotification('O valor do depósito deve ser maior que zero', 'error');
-    return;
-  }
-  
-  showNotification('Processando depósito...', 'info');
-  
+  // Simular processamento
   setTimeout(() => {
+    // Adicionar ao saldo
     userBalance += amount;
     updateBalanceDisplay();
+    
+    // Adicionar à lista de transações
     addTransaction({
       date: new Date(),
       type: 'Depósito',
-      method: method === 'card' ? 'Cartão de Crédito' : 'PIX',
+      method: method === 'card' ? 'Cartão' : 'PIX',
       amount: amount,
       status: 'Concluído'
     });
-    if (method === 'card') { document.getElementById('card-deposit-form').reset(); } 
-    else { document.getElementById('pix-deposit-form').reset(); }
+    
+    // Mostrar notificação
     showNotification(`Depósito de R$ ${amount.toFixed(2)} realizado com sucesso!`, 'success');
-  }, 2000);
+    
+    // Limpar formulário
+    if (method === 'card') {
+      document.getElementById('card-deposit-form').reset();
+    } else {
+      document.getElementById('pix-deposit-form').reset();
+    }
+  }, 1500);
+  
+  showNotification('Processando depósito...', 'info');
 }
 
 function processWithdraw() {
@@ -277,14 +345,10 @@ function processWithdraw() {
   
   const amount = parseFloat(document.getElementById('withdraw-amount').value);
   const pixKey = document.getElementById('pix-key').value;
+  const pixKeyType = document.getElementById('pix-key-type').value;
   
   if (!amount || !pixKey) {
     showNotification('Por favor, preencha todos os campos', 'error');
-    return;
-  }
-  
-  if (amount <= 0) {
-    showNotification('O valor do saque deve ser maior que zero', 'error');
     return;
   }
   
@@ -293,31 +357,39 @@ function processWithdraw() {
     return;
   }
   
-  showNotification('Processando solicitação de saque...', 'info');
-  
+  // Simular processamento
   setTimeout(() => {
+    // Deduzir do saldo
     userBalance -= amount;
     updateBalanceDisplay();
+    
+    // Adicionar à lista de transações
     addTransaction({
       date: new Date(),
       type: 'Saque',
       method: 'PIX',
       amount: amount,
-      status: 'Em processamento'
+      status: 'Concluído'
     });
+    
+    // Mostrar notificação
+    showNotification(`Saque de R$ ${amount.toFixed(2)} realizado com sucesso!`, 'success');
+    
+    // Limpar formulário
     document.getElementById('withdraw-form').reset();
-    showNotification(`Solicitação de saque de R$ ${amount.toFixed(2)} enviada com sucesso!`, 'success');
-  }, 2000);
+  }, 1500);
+  
+  showNotification('Processando saque...', 'info');
 }
 
 function copyPixCode() {
-  const pixCode = document.querySelector('.pix-code input');
-  pixCode.select();
-  document.execCommand('copy');
-  showNotification('Código PIX copiado para a área de transferência!', 'success');
+  const pixCode = document.querySelector('.pix-code input').value;
+  navigator.clipboard.writeText(pixCode).then(() => {
+    showNotification('Código PIX copiado para a área de transferência', 'success');
+  });
 }
 
-// === CONTROLE GERAL DOS JOGOS ===
+// Funções de jogos
 function openGame(game) {
   if (!isLoggedIn) {
     showNotification('Faça login para jogar', 'warning');
@@ -325,20 +397,49 @@ function openGame(game) {
     return;
   }
   
-  currentGame = game;
-  document.querySelectorAll('#game-area > div').forEach(div => div.style.display = 'none');
-  document.getElementById('game-area').style.display = 'block';
+  // Esconder todas as áreas de jogo
+  document.querySelectorAll('.game-container').forEach(container => {
+    container.style.display = 'none';
+  });
+  
+  // Mostrar a área de jogo selecionada
   document.getElementById(`${game}-game`).style.display = 'block';
-  document.getElementById('game-area').scrollIntoView({ behavior: 'smooth' });
-
+  
+  // Mostrar a área de jogo
+  document.getElementById('game-area').style.display = 'block';
+  
+  // Definir o jogo atual
+  currentGame = game;
+  
+  // Inicializar o jogo específico
   switch (game) {
-    case 'roulette': initRoulette(); break;
-    case 'blackjack': initBlackjack(); break;
-    case 'scratch': initScratchCard(); break;
-    case 'slots': initSlots(); break;
-    case 'poker': initPoker(); break;
-    case 'crash': initCrash(); break;
-    case 'mines': initMines(); break;
+    case 'mines':
+      resetMinesGame();
+      break;
+    case 'roulette':
+      // Já inicializado
+      break;
+    case 'blackjack':
+      // Já inicializado
+      break;
+    case 'scratch':
+      newScratchCard();
+      break;
+    case 'slots':
+      // Já inicializado
+      break;
+    case 'crash':
+      resetCrashGame();
+      break;
+    case 'poker':
+      initPoker();
+      break;
+    case 'truco':
+      initTruco();
+      break;
+    case 'baccarat':
+      initBaccarat();
+      break;
   }
 }
 
@@ -347,160 +448,202 @@ function closeGame() {
   currentGame = null;
 }
 
-// === JOGO MINA DE OURO ===
+// Funções para o jogo Mina de Ouro
+let minesGrid = [];
+let minesCount = 5;
+let revealedCells = 0;
+let minesGameActive = false;
+let currentMultiplier = 1;
+
 function initMines() {
-    minesGameActive = false;
-    const grid = document.getElementById('mines-grid');
-    grid.innerHTML = '';
-    for (let i = 0; i < GRID_SIZE; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('mine-cell');
-        cell.dataset.index = i;
-        cell.addEventListener('click', handleMineCellClick);
-        grid.appendChild(cell);
-    }
-    document.getElementById('start-mines-btn').disabled = false;
-    document.getElementById('cashout-mines-btn').disabled = true;
-    document.getElementById('mines-bet-amount').disabled = false;
-    updateMinesInfo(0);
+  const minesGridElement = document.getElementById('mines-grid');
+  if (!minesGridElement) return;
+  
+  minesGridElement.innerHTML = '';
+  
+  // Criar a grade 5x5
+  for (let i = 0; i < 25; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('mine-cell');
+    cell.dataset.index = i;
+    cell.addEventListener('click', () => revealCell(i));
+    minesGridElement.appendChild(cell);
+  }
+}
+
+function resetMinesGame() {
+  minesGrid = [];
+  revealedCells = 0;
+  minesGameActive = false;
+  currentMultiplier = 1;
+  
+  // Resetar a interface
+  document.querySelectorAll('.mine-cell').forEach(cell => {
+    cell.classList.remove('revealed', 'gem', 'mine');
+    cell.innerHTML = '';
+  });
+  
+  document.getElementById('mines-multiplier').textContent = '1.00x';
+  document.getElementById('mines-next-prize').textContent = 'R$ 0.00';
+  document.getElementById('start-mines-btn').disabled = false;
+  document.getElementById('cashout-mines-btn').disabled = true;
 }
 
 function startMinesGame() {
-    const betAmount = parseFloat(document.getElementById('mines-bet-amount').value);
-    if (betAmount <= 0) {
-        showNotification('A aposta deve ser maior que zero.', 'error');
-        return;
+  const betAmount = parseFloat(document.getElementById('mines-bet-amount').value);
+  
+  if (betAmount <= 0) {
+    showNotification('O valor da aposta deve ser maior que zero', 'error');
+    return;
+  }
+  
+  if (betAmount > userBalance) {
+    showNotification('Saldo insuficiente para realizar esta aposta', 'error');
+    return;
+  }
+  
+  // Deduzir a aposta do saldo
+  userBalance -= betAmount;
+  updateBalanceDisplay();
+  
+  // Adicionar a transação
+  addTransaction({
+    date: new Date(),
+    type: 'Aposta',
+    method: 'Mina de Ouro',
+    amount: betAmount,
+    status: 'Pendente'
+  });
+  
+  // Gerar a grade
+  minesGrid = Array(25).fill('gem');
+  
+  // Colocar as minas aleatoriamente
+  let minesPlaced = 0;
+  while (minesPlaced < minesCount) {
+    const position = Math.floor(Math.random() * 25);
+    if (minesGrid[position] !== 'mine') {
+      minesGrid[position] = 'mine';
+      minesPlaced++;
     }
-    if (betAmount > userBalance) {
-        showNotification('Saldo insuficiente para esta aposta.', 'error');
-        return;
-    }
-
-    userBalance -= betAmount;
-    updateBalanceDisplay();
-    addTransaction({ date: new Date(), type: 'Aposta', method: 'Mina de Ouro', amount: betAmount, status: 'Perdida' }); // Assume perda até ganhar
-
-    minesGameActive = true;
-    minesSafeClicks = 0;
-    mineLocations = [];
-    while (mineLocations.length < MINES_COUNT) {
-        const randomPos = Math.floor(Math.random() * GRID_SIZE);
-        if (!mineLocations.includes(randomPos)) {
-            mineLocations.push(randomPos);
-        }
-    }
-
-    // Reset visual do grid
-    const cells = document.querySelectorAll('.mine-cell');
-    cells.forEach(cell => {
-        cell.innerHTML = '';
-        cell.className = 'mine-cell';
-    });
-
-    document.getElementById('start-mines-btn').disabled = true;
-    document.getElementById('cashout-mines-btn').disabled = false;
-    document.getElementById('mines-bet-amount').disabled = true;
-    updateMinesInfo(minesSafeClicks);
-    showNotification('Jogo iniciado! Boa sorte!', 'info');
+  }
+  
+  // Atualizar a interface
+  minesGameActive = true;
+  document.getElementById('start-mines-btn').disabled = true;
+  document.getElementById('cashout-mines-btn').disabled = false;
+  document.getElementById('mines-next-prize').textContent = `R$ ${(betAmount * 1.2).toFixed(2)}`;
 }
 
-function handleMineCellClick(event) {
-    if (!minesGameActive) return;
-
-    const cell = event.target;
-    const index = parseInt(cell.dataset.index);
-
-    if (cell.classList.contains('revealed')) return;
-
-    if (mineLocations.includes(index)) {
-        // Acertou a bomba
-        cell.classList.add('revealed', 'mine');
-        cell.innerHTML = '💣';
-        endMinesGame(false);
-    } else {
-        // Clicou em um lugar seguro
-        cell.classList.add('revealed', 'safe');
-        cell.innerHTML = '💎';
-        minesSafeClicks++;
-        updateMinesInfo(minesSafeClicks);
-        
-        // Verifica se o jogador encontrou todas as joias
-        if (minesSafeClicks === GRID_SIZE - MINES_COUNT) {
-            endMinesGame(true, true); // Ganhou por completar
-        }
+function revealCell(index) {
+  if (!minesGameActive) return;
+  
+  const cell = document.querySelector(`.mine-cell[data-index="${index}"]`);
+  
+  if (cell.classList.contains('revealed')) return;
+  
+  const cellType = minesGrid[index];
+  
+  cell.classList.add('revealed');
+  
+  if (cellType === 'gem') {
+    // Encontrou uma joia
+    cell.classList.add('gem');
+    cell.innerHTML = '<i class="fas fa-gem"></i>';
+    
+    revealedCells++;
+    
+    // Aumentar o multiplicador
+    currentMultiplier += 0.2;
+    document.getElementById('mines-multiplier').textContent = `${currentMultiplier.toFixed(2)}x`;
+    
+    // Calcular o próximo prêmio
+    const betAmount = parseFloat(document.getElementById('mines-bet-amount').value);
+    const nextPrize = betAmount * currentMultiplier;
+    document.getElementById('mines-next-prize').textContent = `R$ ${nextPrize.toFixed(2)}`;
+    
+    // Verificar se todas as joias foram encontradas
+    if (revealedCells === 25 - minesCount) {
+      cashoutMines();
     }
+  } else {
+    // Encontrou uma mina
+    cell.classList.add('mine');
+    cell.innerHTML = '<i class="fas fa-bomb"></i>';
+    
+    // Revelar todas as minas
+    minesGrid.forEach((type, i) => {
+      if (type === 'mine' && i !== index) {
+        const mineCell = document.querySelector(`.mine-cell[data-index="${i}"]`);
+        mineCell.classList.add('revealed', 'mine');
+        mineCell.innerHTML = '<i class="fas fa-bomb"></i>';
+      }
+    });
+    
+    // Fim de jogo
+    minesGameActive = false;
+    document.getElementById('cashout-mines-btn').disabled = true;
+    
+    // Atualizar a transação
+    transactions.shift(); // Remove a transação 'Pendente'
+    const betAmount = parseFloat(document.getElementById('mines-bet-amount').value);
+    addTransaction({
+      date: new Date(),
+      type: 'Aposta',
+      method: 'Mina de Ouro',
+      amount: betAmount,
+      status: 'Perdida'
+    });
+    
+    showNotification(`Você perdeu R$ ${betAmount.toFixed(2)} no Mina de Ouro`, 'error');
+    
+    // Habilitar o botão de iniciar
+    document.getElementById('start-mines-btn').disabled = false;
+  }
 }
 
 function cashoutMines() {
-    if (!minesGameActive || minesSafeClicks === 0) return;
-    endMinesGame(true, false);
-}
-
-function endMinesGame(isWinner, completed = false) {
-    minesGameActive = false;
-    const betAmount = parseFloat(document.getElementById('mines-bet-amount').value);
-    
-    // Revela todas as bombas
-    const cells = document.querySelectorAll('.mine-cell');
-    mineLocations.forEach(index => {
-        if (!cells[index].classList.contains('revealed')) {
-            cells[index].classList.add('revealed');
-            cells[index].innerHTML = '💣';
-        }
-    });
-
-    if (isWinner) {
-        const multiplier = minesMultipliers[minesSafeClicks - 1];
-        const winAmount = betAmount * multiplier;
-        userBalance += winAmount;
-        updateBalanceDisplay();
-
-        // Atualiza a transação para 'Ganha'
-        transactions.shift(); // Remove a transação 'Perdida'
-        addTransaction({ date: new Date(), type: 'Aposta', method: 'Mina de Ouro', amount: winAmount, status: 'Ganha' });
-
-        const message = completed ? `Incrível! Você achou todas as joias e ganhou R$ ${winAmount.toFixed(2)}!` : `Você retirou R$ ${winAmount.toFixed(2)} com sucesso!`;
-        showNotification(message, 'success');
-
-    } else {
-        showNotification(`Você acertou uma bomba e perdeu R$ ${betAmount.toFixed(2)}.`, 'error');
-    }
-
-    document.getElementById('start-mines-btn').disabled = false;
-    document.getElementById('cashout-mines-btn').disabled = true;
-    document.getElementById('mines-bet-amount').disabled = false;
-}
-
-function updateMinesInfo(clicks) {
-    const multiplierDisplay = document.getElementById('mines-multiplier');
-    const nextPrizeDisplay = document.getElementById('mines-next-prize');
-    const betAmount = parseFloat(document.getElementById('mines-bet-amount').value);
-
-    if (clicks === 0) {
-        multiplierDisplay.textContent = '1.00x';
-        nextPrizeDisplay.textContent = `R$ ${(betAmount * minesMultipliers[0]).toFixed(2)}`;
-    } else {
-        const currentMultiplier = minesMultipliers[clicks - 1];
-        multiplierDisplay.textContent = `${currentMultiplier.toFixed(2)}x`;
-        if (clicks < GRID_SIZE - MINES_COUNT) {
-            const nextMultiplier = minesMultipliers[clicks];
-            nextPrizeDisplay.textContent = `R$ ${(betAmount * nextMultiplier).toFixed(2)}`;
-        } else {
-            nextPrizeDisplay.textContent = 'MAX!';
-        }
-    }
-}
-
-// === JOGO DE ROLETA ===
-function initRoulette() {
-  selectedBet = null;
-  document.querySelectorAll('.bet-option').forEach(option => {
-    option.classList.remove('selected');
+  if (!minesGameActive) return;
+  
+  // Calcular o ganho
+  const betAmount = parseFloat(document.getElementById('mines-bet-amount').value);
+  const winAmount = betAmount * currentMultiplier;
+  
+  // Adicionar ao saldo
+  userBalance += winAmount;
+  updateBalanceDisplay();
+  
+  // Atualizar a transação
+  transactions.shift(); // Remove a transação 'Pendente'
+  addTransaction({
+    date: new Date(),
+    type: 'Aposta',
+    method: 'Mina de Ouro',
+    amount: winAmount,
+    status: 'Ganha'
   });
-  const ball = document.getElementById('roulette-ball');
-  if (ball) {
-    ball.style.transform = 'translate(-50%, -50%)';
-  }
+  
+  // Mostrar notificação
+  showNotification(`Você ganhou R$ ${winAmount.toFixed(2)} no Mina de Ouro!`, 'success');
+  
+  // Revelar todas as minas
+  minesGrid.forEach((type, i) => {
+    if (type === 'mine') {
+      const mineCell = document.querySelector(`.mine-cell[data-index="${i}"]`);
+      mineCell.classList.add('revealed', 'mine');
+      mineCell.innerHTML = '<i class="fas fa-bomb"></i>';
+    }
+  });
+  
+  // Fim de jogo
+  minesGameActive = false;
+  document.getElementById('cashout-mines-btn').disabled = true;
+  document.getElementById('start-mines-btn').disabled = false;
+}
+
+// Funções para o jogo Roleta
+function initRoulette() {
+  // Já inicializado no HTML
 }
 
 function selectBet(element) {
@@ -536,7 +679,7 @@ function spinRoulette() {
     type: 'Aposta',
     method: 'Roleta',
     amount: betAmount,
-    status: 'Perdida'
+    status: 'Pendente'
   });
   
   // Animação da roleta
@@ -604,278 +747,257 @@ function spinRoulette() {
       multiplier = 3;
     }
     
+    // Atualizar a transação
+    transactions.shift(); // Remove a transação 'Pendente'
+    
+    if (won) {
+      const winAmount = betAmount * multiplier;
+      userBalance += winAmount;
+      updateBalanceDisplay();
+      
+      addTransaction({
+        date: new Date(),
+        type: 'Aposta',
+        method: 'Roleta',
+        amount: winAmount,
+        status: 'Ganha'
+      });
+      
+      showNotification(`Você ganhou R$ ${winAmount.toFixed(2)} na Roleta!`, 'success');
+    } else {
+      addTransaction({
+        date: new Date(),
+        type: 'Aposta',
+        method: 'Roleta',
+        amount: betAmount,
+        status: 'Perdida'
+      });
+      
+      showNotification(`Você perdeu R$ ${betAmount.toFixed(2)} na Roleta.`, 'error');
+    }
+    
+    // Resetar a roleta
     setTimeout(() => {
       wheel.classList.remove('spinning');
-      
-      if (won) {
-        const winAmount = betAmount * multiplier;
-        userBalance += winAmount;
-        updateBalanceDisplay();
-        
-        // Atualizar a transação para 'Ganha'
-        transactions.shift(); // Remove a transação 'Perdida'
-        addTransaction({
-          date: new Date(),
-          type: 'Aposta',
-          method: 'Roleta',
-          amount: winAmount,
-          status: 'Ganha'
-        });
-        
-        showNotification(`Parabéns! Você ganhou R$ ${winAmount.toFixed(2)}!`, 'success');
-      } else {
-        showNotification(`Você perdeu! O resultado foi ${result} ${resultColor}.`, 'error');
-      }
-      
+      ball.style.transform = 'translate(-50%, -50%)';
       spinBtn.disabled = false;
-    }, 1000);
-  }, 2000);
+    }, 2000);
+  }, 3000);
 }
 
-// === JOGO DE BLACKJACK ===
+// Funções para o jogo Blackjack
+let deck = [];
+let playerHand = [];
+let dealerHand = [];
+let playerScore = 0;
+let dealerScore = 0;
+let blackjackGameActive = false;
+
 function initBlackjack() {
-  document.getElementById('dealer-hand').innerHTML = '';
-  document.getElementById('player-hand').innerHTML = '';
-  document.getElementById('dealer-score').textContent = '0';
-  document.getElementById('player-score').textContent = '0';
-  document.getElementById('deal-btn').disabled = false;
-  document.getElementById('hit-btn').disabled = true;
-  document.getElementById('stand-btn').disabled = true;
+  // Já inicializado no HTML
+}
+
+function createDeck() {
+  const suits = ['♠', '♥', '♦', '♣'];
+  const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  const deck = [];
+  
+  for (const suit of suits) {
+    for (const value of values) {
+      deck.push({ suit, value });
+    }
+  }
+  
+  // Embaralhar o baralho
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  
+  return deck;
 }
 
 function dealBlackjack() {
   const betAmount = parseFloat(document.getElementById('blackjack-bet-amount').value);
+  
   if (betAmount <= 0) {
     showNotification('O valor da aposta deve ser maior que zero', 'error');
     return;
   }
+  
   if (betAmount > userBalance) {
     showNotification('Saldo insuficiente para realizar esta aposta', 'error');
     return;
   }
   
+  // Deduzir a aposta do saldo
   userBalance -= betAmount;
   updateBalanceDisplay();
   
-  // Adicionar a transação como perdida inicialmente
+  // Adicionar a transação
   addTransaction({
     date: new Date(),
     type: 'Aposta',
     method: 'Blackjack',
     amount: betAmount,
-    status: 'Perdida'
+    status: 'Pendente'
   });
   
-  // Limpar as mãos
-  document.getElementById('dealer-hand').innerHTML = '';
-  document.getElementById('player-hand').innerHTML = '';
+  // Resetar o jogo
+  deck = createDeck();
+  playerHand = [];
+  dealerHand = [];
+  blackjackGameActive = true;
   
-  // Distribuir as cartas
-  const dealerCard1 = getRandomCard();
-  const dealerCard2 = getRandomCard();
-  const playerCard1 = getRandomCard();
-  const playerCard2 = getRandomCard();
+  // Distribuir as cartas iniciais
+  playerHand.push(deck.pop());
+  dealerHand.push(deck.pop());
+  playerHand.push(deck.pop());
+  dealerHand.push(deck.pop());
   
-  // Mostrar apenas a primeira carta do dealer
-  addCardToHand('dealer', dealerCard1);
-  addCardToHand('dealer', { value: '?', suit: '?' }, true); // Carta virada para baixo
+  // Atualizar a interface
+  updateBlackjackUI();
   
-  // Mostrar as duas cartas do jogador
-  addCardToHand('player', playerCard1);
-  addCardToHand('player', playerCard2);
-  
-  // Calcular pontuações
-  const dealerScore = calculateScore([dealerCard1]);
-  const playerScore = calculateScore([playerCard1, playerCard2]);
-  
-  document.getElementById('dealer-score').textContent = dealerScore;
-  document.getElementById('player-score').textContent = playerScore;
-  
-  // Guardar a segunda carta do dealer para revelar depois
-  document.getElementById('dealer-hand').dataset.hiddenCard = JSON.stringify(dealerCard2);
-  
-  // Ativar os botões de jogo
+  // Habilitar os botões de jogo
   document.getElementById('deal-btn').disabled = true;
   document.getElementById('hit-btn').disabled = false;
   document.getElementById('stand-btn').disabled = false;
   
-  // Verificar se o jogador tem um blackjack
+  // Verificar se o jogador tem um blackjack natural
+  playerScore = calculateBlackjackScore(playerHand);
   if (playerScore === 21) {
-    setTimeout(() => {
-      standBlackjack();
-    }, 1000);
+    standBlackjack();
   }
 }
 
 function hitBlackjack() {
-  const card = getRandomCard();
-  addCardToHand('player', card);
+  if (!blackjackGameActive) return;
   
-  const playerHand = getPlayerHand();
-  const playerScore = calculateScore(playerHand);
-  document.getElementById('player-score').textContent = playerScore;
+  // Adicionar uma carta à mão do jogador
+  playerHand.push(deck.pop());
   
+  // Atualizar a interface
+  updateBlackjackUI();
+  
+  // Verificar se o jogador estourou
+  playerScore = calculateBlackjackScore(playerHand);
   if (playerScore > 21) {
-    // Jogador estourou
-    document.getElementById('hit-btn').disabled = true;
-    document.getElementById('stand-btn').disabled = true;
-    
-    setTimeout(() => {
-      showNotification('Você estourou! Perdeu a aposta.', 'error');
-      document.getElementById('deal-btn').disabled = false;
-    }, 1000);
-  } else if (playerScore === 21) {
-    // Jogador tem 21, automaticamente ficar
-    setTimeout(() => {
-      standBlackjack();
-    }, 1000);
+    endBlackjackGame(false);
   }
 }
 
 function standBlackjack() {
-  document.getElementById('hit-btn').disabled = true;
-  document.getElementById('stand-btn').disabled = true;
+  if (!blackjackGameActive) return;
   
-  // Revelar a carta escondida do dealer
-  const hiddenCardElement = document.querySelector('#dealer-hand .card:nth-child(2)');
-  const hiddenCard = JSON.parse(document.getElementById('dealer-hand').dataset.hiddenCard);
-  hiddenCardElement.innerHTML = getCardHTML(hiddenCard);
-  hiddenCardElement.classList.remove('hidden-card');
+  // Revelar a carta do dealer
+  document.querySelector('#dealer-hand .card-back').classList.remove('card-back');
   
-  let dealerHand = [getCardFromHTML(document.querySelector('#dealer-hand .card:nth-child(1)')), hiddenCard];
-  let dealerScore = calculateScore(dealerHand);
-  document.getElementById('dealer-score').textContent = dealerScore;
-  
-  // Dealer pega cartas até ter pelo menos 17
-  const drawCard = () => {
-    if (dealerScore < 17) {
-      setTimeout(() => {
-        const card = getRandomCard();
-        addCardToHand('dealer', card);
-        dealerHand.push(card);
-        dealerScore = calculateScore(dealerHand);
-        document.getElementById('dealer-score').textContent = dealerScore;
-        drawCard();
-      }, 700);
-    } else {
-      // Determinar o vencedor
-      setTimeout(() => {
-        const playerScore = parseInt(document.getElementById('player-score').textContent);
-        const betAmount = parseFloat(document.getElementById('blackjack-bet-amount').value);
-        
-        if (dealerScore > 21 || playerScore > dealerScore) {
-          // Jogador ganha
-          let multiplier = (playerScore === 21 && getPlayerHand().length === 2) ? 2.5 : 2; // Blackjack paga 3:2
-          const winAmount = betAmount * multiplier;
-          userBalance += winAmount;
-          updateBalanceDisplay();
-          
-          // Atualizar a transação para 'Ganha'
-          transactions.shift(); // Remove a transação 'Perdida'
-          addTransaction({
-            date: new Date(),
-            type: 'Aposta',
-            method: 'Blackjack',
-            amount: winAmount,
-            status: 'Ganha'
-          });
-          
-          const message = (playerScore === 21 && getPlayerHand().length === 2) ? 
-            `Blackjack! Você ganhou R$ ${winAmount.toFixed(2)}!` : 
-            `Você ganhou R$ ${winAmount.toFixed(2)}!`;
-          showNotification(message, 'success');
-        } else if (playerScore === dealerScore) {
-          // Empate
-          userBalance += betAmount;
-          updateBalanceDisplay();
-          
-          // Atualizar a transação para 'Empate'
-          transactions.shift(); // Remove a transação 'Perdida'
-          addTransaction({
-            date: new Date(),
-            type: 'Aposta',
-            method: 'Blackjack',
-            amount: betAmount,
-            status: 'Empate'
-          });
-          
-          showNotification('Empate! Sua aposta foi devolvida.', 'info');
-        } else {
-          // Dealer ganha
-          showNotification('Dealer ganhou! Você perdeu a aposta.', 'error');
-        }
-        
-        document.getElementById('deal-btn').disabled = false;
-      }, 1000);
-    }
-  };
-  
-  drawCard();
-}
-
-function getRandomCard() {
-  const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-  const suits = ['♠', '♥', '♦', '♣'];
-  
-  const value = values[Math.floor(Math.random() * values.length)];
-  const suit = suits[Math.floor(Math.random() * suits.length)];
-  
-  return { value, suit };
-}
-
-function addCardToHand(player, card, hidden = false) {
-  const hand = document.getElementById(`${player}-hand`);
-  const cardElement = document.createElement('div');
-  cardElement.classList.add('card');
-  if (hidden) {
-    cardElement.classList.add('hidden-card');
-    cardElement.innerHTML = '?';
-  } else {
-    cardElement.innerHTML = getCardHTML(card);
+  // Dealer pega cartas até ter 17 ou mais
+  dealerScore = calculateBlackjackScore(dealerHand);
+  while (dealerScore < 17) {
+    dealerHand.push(deck.pop());
+    dealerScore = calculateBlackjackScore(dealerHand);
   }
-  cardElement.classList.add('dealing');
-  hand.appendChild(cardElement);
-}
-
-function getCardHTML(card) {
-  const isRed = card.suit === '♥' || card.suit === '♦';
-  return `
-    <div class="card-value" style="color: ${isRed ? 'red' : 'black'}">${card.value}</div>
-    <div class="card-suit" style="color: ${isRed ? 'red' : 'black'}">${card.suit}</div>
-  `;
-}
-
-function getCardFromHTML(cardElement) {
-  const valueElement = cardElement.querySelector('.card-value');
-  const suitElement = cardElement.querySelector('.card-suit');
   
-  if (!valueElement || !suitElement) return { value: '?', suit: '?' };
+  // Atualizar a interface
+  updateBlackjackUI();
   
-  return {
-    value: valueElement.textContent,
-    suit: suitElement.textContent
-  };
+  // Determinar o vencedor
+  playerScore = calculateBlackjackScore(playerHand);
+  
+  let playerWins = false;
+  
+  if (playerScore <= 21) {
+    if (dealerScore > 21 || playerScore > dealerScore) {
+      playerWins = true;
+    } else if (playerScore === dealerScore) {
+      // Empate, devolver a aposta
+      const betAmount = parseFloat(document.getElementById('blackjack-bet-amount').value);
+      userBalance += betAmount;
+      updateBalanceDisplay();
+      
+      // Atualizar a transação
+      transactions.shift(); // Remove a transação 'Pendente'
+      addTransaction({
+        date: new Date(),
+        type: 'Aposta',
+        method: 'Blackjack',
+        amount: betAmount,
+        status: 'Empate'
+      });
+      
+      showNotification('Empate no Blackjack! Aposta devolvida.', 'info');
+      
+      // Resetar o jogo
+      blackjackGameActive = false;
+      document.getElementById('deal-btn').disabled = false;
+      document.getElementById('hit-btn').disabled = true;
+      document.getElementById('stand-btn').disabled = true;
+      
+      return;
+    }
+  }
+  
+  endBlackjackGame(playerWins);
 }
 
-function getPlayerHand() {
-  const cards = document.querySelectorAll('#player-hand .card');
-  return Array.from(cards).map(card => getCardFromHTML(card));
+function updateBlackjackUI() {
+  const playerHandElement = document.getElementById('player-hand');
+  const dealerHandElement = document.getElementById('dealer-hand');
+  
+  playerHandElement.innerHTML = '';
+  dealerHandElement.innerHTML = '';
+  
+  // Mostrar as cartas do jogador
+  playerHand.forEach(card => {
+    const cardElement = document.createElement('div');
+    cardElement.classList.add('card');
+    cardElement.innerHTML = getCardHTML(card);
+    playerHandElement.appendChild(cardElement);
+  });
+  
+  // Mostrar as cartas do dealer
+  dealerHand.forEach((card, index) => {
+    const cardElement = document.createElement('div');
+    cardElement.classList.add('card');
+    
+    // Esconder a segunda carta do dealer se o jogo estiver ativo
+    if (index === 1 && blackjackGameActive) {
+      cardElement.classList.add('card-back');
+      cardElement.innerHTML = '<div class="card-back-design"></div>';
+    } else {
+      cardElement.innerHTML = getCardHTML(card);
+    }
+    
+    dealerHandElement.appendChild(cardElement);
+  });
+  
+  // Atualizar as pontuações
+  document.getElementById('player-score').textContent = calculateBlackjackScore(playerHand);
+  
+  if (blackjackGameActive) {
+    // Mostrar apenas a pontuação da primeira carta do dealer
+    const firstCardValue = getCardValue(dealerHand[0]);
+    document.getElementById('dealer-score').textContent = firstCardValue;
+  } else {
+    document.getElementById('dealer-score').textContent = calculateBlackjackScore(dealerHand);
+  }
 }
 
-function calculateScore(cards) {
+function calculateBlackjackScore(hand) {
   let score = 0;
   let aces = 0;
   
-  cards.forEach(card => {
+  for (const card of hand) {
     if (card.value === 'A') {
       aces++;
       score += 11;
     } else if (['K', 'Q', 'J'].includes(card.value)) {
       score += 10;
-    } else if (card.value !== '?') {
+    } else {
       score += parseInt(card.value);
     }
-  });
+  }
   
   // Ajustar o valor dos ases se necessário
   while (score > 21 && aces > 0) {
@@ -886,24 +1008,90 @@ function calculateScore(cards) {
   return score;
 }
 
-// === JOGO DE RASPADINHA ===
-function initScratchCard() {
-  document.getElementById('scratch-prize').textContent = '?';
-  document.getElementById('scratch-overlay').style.opacity = '1';
-  document.getElementById('scratch-overlay').style.display = 'flex';
+function getCardValue(card) {
+  if (card.value === 'A') {
+    return 11;
+  } else if (['K', 'Q', 'J'].includes(card.value)) {
+    return 10;
+  } else {
+    return parseInt(card.value);
+  }
+}
+
+function getCardHTML(card) {
+  const isRed = card.suit === '♥' || card.suit === '♦';
+  
+  return `
+    <div class="card-value ${isRed ? 'red' : 'black'}">${card.value}</div>
+    <div class="card-suit ${isRed ? 'red' : 'black'}">${card.suit}</div>
+  `;
+}
+
+function endBlackjackGame(playerWins) {
+  blackjackGameActive = false;
+  
+  // Habilitar/desabilitar botões
+  document.getElementById('deal-btn').disabled = false;
+  document.getElementById('hit-btn').disabled = true;
+  document.getElementById('stand-btn').disabled = true;
+  
+  // Atualizar a interface
+  updateBlackjackUI();
+  
+  // Atualizar a transação
+  transactions.shift(); // Remove a transação 'Pendente'
+  const betAmount = parseFloat(document.getElementById('blackjack-bet-amount').value);
+  
+  if (playerWins) {
+    // Verificar se é um blackjack natural
+    const isNaturalBlackjack = playerHand.length === 2 && playerScore === 21;
+    const multiplier = isNaturalBlackjack ? 2.5 : 2;
+    const winAmount = betAmount * multiplier;
+    
+    userBalance += winAmount;
+    updateBalanceDisplay();
+    
+    addTransaction({
+      date: new Date(),
+      type: 'Aposta',
+      method: 'Blackjack',
+      amount: winAmount,
+      status: 'Ganha'
+    });
+    
+    showNotification(`Você ganhou R$ ${winAmount.toFixed(2)} no Blackjack!`, 'success');
+  } else {
+    addTransaction({
+      date: new Date(),
+      type: 'Aposta',
+      method: 'Blackjack',
+      amount: betAmount,
+      status: 'Perdida'
+    });
+    
+    showNotification(`Você perdeu R$ ${betAmount.toFixed(2)} no Blackjack.`, 'error');
+  }
+}
+
+// Funções para o jogo Raspadinha
+function initScratch() {
+  // Já inicializado no HTML
 }
 
 function newScratchCard() {
   const betAmount = parseFloat(document.getElementById('scratch-bet-amount').value);
+  
   if (betAmount <= 0) {
     showNotification('O valor da raspadinha deve ser maior que zero', 'error');
     return;
   }
+  
   if (betAmount > userBalance) {
     showNotification('Saldo insuficiente para comprar esta raspadinha', 'error');
     return;
   }
   
+  // Deduzir o valor da raspadinha do saldo
   userBalance -= betAmount;
   updateBalanceDisplay();
   
@@ -919,477 +1107,333 @@ function newScratchCard() {
   // Determinar o prêmio
   const random = Math.random();
   let prize = 0;
+  let prizeSymbol = '';
   
-  if (random < 0.01) { // 1% de chance de ganhar 50x
+  if (random < 0.01) {
+    // 1% de chance de ganhar 50x
     prize = betAmount * 50;
-  } else if (random < 0.05) { // 4% de chance de ganhar 10x
+    prizeSymbol = '💎💎💎';
+  } else if (random < 0.05) {
+    // 4% de chance de ganhar 10x
     prize = betAmount * 10;
-  } else if (random < 0.15) { // 10% de chance de ganhar 5x
+    prizeSymbol = '💰💰💰';
+  } else if (random < 0.15) {
+    // 10% de chance de ganhar 5x
     prize = betAmount * 5;
-  } else if (random < 0.30) { // 15% de chance de ganhar 2x
+    prizeSymbol = '💰💰';
+  } else if (random < 0.35) {
+    // 20% de chance de ganhar 2x
     prize = betAmount * 2;
-  } else if (random < 0.50) { // 20% de chance de ganhar 1x (empate)
-    prize = betAmount;
+    prizeSymbol = '💰';
+  } else {
+    // 65% de chance de não ganhar nada
+    prize = 0;
+    prizeSymbol = '❌';
   }
   
-  // Guardar o prêmio para revelar depois
-  document.getElementById('scratch-prize').dataset.prize = prize.toFixed(2);
+  // Atualizar a interface
+  document.getElementById('scratch-prize').textContent = prizeSymbol;
+  document.getElementById('scratch-overlay').style.opacity = '1';
+  document.getElementById('scratch-overlay').textContent = 'Raspe para revelar';
   
-  // Resetar a raspadinha
-  initScratchCard();
+  // Armazenar o prêmio para uso posterior
+  document.getElementById('scratch-prize').dataset.prize = prize;
 }
 
 function scratchCard() {
   const overlay = document.getElementById('scratch-overlay');
-  const prize = parseFloat(document.getElementById('scratch-prize').dataset.prize || 0);
-  
-  // Efeito de raspar
   overlay.style.opacity = '0';
+  
   setTimeout(() => {
-    overlay.style.display = 'none';
-    document.getElementById('scratch-prize').textContent = prize > 0 ? `R$ ${prize.toFixed(2)}` : 'Não foi dessa vez!';
+    // Processar o resultado
+    const prize = parseFloat(document.getElementById('scratch-prize').dataset.prize);
     
-    // Atualizar o saldo e a transação se ganhou
+    // Atualizar a transação
+    transactions.shift(); // Remove a transação 'Pendente'
+    const betAmount = parseFloat(document.getElementById('scratch-bet-amount').value);
+    
     if (prize > 0) {
+      // Adicionar o prêmio ao saldo
       userBalance += prize;
       updateBalanceDisplay();
       
-      // Atualizar a transação
-      transactions.pop(); // Remove a transação 'Pendente'
-      const status = prize > parseFloat(document.getElementById('scratch-bet-amount').value) ? 'Ganha' : 'Empate';
       addTransaction({
         date: new Date(),
         type: 'Aposta',
         method: 'Raspadinha',
         amount: prize,
-        status: status
+        status: 'Ganha'
       });
       
-      if (status === 'Ganha') {
-        showNotification(`Parabéns! Você ganhou R$ ${prize.toFixed(2)}!`, 'success');
-      } else {
-        showNotification('Empate! Sua aposta foi devolvida.', 'info');
-      }
+      showNotification(`Você ganhou R$ ${prize.toFixed(2)} na Raspadinha!`, 'success');
     } else {
-      // Atualizar a transação para 'Perdida'
-      transactions.pop(); // Remove a transação 'Pendente'
       addTransaction({
         date: new Date(),
         type: 'Aposta',
         method: 'Raspadinha',
-        amount: parseFloat(document.getElementById('scratch-bet-amount').value),
+        amount: betAmount,
         status: 'Perdida'
       });
       
-      showNotification('Não foi dessa vez! Tente novamente.', 'error');
+      showNotification(`Você perdeu R$ ${betAmount.toFixed(2)} na Raspadinha.`, 'error');
     }
   }, 500);
 }
 
-// === JOGO DE CAÇA-NÍQUEIS ===
+// Funções para o jogo Caça-níqueis
+const symbols = ['7', '💎', '🍒', '🍋', '🍊', '🍇', '🔔', 'BAR'];
+const payouts = {
+  '777': 100,
+  '💎💎💎': 50,
+  '🔔🔔🔔': 25,
+  'BARBARBAR': 20,
+  '🍒🍒🍒': 15,
+  '🍊🍊🍊': 10,
+  '🍋🍋🍋': 8,
+  '🍇🍇🍇': 5,
+  '🍒🍒': 3,
+  '🍒': 1
+};
+
 function initSlots() {
-  document.getElementById('reel1').textContent = '7';
-  document.getElementById('reel2').textContent = '7';
-  document.getElementById('reel3').textContent = '7';
+  // Já inicializado no HTML
 }
 
 function spinSlots() {
   const betAmount = parseFloat(document.getElementById('slots-bet-amount').value);
+  
   if (betAmount <= 0) {
     showNotification('O valor da aposta deve ser maior que zero', 'error');
     return;
   }
+  
   if (betAmount > userBalance) {
     showNotification('Saldo insuficiente para realizar esta aposta', 'error');
     return;
   }
   
+  // Deduzir a aposta do saldo
   userBalance -= betAmount;
   updateBalanceDisplay();
   
-  // Adicionar a transação como perdida inicialmente
+  // Adicionar a transação
   addTransaction({
     date: new Date(),
     type: 'Aposta',
     method: 'Caça-níqueis',
     amount: betAmount,
-    status: 'Perdida'
+    status: 'Pendente'
   });
   
-  const spinBtn = document.getElementById('spin-slots-btn');
-  spinBtn.disabled = true;
+  // Desabilitar o botão durante a animação
+  document.getElementById('spin-slots-btn').disabled = true;
   
-  // Símbolos possíveis
-  const symbols = ['7', '💎', '🍒', '🍋', '🍊', '🍇', '⭐'];
-  
-  // Animação de giro
-  const reels = [
-    document.getElementById('reel1'),
-    document.getElementById('reel2'),
-    document.getElementById('reel3')
-  ];
-  
-  reels.forEach(reel => reel.classList.add('spinning'));
+  // Animação dos rolos
+  const reels = document.querySelectorAll('.reel');
+  reels.forEach(reel => {
+    reel.classList.add('spinning');
+  });
   
   // Determinar os resultados
-  const results = [
-    symbols[Math.floor(Math.random() * symbols.length)],
-    symbols[Math.floor(Math.random() * symbols.length)],
-    symbols[Math.floor(Math.random() * symbols.length)]
-  ];
-  
-  // Parar os rolos um por um
   setTimeout(() => {
-    reels[0].textContent = results[0];
-    reels[0].classList.remove('spinning');
+    const results = [];
     
-    setTimeout(() => {
-      reels[1].textContent = results[1];
-      reels[1].classList.remove('spinning');
+    reels.forEach((reel, index) => {
+      reel.classList.remove('spinning');
       
-      setTimeout(() => {
-        reels[2].textContent = results[2];
-        reels[2].classList.remove('spinning');
-        
-        // Verificar o resultado
-        checkSlotsResult(results, betAmount);
-        spinBtn.disabled = false;
-      }, 500);
-    }, 500);
-  }, 1000);
-}
-
-function checkSlotsResult(results, betAmount) {
-  // Verificar se todos os símbolos são iguais
-  const allSame = results[0] === results[1] && results[1] === results[2];
-  
-  // Verificar se há dois símbolos iguais
-  const twoSame = results[0] === results[1] || results[1] === results[2] || results[0] === results[2];
-  
-  let multiplier = 0;
-  
-  if (allSame) {
-    // Multiplicadores para três símbolos iguais
-    switch (results[0]) {
-      case '7': multiplier = 50; break;
-      case '💎': multiplier = 20; break;
-      case '⭐': multiplier = 15; break;
-      case '🍇': multiplier = 10; break;
-      case '🍊': multiplier = 8; break;
-      case '🍋': multiplier = 5; break;
-      case '🍒': multiplier = 3; break;
-    }
-  } else if (twoSame) {
-    // Dois símbolos iguais
-    multiplier = 1.5;
-  }
-  
-  if (multiplier > 0) {
-    const winAmount = betAmount * multiplier;
-    userBalance += winAmount;
-    updateBalanceDisplay();
-    
-    // Atualizar a transação para 'Ganha'
-    transactions.shift(); // Remove a transação 'Perdida'
-    addTransaction({
-      date: new Date(),
-      type: 'Aposta',
-      method: 'Caça-níqueis',
-      amount: winAmount,
-      status: 'Ganha'
+      // Selecionar um símbolo aleatório
+      const randomIndex = Math.floor(Math.random() * symbols.length);
+      const symbol = symbols[randomIndex];
+      
+      reel.textContent = symbol;
+      results.push(symbol);
     });
     
-    showNotification(`Parabéns! Você ganhou R$ ${winAmount.toFixed(2)}!`, 'success');
-  } else {
-    showNotification('Não foi dessa vez! Tente novamente.', 'error');
-  }
+    // Verificar se o jogador ganhou
+    const resultString = results.join('');
+    let winAmount = 0;
+    
+    // Verificar combinações exatas
+    if (payouts[resultString]) {
+      winAmount = betAmount * payouts[resultString];
+    } 
+    // Verificar combinações parciais
+    else if (results[0] === results[1] && results[0] === '🍒') {
+      winAmount = betAmount * payouts['🍒🍒'];
+    } else if (results[0] === '🍒') {
+      winAmount = betAmount * payouts['🍒'];
+    }
+    
+    // Atualizar a transação
+    transactions.shift(); // Remove a transação 'Pendente'
+    
+    if (winAmount > 0) {
+      // Adicionar o ganho ao saldo
+      userBalance += winAmount;
+      updateBalanceDisplay();
+      
+      addTransaction({
+        date: new Date(),
+        type: 'Aposta',
+        method: 'Caça-níqueis',
+        amount: winAmount,
+        status: 'Ganha'
+      });
+      
+      showNotification(`Você ganhou R$ ${winAmount.toFixed(2)} no Caça-níqueis!`, 'success');
+    } else {
+      addTransaction({
+        date: new Date(),
+        type: 'Aposta',
+        method: 'Caça-níqueis',
+        amount: betAmount,
+        status: 'Perdida'
+      });
+      
+      showNotification(`Você perdeu R$ ${betAmount.toFixed(2)} no Caça-níqueis.`, 'error');
+    }
+    
+    // Habilitar o botão novamente
+    document.getElementById('spin-slots-btn').disabled = false;
+  }, 2000);
 }
 
-// === JOGO DE CRASH ===
+// Funções para o jogo Crash
 let crashInterval;
-let crashMultiplier = 1.0;
+let crashMultiplier = 1.00;
 let crashGameActive = false;
 
 function initCrash() {
+  // Já inicializado no HTML
+}
+
+function resetCrashGame() {
+  // Limpar qualquer intervalo existente
+  if (crashInterval) {
+    clearInterval(crashInterval);
+  }
+  
+  // Resetar variáveis
+  crashMultiplier = 1.00;
+  crashGameActive = false;
+  
+  // Atualizar a interface
   document.getElementById('crash-multiplier').textContent = '1.00x';
+  document.querySelector('.crash-graph').classList.remove('crashing');
+  
+  // Habilitar/desabilitar botões
   document.getElementById('start-crash-btn').disabled = false;
   document.getElementById('cashout-crash-btn').disabled = true;
-  crashGameActive = false;
-  if (crashInterval) clearInterval(crashInterval);
 }
 
 function startCrashGame() {
   const betAmount = parseFloat(document.getElementById('crash-bet-amount').value);
+  
   if (betAmount <= 0) {
     showNotification('O valor da aposta deve ser maior que zero', 'error');
     return;
   }
+  
   if (betAmount > userBalance) {
     showNotification('Saldo insuficiente para realizar esta aposta', 'error');
     return;
   }
   
+  // Deduzir a aposta do saldo
   userBalance -= betAmount;
   updateBalanceDisplay();
   
-  // Adicionar a transação como perdida inicialmente
+  // Adicionar a transação
   addTransaction({
     date: new Date(),
     type: 'Aposta',
     method: 'Crash',
     amount: betAmount,
-    status: 'Perdida'
+    status: 'Pendente'
   });
   
-  document.getElementById('start-crash-btn').disabled = true;
-  document.getElementById('cashout-crash-btn').disabled = false;
-  document.getElementById('crash-bet-amount').disabled = true;
-  
-  crashMultiplier = 1.0;
+  // Resetar o multiplicador
+  crashMultiplier = 1.00;
   crashGameActive = true;
   
-  // Determinar quando o jogo vai "crashar"
-  const crashPoint = generateCrashPoint();
+  // Atualizar a interface
+  document.getElementById('crash-multiplier').textContent = '1.00x';
+  document.querySelector('.crash-graph').classList.remove('crashing');
   
-  // Atualizar o multiplicador
+  // Habilitar/desabilitar botões
+  document.getElementById('start-crash-btn').disabled = true;
+  document.getElementById('cashout-crash-btn').disabled = false;
+  
+  // Determinar quando o jogo vai "crashar"
+  const crashPoint = Math.random() * 10;
+  const willCrash = crashPoint < 1 ? 1 : crashPoint; // Mínimo de 1x
+  
+  // Iniciar o intervalo para aumentar o multiplicador
   crashInterval = setInterval(() => {
+    // Aumentar o multiplicador
     crashMultiplier += 0.01;
-    document.getElementById('crash-multiplier').textContent = crashMultiplier.toFixed(2) + 'x';
+    
+    // Atualizar a interface
+    document.getElementById('crash-multiplier').textContent = `${crashMultiplier.toFixed(2)}x`;
     
     // Verificar se chegou ao ponto de crash
-    if (crashMultiplier >= crashPoint) {
-      endCrashGame(false);
+    if (crashMultiplier >= willCrash) {
+      // Crash!
+      clearInterval(crashInterval);
+      crashGameActive = false;
+      
+      document.querySelector('.crash-graph').classList.add('crashing');
+      document.getElementById('cashout-crash-btn').disabled = true;
+      
+      // Atualizar a transação
+      transactions.shift(); // Remove a transação 'Pendente'
+      addTransaction({
+        date: new Date(),
+        type: 'Aposta',
+        method: 'Crash',
+        amount: betAmount,
+        status: 'Perdida'
+      });
+      
+      showNotification(`Você perdeu R$ ${betAmount.toFixed(2)} no Crash.`, 'error');
+      
+      // Habilitar o botão de iniciar
+      setTimeout(() => {
+        document.getElementById('start-crash-btn').disabled = false;
+      }, 1500);
     }
   }, 100);
 }
 
 function cashoutCrash() {
   if (!crashGameActive) return;
-  endCrashGame(true);
-}
-
-function endCrashGame(cashout) {
+  
+  // Parar o jogo
   clearInterval(crashInterval);
   crashGameActive = false;
+  
+  // Calcular o ganho
+  const betAmount = parseFloat(document.getElementById('crash-bet-amount').value);
+  const winAmount = betAmount * crashMultiplier;
+  
+  // Adicionar ao saldo
+  userBalance += winAmount;
+  updateBalanceDisplay();
+  
+  // Atualizar a transação
+  transactions.shift(); // Remove a transação 'Pendente'
+  addTransaction({
+    date: new Date(),
+    type: 'Aposta',
+    method: 'Crash',
+    amount: winAmount,
+    status: 'Ganha'
+  });
+  
+  // Mostrar notificação
+  showNotification(`Você ganhou R$ ${winAmount.toFixed(2)} no Crash!`, 'success');
+  
+  // Habilitar/desabilitar botões
   document.getElementById('start-crash-btn').disabled = false;
   document.getElementById('cashout-crash-btn').disabled = true;
-  document.getElementById('crash-bet-amount').disabled = false;
-  
-  if (cashout) {
-    const betAmount = parseFloat(document.getElementById('crash-bet-amount').value);
-    const winAmount = betAmount * crashMultiplier;
-    userBalance += winAmount;
-    updateBalanceDisplay();
-    
-    // Atualizar a transação para 'Ganha'
-    transactions.shift(); // Remove a transação 'Perdida'
-    addTransaction({
-      date: new Date(),
-      type: 'Aposta',
-      method: 'Crash',
-      amount: winAmount,
-      status: 'Ganha'
-    });
-    
-    showNotification(`Você retirou R$ ${winAmount.toFixed(2)} com sucesso!`, 'success');
-  } else {
-    document.getElementById('crash-multiplier').innerHTML = `<span style="color: var(--danger-color);">CRASH!</span>`;
-    showNotification('Crash! Você perdeu sua aposta.', 'error');
-  }
 }
-
-function generateCrashPoint() {
-  // Algoritmo para gerar o ponto de crash
-  // Usando uma distribuição que favorece valores mais baixos
-  const r = Math.random();
-  return 1 + Math.pow(Math.random() * 10, r);
-}
-
-// === JOGO DE POKER ===
-function initPoker() {
-  // Placeholder para futura implementação
-  showNotification('O jogo de Poker estará disponível em breve!', 'info');
-}
-
-// === FUNÇÕES UTILITÁRIAS ===
-function updateBalanceDisplay() {
-  const balanceElement = document.querySelector('.balance-amount');
-  if (balanceElement) {
-    balanceElement.textContent = `R$ ${userBalance.toFixed(2)}`;
-  }
-  
-  // Atualizar o localStorage
-  if (isLoggedIn) {
-    const savedUser = JSON.parse(localStorage.getItem('infinitySlotsUser'));
-    savedUser.balance = userBalance;
-    localStorage.setItem('infinitySlotsUser', JSON.stringify(savedUser));
-  }
-}
-
-function addTransaction(transaction) {
-  transactions.unshift(transaction);
-  if (transactions.length > 10) {
-    transactions.pop();
-  }
-  
-  updateTransactionHistory();
-  
-  // Atualizar o localStorage
-  localStorage.setItem('infinitySlotsTransactions', JSON.stringify(transactions));
-}
-
-function updateTransactionHistory() {
-  const transactionList = document.getElementById('transaction-list');
-  if (!transactionList) return;
-  
-  transactionList.innerHTML = '';
-  
-  transactions.forEach(transaction => {
-    const row = document.createElement('tr');
-    
-    const dateCell = document.createElement('td');
-    dateCell.textContent = new Date(transaction.date).toLocaleDateString('pt-BR');
-    
-    const typeCell = document.createElement('td');
-    typeCell.textContent = transaction.type;
-    
-    const methodCell = document.createElement('td');
-    methodCell.textContent = transaction.method;
-    
-    const amountCell = document.createElement('td');
-    amountCell.textContent = `R$ ${transaction.amount.toFixed(2)}`;
-    
-    const statusCell = document.createElement('td');
-    statusCell.textContent = transaction.status;
-    
-    if (transaction.status === 'Ganha') {
-      statusCell.style.color = 'var(--success-color)';
-    } else if (transaction.status === 'Perdida') {
-      statusCell.style.color = 'var(--danger-color)';
-    } else if (transaction.status === 'Em processamento') {
-      statusCell.style.color = 'var(--warning-color)';
-    }
-    
-    row.appendChild(dateCell);
-    row.appendChild(typeCell);
-    row.appendChild(methodCell);
-    row.appendChild(amountCell);
-    row.appendChild(statusCell);
-    
-    transactionList.appendChild(row);
-  });
-}
-
-function addSampleTransactions() {
-  const sampleTransactions = [
-    {
-      date: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 horas atrás
-      type: 'Depósito',
-      method: 'PIX',
-      amount: 100,
-      status: 'Concluído'
-    },
-    {
-      date: new Date(Date.now() - 1000 * 60 * 60), // 1 hora atrás
-      type: 'Aposta',
-      method: 'Roleta',
-      amount: 50,
-      status: 'Ganha'
-    },
-    {
-      date: new Date(Date.now() - 1000 * 60 * 30), // 30 minutos atrás
-      type: 'Aposta',
-      method: 'Blackjack',
-      amount: 25,
-      status: 'Perdida'
-    }
-  ];
-  
-  sampleTransactions.forEach(transaction => {
-    addTransaction(transaction);
-  });
-}
-
-function showNotification(message, type = 'info') {
-  const notification = document.getElementById('notification');
-  const notificationMessage = notification.querySelector('.notification-message');
-  const notificationIcon = notification.querySelector('.notification-icon i');
-  
-  notificationMessage.textContent = message;
-  
-  // Remover classes anteriores
-  notification.classList.remove('success', 'error', 'warning', 'info');
-  
-  // Adicionar a classe correta
-  notification.classList.add(type);
-  
-  // Definir o ícone correto
-  switch (type) {
-    case 'success':
-      notificationIcon.className = 'fas fa-check-circle';
-      break;
-    case 'error':
-      notificationIcon.className = 'fas fa-times-circle';
-      break;
-    case 'warning':
-      notificationIcon.className = 'fas fa-exclamation-triangle';
-      break;
-    default:
-      notificationIcon.className = 'fas fa-info-circle';
-  }
-  
-  // Mostrar a notificação
-  notification.classList.add('show');
-  
-  // Esconder a notificação após 5 segundos
-  setTimeout(closeNotification, 5000);
-}
-
-function closeNotification() {
-  const notification = document.getElementById('notification');
-  notification.classList.remove('show');
-}
-
-// Adicionar efeitos de partículas quando disponível
-document.addEventListener('DOMContentLoaded', function() {
-  if (typeof particlesJS !== 'undefined') {
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: '#9d4edd' },
-        shape: { type: 'circle' },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: '#9d4edd',
-          opacity: 0.4,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: 'none',
-          random: true,
-          straight: false,
-          out_mode: 'out',
-          bounce: false
-        }
-      },
-      interactivity: {
-        detect_on: 'canvas',
-        events: {
-          onhover: { enable: true, mode: 'grab' },
-          onclick: { enable: true, mode: 'push' },
-          resize: true
-        },
-        modes: {
-          grab: { distance: 140, line_linked: { opacity: 1 } },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
-  }
-});
